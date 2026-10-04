@@ -68,7 +68,7 @@ class AutomationLayerTests(unittest.TestCase):
         )
         self.assertEqual(len(with_label), 1)
         self.assertIn("distinctiveness_authorship", with_label[0]["semantic_evals"])
-        self.assertEqual(with_label[0]["adapter_status"], "spec_only")
+        self.assertEqual(with_label[0]["adapter_status"], "installed")
         self.assertNotIn("research-synthesist", with_label[0]["required_agents"])
 
     def test_editorial_claims_label_routes_research(self):
