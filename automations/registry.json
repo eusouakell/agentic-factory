@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "automations": [
+    {
+      "id": "factory-governance-pr",
+      "repository": "eusouakell/agentic-factory",
+      "event": "pull_request",
+      "triggers": {
+        "paths": [
+          "agents/**",
+          "control-plane/**",
+          "controls/**",
+          "governance/**",
+          ".github/**",
+          "ARCHITECTURE.md",
+          "automations/**",
+          "execution-surfaces/**"
+        ]
+      },
+      "route": [
+        {
+          "agent_id": "code-reviewer",
+          "required": true
+        },
+        {
+          "agent_id": "security-auditor",
+          "required_if_paths": [
+            ".github/**",
+            "control-plane/**",
+            "automations/**",
+            "execution-surfaces/**"
+          ]
+        },
+        {
+          "agent_id": "readiness-evaluator",
+          "required": true
+        }
+      ],
+      "execution_surface": "github_review",
+      "human_gate": "merge",
+      "max_retries": 1,
+      "adapter_status": "installed"
+    },
+    {
+      "id": "editorial-draft-quality",
+      "repository": "eusouakell/cereja-editorial-engine",
+      "event": "draft_ready",
+      "triggers": {
+        "paths": [
+          "drafts/**",
+          "packets/**",
+          "examples/**",
+          "formats/newsletter/**"
+        ],
+        "labels": [
+          "editorial-draft"
+        ]
+      },
+      "route": [
+        {
+          "agent_id": "research-synthesist",
+          "required_if_claims": true
+        },
+        {
+          "agent_id": "inclusive-experience-reviewer",
+          "required_if_sensitive_context": true
+        },
+        {
+          "agent_id": "readiness-evaluator",
+          "required": true
+        }
+      ],
+      "semantic_evals": [
+        "voice",
+        "distinctiveness_authorship",
+        "evidence",
+        "originality",
+        "intellectual_honesty"
+      ],
+      "execution_surface": "codex_interactive_or_chat",
+      "human_gate": "Kell publication approval",
+      "max_retries": 2,
+      "adapter_status": "spec_only"
+    },
+    {
+      "id": "flame-product-change",
+      "repository": "eusouakell/cereja-knowledge-system",
+      "event": "pull_request",
+      "triggers": {
+        "paths": [
+          "brand/flame/**"
+        ]
+      },
+      "route": [
+        {
+          "agent_id": "flame-ui-composer",
+          "required_if_visual_change": true
+        },
+        {
+          "agent_id": "frontend-engineer",
+          "required_if_code_change": true
+        },
+        {
+          "agent_id": "accessibility-auditor",
+          "required_if_interactive_surface": true
+        },
+        {
+          "agent_id": "inclusive-experience-reviewer",
+          "required_if_people_or_sensitive_context": true
+        },
+        {
+          "agent_id": "readiness-evaluator",
+          "required": true
+        }
+      ],
+      "execution_surface": "codex_interactive_or_github_review",
+      "human_gate": "Flame canonical change approval",
+      "max_retries": 2,
+      "adapter_status": "spec_only"
+    },
+    {
+      "id": "agent-validation-lifecycle",
+      "repository": "eusouakell/agentic-factory",
+      "event": "validation_record",
+      "triggers": {
+        "paths": [
+          "validation/runs/**",
+          "validation/index.json"
+        ]
+      },
+      "route": [
+        {
+          "agent_id": "code-reviewer",
+          "required": true
+        },
+        {
+          "agent_id": "readiness-evaluator",
+          "required": true
+        }
+      ],
+      "execution_surface": "github_review",
+      "human_gate": "agent lifecycle promotion/demotion",
+      "max_retries": 1,
+      "adapter_status": "installed"
+    }
+  ]
+}

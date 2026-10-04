@@ -81,3 +81,10 @@ Escalate when:
 - a Check repeatedly fails;
 - high-impact uncertainty remains;
 - a human decision is explicitly required.
+
+
+## Automation boundary
+
+The control plane may receive routes from [Automation Layer V1](../automations/README.md). Automation can select an eligible run plan from explicit event contracts, but cannot grant broader tool/write authority than the selected agent contract already permits.
+
+Execution surfaces such as Codex are adapters/runners. They do not become the authority source merely because they can browse, edit or execute code.
