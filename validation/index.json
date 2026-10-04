@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "wave": "core-waves-1-2-plus-on-demand-wave-1",
+  "wave": "core-waves-1-2-plus-on-demand-waves-1-2",
   "date": "2026-10-04",
   "runs": [
     {
@@ -83,6 +83,24 @@
       "outcome": "validated_once",
       "evidence": [
         "https://github.com/eusouakell/cereja-knowledge-system/pull/18"
+      ],
+      "recommendation": "candidate_active_pending_human_approval"
+    },
+    {
+      "agent_id": "repository-analyst",
+      "outcome": "validated_once",
+      "evidence": [
+        "https://github.com/eusouakell/marketing-context-system/issues/17",
+        "https://github.com/eusouakell/marketing-context-system/pull/18"
+      ],
+      "recommendation": "candidate_active_pending_human_approval"
+    },
+    {
+      "agent_id": "workflow-architect",
+      "outcome": "validated_once",
+      "evidence": [
+        "validation/workflow.md",
+        "https://github.com/eusouakell/agentic-factory/pull/10"
       ],
       "recommendation": "candidate_active_pending_human_approval"
     }
