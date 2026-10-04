@@ -14,6 +14,7 @@ REQUIRED = {
     "execution_surface",
     "human_gate",
     "max_retries",
+    "adapter_status",
 }
 
 
@@ -37,6 +38,8 @@ def validate(data: dict) -> list[str]:
             errors.append(f"{automation['id']}: human_gate required")
         if not automation["route"]:
             errors.append(f"{automation['id']}: route must not be empty")
+        if automation["adapter_status"] not in {"installed", "spec_only"}:
+            errors.append(f"{automation['id']}: invalid adapter_status")
     return errors
 
 
