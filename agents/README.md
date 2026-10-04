@@ -61,7 +61,8 @@ Current lifecycle target in Registry V2:
 
 - **Active core:** Research Synthesist, Frontend Engineer, Code Reviewer, Security Auditor, Production Readiness Evaluator, Flame UI Composer.
 - **Pilot core:** Accessibility Auditor — source-level validation completed; rendered/manual validation still required.
-- **On-demand:** all 14 remain pilot until individually validated.
+- **Active on-demand:** Agent Tooling Engineer, Test Automation Engineer, Repository Analyst, Workflow Architect.
+- **Pilot on-demand:** Motion Web Director, Motion Video Director, Editorial Typography Director, Photo Art Director, Generative Photography Specialist, Inclusive Experience Reviewer, Experience Researcher, Knowledge Systems Architect, Discoverability Architect, Data Visualization Engineer.
 
 `active` means the capability has passed its lifecycle evidence gate. It does **not** mean autonomous execution. `enabled_by_default` remains false, so routing still requires an explicit trigger/control-plane decision.
 
