@@ -8,7 +8,7 @@ on:
       - ".github/workflows/agent-registry.yml"
   push:
     branches:
-      - agent-registry-v1
+      - main
     paths:
       - "agents/**"
       - "tests/test_agent_registry.py"
@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate registry
+      - name: Validate Registry V2
         run: python agents/validate_registry.py agents/registry.json
-      - name: Run tests
+      - name: Run registry tests
         run: python -m unittest tests.test_agent_registry -v
