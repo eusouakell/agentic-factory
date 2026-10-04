@@ -16,6 +16,8 @@ A useful validation run must have:
 - limitations and unresolved uncertainty;
 - a promotion recommendation separate from the human promotion decision.
 
+See [workflow.md](workflow.md) for the full lifecycle/state-machine contract.
+
 ## Promotion gate
 
 Registry policy remains:
