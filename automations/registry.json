@@ -143,11 +143,13 @@
     {
       "id": "agent-validation-lifecycle",
       "repository": "eusouakell/agentic-factory",
-      "event": "validation_record",
+      "event": "pull_request",
       "triggers": {
         "paths": [
           "validation/runs/**",
-          "validation/index.json"
+          "validation/index.json",
+          "validation/workflow.md",
+          "validation/README.md"
         ]
       },
       "route": [

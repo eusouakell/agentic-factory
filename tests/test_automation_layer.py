@@ -82,6 +82,29 @@ class AutomationLayerTests(unittest.TestCase):
         self.assertEqual(len(plans), 1)
         self.assertIn("research-synthesist", plans[0]["required_agents"])
 
+    def test_validation_pull_request_routes_lifecycle_reviewers(self):
+        plans = route_event(
+            self.data,
+            repository="eusouakell/agentic-factory",
+            event="pull_request",
+            paths=["validation/runs/2026-10-04-example.md"],
+        )
+        self.assertEqual(len(plans), 1)
+        self.assertEqual(plans[0]["automation_id"], "agent-validation-lifecycle")
+        self.assertIn("code-reviewer", plans[0]["required_agents"])
+        self.assertIn("readiness-evaluator", plans[0]["required_agents"])
+        self.assertEqual(plans[0]["adapter_status"], "installed")
+
+    def test_validation_contract_change_routes_lifecycle_reviewers(self):
+        plans = route_event(
+            self.data,
+            repository="eusouakell/agentic-factory",
+            event="pull_request",
+            paths=["validation/workflow.md"],
+        )
+        self.assertEqual(len(plans), 1)
+        self.assertEqual(plans[0]["automation_id"], "agent-validation-lifecycle")
+
     def test_flame_css_change_routes_ui_frontend_accessibility(self):
         plans = route_event(
             self.data,
