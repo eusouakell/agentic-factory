@@ -4,7 +4,7 @@
 **Domain:** engineering  
 **Role type:** evaluator  
 **Tier:** on_demand  
-**Lifecycle:** pilot  
+**Lifecycle:** active  
 **Enabled by default:** no
 
 ## Purpose
