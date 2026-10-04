@@ -1,0 +1,210 @@
+{
+  "schema_version": "1.0",
+  "migration_date": "2026-10-04",
+  "source_repository": "eusouakell/marketing-context-system",
+  "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+  "registry_v2_source_merge_commit": "10b7f93c2c1cba0954093660906881bd0e8caa2b",
+  "extraction_plan_source_merge_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+  "target_repository": "eusouakell/agentic-factory",
+  "strategy": "copy -> validate -> redirect/deprecate -> remove",
+  "files": [
+    {
+      "source_path": ".github/workflows/agent-registry.yml",
+      "target_path": ".github/workflows/agent-registry.yml",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied then adapted to standalone Factory repository"
+    },
+    {
+      "source_path": "agents/UPSTREAM.md",
+      "target_path": "agents/UPSTREAM.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied then adapted to standalone Factory repository"
+    },
+    {
+      "source_path": "agents/__init__.py",
+      "target_path": "agents/__init__.py",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/audit/agency-agents/README.md",
+      "target_path": "agents/audit/agency-agents/README.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/audit/agency-agents/capability-map.md",
+      "target_path": "agents/audit/agency-agents/capability-map.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/audit/agency-agents/catalog.csv",
+      "target_path": "agents/audit/agency-agents/catalog.csv",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/audit/agency-agents/catalog.json",
+      "target_path": "agents/audit/agency-agents/catalog.json",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/audit/agency-agents/deep-review.md",
+      "target_path": "agents/audit/agency-agents/deep-review.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/audit/agency-agents/roster-v2-proposal.md",
+      "target_path": "agents/audit/agency-agents/roster-v2-proposal.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/accessibility-auditor.md",
+      "target_path": "agents/contracts/accessibility-auditor.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/agent-tooling-engineer.md",
+      "target_path": "agents/contracts/agent-tooling-engineer.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/code-reviewer.md",
+      "target_path": "agents/contracts/code-reviewer.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/data-visualization-engineer.md",
+      "target_path": "agents/contracts/data-visualization-engineer.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/discoverability-architect.md",
+      "target_path": "agents/contracts/discoverability-architect.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/editorial-typography-director.md",
+      "target_path": "agents/contracts/editorial-typography-director.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/experience-researcher.md",
+      "target_path": "agents/contracts/experience-researcher.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/flame-ui-composer.md",
+      "target_path": "agents/contracts/flame-ui-composer.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/frontend-engineer.md",
+      "target_path": "agents/contracts/frontend-engineer.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/generative-photography-specialist.md",
+      "target_path": "agents/contracts/generative-photography-specialist.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/inclusive-experience-reviewer.md",
+      "target_path": "agents/contracts/inclusive-experience-reviewer.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/knowledge-systems-architect.md",
+      "target_path": "agents/contracts/knowledge-systems-architect.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/motion-video-director.md",
+      "target_path": "agents/contracts/motion-video-director.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/motion-web-director.md",
+      "target_path": "agents/contracts/motion-web-director.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/photo-art-director.md",
+      "target_path": "agents/contracts/photo-art-director.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/readiness-evaluator.md",
+      "target_path": "agents/contracts/readiness-evaluator.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/repository-analyst.md",
+      "target_path": "agents/contracts/repository-analyst.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/research-synthesist.md",
+      "target_path": "agents/contracts/research-synthesist.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/security-auditor.md",
+      "target_path": "agents/contracts/security-auditor.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/test-automation-engineer.md",
+      "target_path": "agents/contracts/test-automation-engineer.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/contracts/workflow-architect.md",
+      "target_path": "agents/contracts/workflow-architect.md",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/registry.json",
+      "target_path": "agents/registry.json",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "agents/validate_registry.py",
+      "target_path": "agents/validate_registry.py",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    },
+    {
+      "source_path": "tests/test_agent_registry.py",
+      "target_path": "tests/test_agent_registry.py",
+      "source_commit": "5d6a8e8620edd96178f7c70fd18e6c8d26851e7d",
+      "note": "copied as canonical seed"
+    }
+  ]
+}
