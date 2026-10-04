@@ -51,12 +51,12 @@ See [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Agent Registry V2
 
-The current registry contains **21 pilot agents**:
+The current Registry V2 contains **21 agents**:
 
-- **7 core** — broadly reusable when their trigger is met;
-- **14 on-demand** — specialist capabilities activated only for matching tasks.
+- **7 core** — 6 active, 1 pilot;
+- **14 on-demand** — 4 active, 10 pilot.
 
-All pilots remain disabled by default.
+`active` means validated capability, not autonomous execution. All agents remain disabled by default unless the control plane explicitly routes them.
 
 Start with:
 
@@ -64,6 +64,12 @@ Start with:
 - [Registry documentation](agents/README.md)
 - [Agent contracts](agents/contracts/)
 - [Agency Agents audit](agents/audit/agency-agents/)
+
+## Automation Layer
+
+Event-driven routing and execution-surface contracts live in [automations/](automations/). V1 autonomously converts supported events into bounded run plans; model/tool execution remains adapter-specific and preserves human gates.
+
+Codex is modeled as an [execution surface](execution-surfaces/codex.md), not as a privileged agent.
 
 ## Controls
 
