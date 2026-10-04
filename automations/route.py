@@ -52,17 +52,23 @@ def route_event(
         for route in automation.get("route", []):
             if route.get("required"):
                 required_agents.append(route["agent_id"])
-            else:
-                conditional_agents.append(
-                    {
-                        "agent_id": route["agent_id"],
-                        "conditions": {
-                            key: value
-                            for key, value in route.items()
-                            if key != "agent_id"
-                        },
-                    }
-                )
+                continue
+
+            path_conditions = route.get("required_if_paths", [])
+            if path_conditions and any_path_matches(paths, path_conditions):
+                required_agents.append(route["agent_id"])
+                continue
+
+            conditional_agents.append(
+                {
+                    "agent_id": route["agent_id"],
+                    "conditions": {
+                        key: value
+                        for key, value in route.items()
+                        if key != "agent_id"
+                    },
+                }
+            )
 
         matches.append(
             {
@@ -76,6 +82,7 @@ def route_event(
                 "execution_surface": automation["execution_surface"],
                 "human_gate": automation["human_gate"],
                 "max_retries": automation["max_retries"],
+                "adapter_status": automation.get("adapter_status", "spec_only"),
             }
         )
 
@@ -93,6 +100,7 @@ def render_markdown(plans: list[dict]) -> str:
                 f"### {plan['automation_id']}",
                 f"- Execution surface: `{plan['execution_surface']}`",
                 f"- Human gate: **{plan['human_gate']}**",
+                f"- Adapter: `{plan['adapter_status']}`",
                 f"- Retry budget: {plan['max_retries']}",
                 "- Required agents: "
                 + (
