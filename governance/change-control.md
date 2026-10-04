@@ -45,7 +45,7 @@ When a second reviewer with write access is available, the `main` ruleset should
 
 - at least 1 approval;
 - code-owner review for owned paths;
-- status check `Agent Registry Checks`;
+- status check `registry` (emitted by the `Agent Registry Checks` workflow);
 - conversation resolution;
 - stale-approval dismissal or approval of the latest reviewable push.
 
