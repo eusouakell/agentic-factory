@@ -74,12 +74,14 @@ Machine-readable automation contracts live in:
 
 `automations/registry.json`
 
-V1 includes:
+V1 contracts include:
 
-- Factory governance PR review;
-- editorial-draft quality review;
-- Flame product/design changes;
-- agent-validation lifecycle changes.
+- Factory governance PR review — **adapter installed**;
+- agent-validation lifecycle changes — **adapter installed through the Factory PR surface**;
+- editorial-draft quality review — **central contract, consumer adapter pending**;
+- Flame product/design changes — **central contract, consumer adapter pending**.
+
+A route is not called operational merely because its contract exists. `adapter_status` records whether the repository event is actually connected.
 
 ## Routing
 
