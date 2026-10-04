@@ -4,7 +4,7 @@
 **Domain:** research  
 **Role type:** research_specialist  
 **Tier:** core  
-**Lifecycle:** pilot  
+**Lifecycle:** active  
 **Enabled by default:** no
 
 ## Purpose
