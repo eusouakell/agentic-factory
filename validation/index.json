@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "wave": "core-agent-validation-waves-1-2",
+  "wave": "core-waves-1-2-plus-on-demand-wave-1",
   "date": "2026-10-04",
   "runs": [
     {
@@ -11,7 +11,8 @@
         "https://github.com/eusouakell/agentic-factory/pull/3",
         "https://github.com/eusouakell/agentic-factory/issues/2"
       ],
-      "recommendation": "candidate_active_pending_human_approval"
+      "recommendation": "candidate_active_pending_human_approval",
+      "decision": "promoted_active_via_pr_8"
     },
     {
       "agent_id": "code-reviewer",
@@ -19,7 +20,8 @@
       "evidence": [
         "https://github.com/eusouakell/agentic-factory/pull/3"
       ],
-      "recommendation": "candidate_active_pending_human_approval"
+      "recommendation": "candidate_active_pending_human_approval",
+      "decision": "promoted_active_via_pr_8"
     },
     {
       "agent_id": "accessibility-auditor",
@@ -36,7 +38,8 @@
         "https://github.com/eusouakell/cereja-knowledge-system/issues/16",
         "https://github.com/eusouakell/cereja-knowledge-system/pull/17"
       ],
-      "recommendation": "candidate_active_pending_human_approval"
+      "recommendation": "candidate_active_pending_human_approval",
+      "decision": "promoted_active_via_pr_8"
     },
     {
       "agent_id": "frontend-engineer",
@@ -44,7 +47,8 @@
       "evidence": [
         "https://github.com/eusouakell/cereja-knowledge-system/pull/17"
       ],
-      "recommendation": "candidate_active_pending_human_approval"
+      "recommendation": "candidate_active_pending_human_approval",
+      "decision": "promoted_active_via_pr_8"
     },
     {
       "agent_id": "readiness-evaluator",
@@ -52,7 +56,8 @@
       "evidence": [
         "https://github.com/eusouakell/cereja-knowledge-system/pull/17"
       ],
-      "recommendation": "candidate_active_pending_human_approval"
+      "recommendation": "candidate_active_pending_human_approval",
+      "decision": "promoted_active_via_pr_8"
     },
     {
       "agent_id": "security-auditor",
@@ -60,6 +65,24 @@
       "evidence": [
         "https://github.com/eusouakell/agentic-factory/issues/5",
         "https://github.com/eusouakell/agentic-factory/pull/6"
+      ],
+      "recommendation": "candidate_active_pending_human_approval",
+      "decision": "promoted_active_via_pr_8"
+    },
+    {
+      "agent_id": "agent-tooling-engineer",
+      "outcome": "validated_once",
+      "evidence": [
+        "https://github.com/eusouakell/cereja-knowledge-system/issues/16",
+        "https://github.com/eusouakell/cereja-knowledge-system/pull/18"
+      ],
+      "recommendation": "candidate_active_pending_human_approval"
+    },
+    {
+      "agent_id": "test-automation-engineer",
+      "outcome": "validated_once",
+      "evidence": [
+        "https://github.com/eusouakell/cereja-knowledge-system/pull/18"
       ],
       "recommendation": "candidate_active_pending_human_approval"
     }
