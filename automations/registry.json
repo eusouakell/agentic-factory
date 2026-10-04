@@ -38,7 +38,8 @@
       ],
       "execution_surface": "github_review",
       "human_gate": "merge",
-      "max_retries": 1
+      "max_retries": 1,
+      "adapter_status": "installed"
     },
     {
       "id": "editorial-draft-quality",
@@ -78,7 +79,8 @@
       ],
       "execution_surface": "codex_interactive_or_chat",
       "human_gate": "Kell publication approval",
-      "max_retries": 2
+      "max_retries": 2,
+      "adapter_status": "spec_only"
     },
     {
       "id": "flame-product-change",
@@ -113,7 +115,8 @@
       ],
       "execution_surface": "codex_interactive_or_github_review",
       "human_gate": "Flame canonical change approval",
-      "max_retries": 2
+      "max_retries": 2,
+      "adapter_status": "spec_only"
     },
     {
       "id": "agent-validation-lifecycle",
@@ -137,7 +140,8 @@
       ],
       "execution_surface": "github_review",
       "human_gate": "agent lifecycle promotion/demotion",
-      "max_retries": 1
+      "max_retries": 1,
+      "adapter_status": "installed"
     }
   ]
 }
