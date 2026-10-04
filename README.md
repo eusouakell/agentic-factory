@@ -108,6 +108,10 @@ The source copy is not removed until this repository is validated and consumer r
 
 See [governance/provenance.md](governance/provenance.md) and [MIGRATION-MANIFEST.json](MIGRATION-MANIFEST.json).
 
+## Validation evidence
+
+Real-task agent evidence lives in [validation/](validation/). Promotion from `pilot` to `active` requires recorded evidence plus explicit human approval.
+
 ## Validation
 
 ```bash
