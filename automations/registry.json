@@ -84,7 +84,7 @@
       "execution_surface": "codex_interactive_or_chat",
       "human_gate": "Kell publication approval",
       "max_retries": 2,
-      "adapter_status": "spec_only"
+      "adapter_status": "installed"
     },
     {
       "id": "flame-product-change",
@@ -138,7 +138,7 @@
       "execution_surface": "codex_interactive_or_github_review",
       "human_gate": "Flame canonical change approval",
       "max_retries": 2,
-      "adapter_status": "spec_only"
+      "adapter_status": "installed"
     },
     {
       "id": "agent-validation-lifecycle",
