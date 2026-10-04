@@ -9,6 +9,7 @@ on:
       - "controls/**"
       - "governance/**"
       - "execution-surfaces/**"
+      - "validation/**"
       - "ARCHITECTURE.md"
       - ".github/workflows/automation-router.yml"
 
