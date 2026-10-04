@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "wave": "core-agent-validation-wave1",
+  "wave": "core-agent-validation-waves-1-2",
   "date": "2026-10-04",
   "runs": [
     {
@@ -28,6 +28,40 @@
         "https://github.com/eusouakell/cereja-knowledge-system/issues/16"
       ],
       "recommendation": "remain_pilot_until_rendered_manual_validation"
+    },
+    {
+      "agent_id": "flame-ui-composer",
+      "outcome": "validated_once",
+      "evidence": [
+        "https://github.com/eusouakell/cereja-knowledge-system/issues/16",
+        "https://github.com/eusouakell/cereja-knowledge-system/pull/17"
+      ],
+      "recommendation": "candidate_active_pending_human_approval"
+    },
+    {
+      "agent_id": "frontend-engineer",
+      "outcome": "validated_once",
+      "evidence": [
+        "https://github.com/eusouakell/cereja-knowledge-system/pull/17"
+      ],
+      "recommendation": "candidate_active_pending_human_approval"
+    },
+    {
+      "agent_id": "readiness-evaluator",
+      "outcome": "validated_once",
+      "evidence": [
+        "https://github.com/eusouakell/cereja-knowledge-system/pull/17"
+      ],
+      "recommendation": "candidate_active_pending_human_approval"
+    },
+    {
+      "agent_id": "security-auditor",
+      "outcome": "validated_once",
+      "evidence": [
+        "https://github.com/eusouakell/agentic-factory/issues/5",
+        "https://github.com/eusouakell/agentic-factory/pull/6"
+      ],
+      "recommendation": "candidate_active_pending_human_approval"
     }
   ]
 }
