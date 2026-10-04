@@ -67,7 +67,7 @@ Once a second reviewer with write access is available, add:
 Create a ruleset targeting `main` with:
 
 - **Require a pull request before merging**.
-- **Require status checks before merging** → `Agent Registry Checks`.
+- **Require status checks before merging** → `registry` (emitted by the `Agent Registry Checks` workflow).
 - **Require conversation resolution before merging**.
 - Do **not** require independent approval yet if Kell is the only reviewer with write access.
 
