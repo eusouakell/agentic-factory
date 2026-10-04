@@ -78,8 +78,8 @@ V1 contracts include:
 
 - Factory governance PR review — **adapter installed**;
 - agent-validation lifecycle changes — **adapter installed through the Factory PR surface**;
-- editorial-draft quality review — **central contract, consumer adapter pending**;
-- Flame product/design changes — **central contract, consumer adapter pending**.
+- editorial-draft quality review — **adapter installed in Cereja Editorial Engine**;
+- Flame product/design changes — **adapter installed in Cereja Knowledge System**.
 
 A route is not called operational merely because its contract exists. `adapter_status` records whether the repository event is actually connected.
 
