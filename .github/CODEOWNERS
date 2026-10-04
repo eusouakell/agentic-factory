@@ -1,0 +1,10 @@
+# Agentic Factory canonical ownership
+# CODEOWNERS routes review. Enforcement depends on repository rulesets.
+
+/.github/ @eusouakell
+/agents/ @eusouakell
+/control-plane/ @eusouakell
+/controls/ @eusouakell
+/governance/ @eusouakell
+/ARCHITECTURE.md @eusouakell
+/MIGRATION-MANIFEST.json @eusouakell
