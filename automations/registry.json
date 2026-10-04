@@ -59,11 +59,15 @@
       "route": [
         {
           "agent_id": "research-synthesist",
-          "required_if_claims": true
+          "required_if_labels": [
+            "claims-review"
+          ]
         },
         {
           "agent_id": "inclusive-experience-reviewer",
-          "required_if_sensitive_context": true
+          "required_if_labels": [
+            "sensitive-context"
+          ]
         },
         {
           "agent_id": "readiness-evaluator",
@@ -94,19 +98,37 @@
       "route": [
         {
           "agent_id": "flame-ui-composer",
-          "required_if_visual_change": true
+          "required_if_paths": [
+            "brand/flame/prototype/**",
+            "brand/flame/components/**",
+            "brand/flame/DESIGN.md",
+            "brand/flame/fluent-*.md"
+          ]
         },
         {
           "agent_id": "frontend-engineer",
-          "required_if_code_change": true
+          "required_if_paths": [
+            "brand/flame/**/*.html",
+            "brand/flame/**/*.css",
+            "brand/flame/**/*.js",
+            "brand/flame/visual-delivery/**",
+            ".github/workflows/flame-*.yml"
+          ]
         },
         {
           "agent_id": "accessibility-auditor",
-          "required_if_interactive_surface": true
+          "required_if_paths": [
+            "brand/flame/prototype/**",
+            "brand/flame/components/**",
+            "brand/flame/accessibility.md",
+            "brand/flame/motion.md"
+          ]
         },
         {
           "agent_id": "inclusive-experience-reviewer",
-          "required_if_people_or_sensitive_context": true
+          "required_if_labels": [
+            "sensitive-context"
+          ]
         },
         {
           "agent_id": "readiness-evaluator",

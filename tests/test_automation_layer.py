@@ -69,6 +69,32 @@ class AutomationLayerTests(unittest.TestCase):
         self.assertEqual(len(with_label), 1)
         self.assertIn("distinctiveness_authorship", with_label[0]["semantic_evals"])
         self.assertEqual(with_label[0]["adapter_status"], "spec_only")
+        self.assertNotIn("research-synthesist", with_label[0]["required_agents"])
+
+    def test_editorial_claims_label_routes_research(self):
+        plans = route_event(
+            self.data,
+            repository="eusouakell/cereja-editorial-engine",
+            event="draft_ready",
+            paths=["drafts/031.md"],
+            labels=["editorial-draft", "claims-review"],
+        )
+        self.assertEqual(len(plans), 1)
+        self.assertIn("research-synthesist", plans[0]["required_agents"])
+
+    def test_flame_css_change_routes_ui_frontend_accessibility(self):
+        plans = route_event(
+            self.data,
+            repository="eusouakell/cereja-knowledge-system",
+            event="pull_request",
+            paths=["brand/flame/prototype/tokens.css"],
+        )
+        self.assertEqual(len(plans), 1)
+        required = plans[0]["required_agents"]
+        self.assertIn("flame-ui-composer", required)
+        self.assertIn("frontend-engineer", required)
+        self.assertIn("accessibility-auditor", required)
+        self.assertIn("readiness-evaluator", required)
 
 
 if __name__ == "__main__":

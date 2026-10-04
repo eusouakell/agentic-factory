@@ -59,6 +59,11 @@ def route_event(
                 required_agents.append(route["agent_id"])
                 continue
 
+            label_conditions = route.get("required_if_labels", [])
+            if label_conditions and any(label in labels for label in label_conditions):
+                required_agents.append(route["agent_id"])
+                continue
+
             conditional_agents.append(
                 {
                     "agent_id": route["agent_id"],
