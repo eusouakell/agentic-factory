@@ -40,6 +40,17 @@ GUIDES / GUARDS / SENSORS / CHECKS
 - failure ownership;
 - execution evidence requirements.
 
+### Automation layer owns
+
+- supported event contracts;
+- deterministic routing from event to run plan;
+- execution-surface selection;
+- retry budgets;
+- preservation of declared human gates;
+- run-plan evidence.
+
+Automation routes authority; it does not invent authority.
+
 ### Registry owns
 
 - named capabilities;
