@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "wave": "core-agent-validation-wave1",
+  "date": "2026-10-04",
+  "runs": [
+    {
+      "agent_id": "research-synthesist",
+      "outcome": "validated_once",
+      "evidence": [
+        "decisions/registry-human-gate.md",
+        "https://github.com/eusouakell/agentic-factory/pull/3",
+        "https://github.com/eusouakell/agentic-factory/issues/2"
+      ],
+      "recommendation": "candidate_active_pending_human_approval"
+    },
+    {
+      "agent_id": "code-reviewer",
+      "outcome": "validated_once",
+      "evidence": [
+        "https://github.com/eusouakell/agentic-factory/pull/3"
+      ],
+      "recommendation": "candidate_active_pending_human_approval"
+    },
+    {
+      "agent_id": "accessibility-auditor",
+      "outcome": "needs_more_evidence",
+      "evidence": [
+        "https://github.com/eusouakell/cereja-knowledge-system/issues/16"
+      ],
+      "recommendation": "remain_pilot_until_rendered_manual_validation"
+    }
+  ]
+}
