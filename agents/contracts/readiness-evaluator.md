@@ -4,7 +4,7 @@
 **Domain:** quality  
 **Role type:** evaluator  
 **Tier:** core  
-**Lifecycle:** pilot  
+**Lifecycle:** active  
 **Enabled by default:** no
 
 ## Purpose
