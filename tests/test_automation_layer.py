@@ -27,6 +27,18 @@ class AutomationLayerTests(unittest.TestCase):
         self.assertEqual(len(plans), 1)
         self.assertIn("code-reviewer", plans[0]["required_agents"])
         self.assertIn("readiness-evaluator", plans[0]["required_agents"])
+        self.assertNotIn("security-auditor", plans[0]["required_agents"])
+        self.assertEqual(plans[0]["adapter_status"], "installed")
+
+    def test_factory_automation_change_requires_security_auditor(self):
+        plans = route_event(
+            self.data,
+            repository="eusouakell/agentic-factory",
+            event="pull_request",
+            paths=["automations/route.py"],
+        )
+        self.assertEqual(len(plans), 1)
+        self.assertIn("security-auditor", plans[0]["required_agents"])
 
     def test_unrelated_repo_does_not_match(self):
         plans = route_event(
@@ -56,6 +68,7 @@ class AutomationLayerTests(unittest.TestCase):
         )
         self.assertEqual(len(with_label), 1)
         self.assertIn("distinctiveness_authorship", with_label[0]["semantic_evals"])
+        self.assertEqual(with_label[0]["adapter_status"], "spec_only")
 
 
 if __name__ == "__main__":
