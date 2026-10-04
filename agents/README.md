@@ -57,9 +57,15 @@ Every registered agent declares:
 
 `pilot → active → retired`
 
-All V2 agents currently remain `pilot` and disabled by default.
+Current lifecycle target in Registry V2:
 
-Promotion requires a real validation task and explicit human approval.
+- **Active core:** Research Synthesist, Frontend Engineer, Code Reviewer, Security Auditor, Production Readiness Evaluator, Flame UI Composer.
+- **Pilot core:** Accessibility Auditor — source-level validation completed; rendered/manual validation still required.
+- **On-demand:** all 14 remain pilot until individually validated.
+
+`active` means the capability has passed its lifecycle evidence gate. It does **not** mean autonomous execution. `enabled_by_default` remains false, so routing still requires an explicit trigger/control-plane decision.
+
+Promotion requires real-task evidence and explicit human approval. See [validation/](../validation/).
 
 ## Authority
 
