@@ -4,7 +4,7 @@
 **Domain:** visual  
 **Role type:** executor  
 **Tier:** core  
-**Lifecycle:** pilot  
+**Lifecycle:** active  
 **Enabled by default:** no
 
 ## Purpose
