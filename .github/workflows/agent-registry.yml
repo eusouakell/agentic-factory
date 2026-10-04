@@ -1,0 +1,28 @@
+name: Agent Registry Checks
+
+on:
+  pull_request:
+    paths:
+      - "agents/**"
+      - "tests/test_agent_registry.py"
+      - ".github/workflows/agent-registry.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "agents/**"
+      - "tests/test_agent_registry.py"
+      - ".github/workflows/agent-registry.yml"
+
+jobs:
+  registry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate Registry V2
+        run: python agents/validate_registry.py agents/registry.json
+      - name: Run registry tests
+        run: python -m unittest tests.test_agent_registry -v

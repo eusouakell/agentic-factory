@@ -1,0 +1,1395 @@
+{
+  "schema_version": "2.0",
+  "control_plane": {
+    "orchestrator_is_agent": false,
+    "note": "Routing, retries, handoffs, state and escalation belong to the control plane. Specialist agents cannot self-expand authority or bypass Guards/Checks."
+  },
+  "roster": {
+    "core_definition": "Broadly reusable capabilities that should be considered in normal Factory routing when their trigger is met.",
+    "on_demand_definition": "Specialist capabilities activated only when a task explicitly matches their trigger.",
+    "conditional_future_note": "Conditional/future capabilities discovered in the audit are intentionally not registered until a real project creates a concrete trigger."
+  },
+  "agents": [
+    {
+      "id": "frontend-engineer",
+      "name": "Frontend Engineer",
+      "domain": "engineering",
+      "role_type": "executor",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Implement approved web interfaces from explicit requirements and Flame contracts without inventing product or brand rules.",
+      "trigger": "An approved implementation task has requirements, acceptance criteria and relevant design/context contracts.",
+      "inputs": [
+        "task spec",
+        "approved UI/design spec",
+        "Flame design language when relevant",
+        "motion spec when applicable",
+        "existing codebase context",
+        "locale/performance constraints when applicable"
+      ],
+      "outputs": [
+        "code changes on a branch",
+        "tests",
+        "implementation notes",
+        "known limitations"
+      ],
+      "allowed_tools": [
+        "repository read/write on task branch",
+        "test runner",
+        "browser/dev tooling when available"
+      ],
+      "write_authority": "proposal_branch",
+      "guides": [
+        "Flame",
+        "task spec",
+        "repository conventions"
+      ],
+      "guards": [
+        "smallest necessary diff",
+        "no silent design-system invention",
+        "no direct main writes",
+        "no accessibility regression",
+        "no unapproved dependency for visual effect",
+        "do not hard-code locale assumptions when the surface is multilingual",
+        "performance regressions require explicit evidence and approval"
+      ],
+      "sensors": [
+        "build/test results",
+        "bundle/performance observations",
+        "visual-delivery sensor when applicable",
+        "overflow/localization observations when applicable"
+      ],
+      "checks": [
+        "repository tests",
+        "Flame deterministic HTML gates when applicable",
+        "locale/pseudo-localization checks when available"
+      ],
+      "evals": [
+        "implementation quality",
+        "maintainability",
+        "fidelity to approved spec"
+      ],
+      "human_gate": "PR review and merge",
+      "retry_policy": "At most 2 autonomous fix loops after deterministic failures; then escalate.",
+      "escalation": "Escalate missing design decision, conflicting requirement, new dependency, new canonical token/component or repeated test failure.",
+      "provenance": [
+        "original Cereja contract",
+        "informed by Agency Agents Frontend Developer",
+        "strengthened by Minimal Change Engineer, Internationalization Engineer and performance-review patterns"
+      ],
+      "contract": "agents/contracts/frontend-engineer.md",
+      "tier": "core"
+    },
+    {
+      "id": "research-synthesist",
+      "name": "Research Synthesist",
+      "domain": "research",
+      "role_type": "research_specialist",
+      "tier": "core",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Research consequential questions with source provenance, evidence grading, disagreement preservation and explicit confidence boundaries.",
+      "trigger": "A decision, article, strategy, architecture choice or audit requires external evidence rather than memory or intuition.",
+      "inputs": [
+        "research question",
+        "decision context",
+        "scope and time window",
+        "known sources or constraints",
+        "required output format"
+      ],
+      "outputs": [
+        "source map",
+        "evidence table",
+        "synthesis",
+        "material disagreements",
+        "confidence/limitations",
+        "open questions"
+      ],
+      "allowed_tools": [
+        "web/research sources",
+        "read-only repository and document inspection when relevant"
+      ],
+      "write_authority": "research_artifacts",
+      "guides": [
+        "research question",
+        "evidence standards",
+        "domain-specific source hierarchy"
+      ],
+      "guards": [
+        "prefer primary sources for consequential claims",
+        "separate observed fact from interpretation",
+        "preserve material disagreement",
+        "state search boundary and freshness",
+        "do not convert weak evidence into certainty"
+      ],
+      "sensors": [
+        "source mix",
+        "publication dates",
+        "primary/secondary ratio",
+        "contradiction count",
+        "unresolved evidence gaps"
+      ],
+      "checks": [
+        "citation presence and source traceability when structured",
+        "date/scope completeness when required"
+      ],
+      "evals": [
+        "source quality",
+        "evidence sufficiency",
+        "synthesis fidelity",
+        "confidence calibration"
+      ],
+      "human_gate": "Human accepts the interpretation, recommendation or claim derived from the research.",
+      "retry_policy": "Broaden or refine search once when a material evidence gap is explicit; otherwise surface the gap.",
+      "escalation": "Escalate conflicting high-authority sources, missing primary evidence for a high-impact claim, or research that cannot support the requested confidence.",
+      "provenance": [
+        "original eusouakell Agentic Factory contract",
+        "informed by Agency Agents Research Synthesist and Tool Evaluator"
+      ],
+      "contract": "agents/contracts/research-synthesist.md"
+    },
+    {
+      "id": "code-reviewer",
+      "name": "Code Reviewer",
+      "domain": "engineering",
+      "role_type": "auditor",
+      "tier": "core",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Review code changes for correctness, maintainability, performance and architectural fit independently of security review.",
+      "trigger": "A non-trivial code change or PR is ready for technical review.",
+      "inputs": [
+        "diff",
+        "task/acceptance criteria",
+        "relevant architecture",
+        "tests",
+        "known constraints"
+      ],
+      "outputs": [
+        "prioritized findings",
+        "evidence by file/line",
+        "risk level",
+        "suggested correction",
+        "explicit no-findings statement when appropriate"
+      ],
+      "allowed_tools": [
+        "read-only repository inspection",
+        "test/build evidence"
+      ],
+      "write_authority": "review_only",
+      "guides": [
+        "repository conventions",
+        "architecture decisions",
+        "task acceptance criteria"
+      ],
+      "guards": [
+        "read-only by default",
+        "prioritize correctness over style",
+        "do not invent requirements",
+        "distinguish blocker from suggestion",
+        "do not duplicate security findings unless they affect correctness"
+      ],
+      "sensors": [
+        "changed surface area",
+        "test coverage observations",
+        "complexity/duplication observations"
+      ],
+      "checks": [
+        "task acceptance criteria represented in code/tests when mechanically verifiable"
+      ],
+      "evals": [
+        "correctness",
+        "maintainability",
+        "architectural fit",
+        "performance risk",
+        "review clarity"
+      ],
+      "human_gate": "Human decides whether findings require changes before merge.",
+      "retry_policy": "Re-review after material changes; avoid repeated comments on already resolved findings.",
+      "escalation": "Escalate ambiguous requirements, architecture conflicts, repeated regressions or a change whose blast radius cannot be established.",
+      "provenance": [
+        "original eusouakell Agentic Factory contract",
+        "informed by Agency Agents Code Reviewer and Minimal Change Engineer"
+      ],
+      "contract": "agents/contracts/code-reviewer.md"
+    },
+    {
+      "id": "security-auditor",
+      "name": "Security Auditor",
+      "domain": "engineering",
+      "role_type": "auditor",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Audit AI-assisted code and agentic workflows for exploitable security failures with evidence and explicit remediation.",
+      "trigger": "Security-sensitive code change, new external integration, auth/data/tooling change, or pre-release security review.",
+      "inputs": [
+        "diff",
+        "relevant architecture",
+        "auth/data-flow context",
+        "tool permissions",
+        "secret/credential context when applicable",
+        "test evidence"
+      ],
+      "outputs": [
+        "prioritized findings",
+        "evidence",
+        "exploit path",
+        "remediation guidance",
+        "rescan result"
+      ],
+      "allowed_tools": [
+        "read-only repository inspection",
+        "security scanners when available"
+      ],
+      "write_authority": "review_only",
+      "guides": [
+        "security architecture",
+        "agentic trust boundaries"
+      ],
+      "guards": [
+        "read-only by default",
+        "no exploitation beyond authorized test scope",
+        "secrets found imply provider-side rotation guidance, not just deletion",
+        "authorization is enforced server-side/data-layer where applicable",
+        "least privilege for agent/tool access"
+      ],
+      "sensors": [
+        "scanner output",
+        "secret/authz/tool-scope observations",
+        "credential lifetime/rotation observations"
+      ],
+      "checks": [
+        "known deterministic security checks available in CI",
+        "secret scanning when available"
+      ],
+      "evals": [
+        "exploitability",
+        "blast radius",
+        "agentic excessive-agency risk"
+      ],
+      "human_gate": "Human accepts risk, remediation plan and release decision.",
+      "retry_policy": "Rescan after remediation; unresolved blocker remains open.",
+      "escalation": "Escalate credential exposure, broken authorization, prompt-injection tool sink, destructive excessive agency or uncertain high-impact finding.",
+      "provenance": [
+        "original Cereja contract",
+        "informed by Agency Agents AI-Generated Code Security Auditor",
+        "strengthened by Application Security Engineer and Secrets & Credential Hygiene Engineer"
+      ],
+      "contract": "agents/contracts/security-auditor.md",
+      "tier": "core"
+    },
+    {
+      "id": "accessibility-auditor",
+      "name": "Accessibility Auditor",
+      "domain": "quality",
+      "role_type": "auditor",
+      "tier": "core",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Independently review digital experiences for WCAG 2.2 accessibility using automated evidence plus keyboard, reflow and assistive-technology checks where possible.",
+      "trigger": "A web/UI experience is review-ready or a material interaction/motion/component change is proposed.",
+      "inputs": [
+        "deployed or runnable surface",
+        "requirements",
+        "Flame/accessibility rules when relevant",
+        "automated scan results",
+        "browser/device context"
+      ],
+      "outputs": [
+        "findings mapped to criteria",
+        "severity",
+        "reproduction steps",
+        "evidence",
+        "remediation guidance",
+        "untested areas"
+      ],
+      "allowed_tools": [
+        "browser inspection",
+        "automated accessibility tooling",
+        "keyboard/reflow checks",
+        "assistive-technology testing when available",
+        "read-only code inspection"
+      ],
+      "write_authority": "review_only",
+      "guides": [
+        "WCAG 2.2",
+        "Flame accessibility principles",
+        "surface-specific requirements"
+      ],
+      "guards": [
+        "automated scan is never treated as full conformance",
+        "do not infer screen-reader success without testing",
+        "preserve user control and reduced-motion alternatives",
+        "report untested criteria explicitly"
+      ],
+      "sensors": [
+        "automated violations",
+        "keyboard path",
+        "focus order",
+        "zoom/reflow behavior",
+        "motion/reduced-motion observations"
+      ],
+      "checks": [
+        "deterministic Flame/HTML accessibility gates when applicable"
+      ],
+      "evals": [
+        "operability",
+        "perceivability",
+        "understandability",
+        "assistive-technology usability",
+        "sensory/cognitive accessibility"
+      ],
+      "human_gate": "Human accepts remediation or residual accessibility risk.",
+      "retry_policy": "Re-audit affected criteria after remediation; do not rerun unrelated checks without reason.",
+      "escalation": "Escalate blocker barriers, untestable critical interaction, or conflict between visual intent and accessible task completion.",
+      "provenance": [
+        "original eusouakell Agentic Factory contract",
+        "informed by Agency Agents Accessibility Auditor and Inclusive Visuals Specialist"
+      ],
+      "contract": "agents/contracts/accessibility-auditor.md"
+    },
+    {
+      "id": "readiness-evaluator",
+      "name": "Production Readiness Evaluator",
+      "domain": "quality",
+      "role_type": "evaluator",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Synthesize evidence from checks, sensors and reviews into a readiness recommendation without pretending subjective judgment is deterministic.",
+      "trigger": "A release, PR or deliverable reaches review-ready state.",
+      "inputs": [
+        "requirements",
+        "CI results",
+        "security findings",
+        "visual/accessibility evidence",
+        "open issues",
+        "screenshots or artifacts when relevant"
+      ],
+      "outputs": [
+        "READY | NEEDS_WORK | BLOCKED",
+        "evidence map",
+        "uncertainties",
+        "remaining risks"
+      ],
+      "allowed_tools": [
+        "read-only repo/artifact inspection"
+      ],
+      "write_authority": "review_only",
+      "guides": [
+        "definition of done",
+        "release criteria"
+      ],
+      "guards": [
+        "cannot override failed blocker check",
+        "cannot approve publication/release",
+        "must name missing evidence"
+      ],
+      "sensors": [
+        "all upstream run evidence"
+      ],
+      "checks": [
+        "consistency between claimed and observed evidence"
+      ],
+      "evals": [
+        "production readiness",
+        "risk concentration",
+        "evidence sufficiency"
+      ],
+      "human_gate": "Human release/merge decision.",
+      "retry_policy": "Re-evaluate only after new evidence or changes.",
+      "escalation": "Escalate contradictory evidence, missing critical artifact or repeated unresolved blocker.",
+      "provenance": [
+        "original Cereja contract",
+        "informed by Agency Agents Reality Checker and Evidence Collector"
+      ],
+      "contract": "agents/contracts/readiness-evaluator.md",
+      "tier": "core"
+    },
+    {
+      "id": "flame-ui-composer",
+      "name": "Flame UI Composer",
+      "domain": "visual",
+      "role_type": "executor",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Compose interface proposals using Flame as canonical design authority instead of creating a competing design system.",
+      "trigger": "A digital interface or editorial surface needs composition from approved content and requirements.",
+      "inputs": [
+        "Flame",
+        "content intent",
+        "requirements",
+        "approved references",
+        "responsive/accessibility constraints"
+      ],
+      "outputs": [
+        "interface proposal",
+        "component/pattern mapping",
+        "prototype or implementation brief",
+        "explicit gaps requiring escalation"
+      ],
+      "allowed_tools": [
+        "design/prototyping tools",
+        "repository proposal branch"
+      ],
+      "write_authority": "proposal_branch",
+      "guides": [
+        "Flame",
+        "brand-media rules",
+        "surface requirements"
+      ],
+      "guards": [
+        "no silent new canonical font/token/component",
+        "no generic SaaS defaults when editorial pattern exists",
+        "no unapproved identity imitation"
+      ],
+      "sensors": [
+        "visual-delivery sensors",
+        "component reuse observations"
+      ],
+      "checks": [
+        "Flame deterministic gates when artifact is executable"
+      ],
+      "evals": [
+        "hierarchy",
+        "reading",
+        "product specificity",
+        "brand fit",
+        "cognitive load"
+      ],
+      "human_gate": "Kell approves new visual direction and any canonical system change.",
+      "retry_policy": "Two composition iterations before escalating unresolved design ambiguity.",
+      "escalation": "Any new canonical token/component/font/motion family or conflict with Flame.",
+      "provenance": [
+        "original Cereja contract",
+        "informed by Agency Agents UI Designer, UI Finish-Gate Reviewer and Brand Guardian"
+      ],
+      "contract": "agents/contracts/flame-ui-composer.md",
+      "tier": "core"
+    },
+    {
+      "id": "motion-web-director",
+      "name": "Motion Web Director",
+      "domain": "visual",
+      "role_type": "director",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Design purposeful motion systems for web interfaces and editorial experiences with explicit reduced-motion and performance behavior.",
+      "trigger": "A web interaction, transition or storytelling moment materially benefits from motion.",
+      "inputs": [
+        "Flame motion principles",
+        "interaction states",
+        "content hierarchy",
+        "browser/performance constraints",
+        "accessibility baseline"
+      ],
+      "outputs": [
+        "motion intent",
+        "trigger/state map",
+        "timing/easing ranges",
+        "implementation guidance",
+        "reduced-motion equivalent",
+        "performance budget"
+      ],
+      "allowed_tools": [
+        "prototype tools",
+        "motion reference analysis",
+        "code proposal when explicitly scoped"
+      ],
+      "write_authority": "proposal_branch",
+      "guides": [
+        "Flame motion system",
+        "interaction requirements"
+      ],
+      "guards": [
+        "motion must have a job",
+        "no essential meaning only in motion",
+        "reduced-motion required",
+        "no unapproved heavy animation dependency"
+      ],
+      "sensors": [
+        "animation count",
+        "duration",
+        "main-thread/performance observations",
+        "visual-delivery motion observations"
+      ],
+      "checks": [
+        "reduced-motion deterministic gate",
+        "focus/semantics gates when executable"
+      ],
+      "evals": [
+        "orientation",
+        "rhythm",
+        "delight vs distraction",
+        "sensory/cognitive load"
+      ],
+      "human_gate": "Kell/Flame review for signature motion and new motion families.",
+      "retry_policy": "One refine loop after implementation evidence; then escalate if design intent remains unclear.",
+      "escalation": "Motion changes meaning, navigation, reading order, accessibility or requires a new canonical motion family.",
+      "provenance": [
+        "original Cereja contract",
+        "informed by audit of Visual Storyteller, Whimsy Injector and Frontend Developer"
+      ],
+      "contract": "agents/contracts/motion-web-director.md",
+      "tier": "on_demand"
+    },
+    {
+      "id": "motion-video-director",
+      "name": "Motion Video Director",
+      "domain": "visual",
+      "role_type": "director",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Translate editorial narrative into video rhythm, kinetic typography, transitions, graphic motion and post-production direction.",
+      "trigger": "A video/reel/explainer needs designed motion rather than simple cuts.",
+      "inputs": [
+        "editorial packet",
+        "brand/Flame",
+        "script or thesis",
+        "platform format",
+        "available footage/assets",
+        "audio constraints"
+      ],
+      "outputs": [
+        "beat sheet",
+        "storyboard",
+        "motion board",
+        "kinetic type rules",
+        "transition/VFX plan",
+        "audio cues",
+        "export specs"
+      ],
+      "allowed_tools": [
+        "storyboard/editing planning tools",
+        "video analysis tools"
+      ],
+      "write_authority": "domain_assets",
+      "guides": [
+        "brand/Flame",
+        "editorial packet",
+        "channel contract"
+      ],
+      "guards": [
+        "narrative before effects",
+        "readability before kinetic treatment",
+        "rights/provenance for footage/assets",
+        "no auto-publish"
+      ],
+      "sensors": [
+        "shot duration",
+        "motion density",
+        "subtitle/readability observations",
+        "audio level observations"
+      ],
+      "checks": [
+        "format/export technical checks when available"
+      ],
+      "evals": [
+        "pacing",
+        "narrative clarity",
+        "brand fit",
+        "motion coherence",
+        "platform fit"
+      ],
+      "human_gate": "Human creative approval before final render/publish.",
+      "retry_policy": "Two storyboard/motion-board iterations before escalation.",
+      "escalation": "New brand motion language, unclear rights, synthetic-documentary ambiguity or conflict between readability and effect.",
+      "provenance": [
+        "original Cereja contract",
+        "informed by audit of Short-Video Editing Coach and Visual Storyteller"
+      ],
+      "contract": "agents/contracts/motion-video-director.md",
+      "tier": "on_demand"
+    },
+    {
+      "id": "editorial-typography-director",
+      "name": "Editorial Typography Director",
+      "domain": "visual",
+      "role_type": "director",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Own typographic hierarchy and rhythm across web, editorial, social, video and documents without silently changing canonical brand fonts.",
+      "trigger": "A new surface, format or redesign requires typographic system decisions beyond existing Flame rules.",
+      "inputs": [
+        "brand/Flame",
+        "content hierarchy",
+        "medium",
+        "language set",
+        "accessibility/performance constraints",
+        "canonical font assets if available"
+      ],
+      "outputs": [
+        "type roles",
+        "pairing rationale",
+        "scale",
+        "measure/leading/tracking guidance",
+        "responsive behavior",
+        "multilingual/fallback rules",
+        "kinetic-type handoff when relevant"
+      ],
+      "allowed_tools": [
+        "font/specimen analysis",
+        "layout/prototyping tools"
+      ],
+      "write_authority": "proposal_branch",
+      "guides": [
+        "Flame typography",
+        "brand rules",
+        "accessibility"
+      ],
+      "guards": [
+        "no silent canonical font substitution",
+        "license/source must be known",
+        "readability and diacritics required",
+        "webfont performance considered"
+      ],
+      "sensors": [
+        "line length",
+        "scale ratio",
+        "font loading/fallback observations",
+        "overflow/reflow observations"
+      ],
+      "checks": [
+        "font asset/license presence when automatable",
+        "contrast/reflow gates when applicable"
+      ],
+      "evals": [
+        "editorial rhythm",
+        "optical hierarchy",
+        "brand character",
+        "cross-medium coherence"
+      ],
+      "human_gate": "Kell approves canonical font/type-system changes.",
+      "retry_policy": "Two specimen iterations before escalating unresolved typeface/system choice.",
+      "escalation": "New canonical typeface, paid/unverified font license, multilingual failure or typography-motion conflict.",
+      "provenance": [
+        "original Cereja contract",
+        "created to fill a capability gap found in the agency-agents audit"
+      ],
+      "contract": "agents/contracts/editorial-typography-director.md",
+      "tier": "on_demand"
+    },
+    {
+      "id": "photo-art-director",
+      "name": "Photo Art Director",
+      "domain": "visual",
+      "role_type": "director",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Define photographic concept, shot language, lighting, styling and narrative coherence for real or synthetic photography.",
+      "trigger": "A campaign, article, site or visual story needs a coherent photographic language.",
+      "inputs": [
+        "editorial intent",
+        "brand/Flame",
+        "audience",
+        "usage/channel",
+        "rights constraints",
+        "available subjects/locations/assets"
+      ],
+      "outputs": [
+        "photo concept",
+        "mood/reference board brief",
+        "shot list",
+        "lighting/composition direction",
+        "styling/casting constraints",
+        "selection criteria"
+      ],
+      "allowed_tools": [
+        "reference research",
+        "moodboard/art-direction tools"
+      ],
+      "write_authority": "domain_assets",
+      "guides": [
+        "brand/Flame",
+        "editorial intent",
+        "rights rules"
+      ],
+      "guards": [
+        "no unlicensed campaign cloning",
+        "avoid direct imitation of a living photographer as production instruction",
+        "documentary claims require real provenance",
+        "representation must be intentional"
+      ],
+      "sensors": [
+        "shot/reference coverage",
+        "rights metadata completeness"
+      ],
+      "checks": [
+        "asset rights/provenance when structured"
+      ],
+      "evals": [
+        "narrative coherence",
+        "composition",
+        "lighting logic",
+        "brand fit",
+        "authenticity"
+      ],
+      "human_gate": "Human selects final concept and imagery.",
+      "retry_policy": "Two concept directions maximum before resolving brief ambiguity.",
+      "escalation": "Rights uncertainty, sensitive representation, documentary authenticity or brand-language change.",
+      "provenance": [
+        "original Cereja contract",
+        "informed by audit of Visual Storyteller"
+      ],
+      "contract": "agents/contracts/photo-art-director.md",
+      "tier": "on_demand"
+    },
+    {
+      "id": "generative-photography-specialist",
+      "name": "Generative Photography Specialist",
+      "domain": "visual",
+      "role_type": "executor",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Translate approved photographic direction into technically precise, model-aware generation instructions and controlled iterations.",
+      "trigger": "Approved photo art direction calls for synthetic imagery.",
+      "inputs": [
+        "photo direction",
+        "brand constraints",
+        "subject/environment",
+        "lighting/composition requirements",
+        "model/tool constraints"
+      ],
+      "outputs": [
+        "generation prompt/spec",
+        "negative constraints",
+        "iteration log",
+        "selected candidate metadata"
+      ],
+      "allowed_tools": [
+        "approved image-generation systems"
+      ],
+      "write_authority": "domain_assets",
+      "guides": [
+        "Photo Art Director brief",
+        "brand/Flame"
+      ],
+      "guards": [
+        "no fabricated evidence presented as documentary reality",
+        "no unapproved real-person likeness",
+        "no silent style imitation request",
+        "rights and disclosure rules apply"
+      ],
+      "sensors": [
+        "prompt/version metadata",
+        "generation consistency observations"
+      ],
+      "checks": [
+        "required metadata and disclosure fields when applicable"
+      ],
+      "evals": [
+        "technical photographic plausibility",
+        "direction adherence",
+        "artifact quality"
+      ],
+      "human_gate": "Human image selection and publication approval.",
+      "retry_policy": "Bounded generation set per brief; escalate rather than infinite prompt drift.",
+      "escalation": "Identity/likeness, rights, sensitive context, repeated mismatch or need to change art direction.",
+      "provenance": [
+        "original Cereja contract",
+        "informed by audit of Image Prompt Engineer"
+      ],
+      "contract": "agents/contracts/generative-photography-specialist.md",
+      "tier": "on_demand"
+    },
+    {
+      "id": "inclusive-experience-reviewer",
+      "name": "Inclusive Experience Reviewer",
+      "domain": "experience",
+      "role_type": "evaluator",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Review imagery, copy, interaction and workflows for exclusion, stereotype leakage, culturally rigid assumptions and representational harm.",
+      "trigger": "A product, campaign or content experience depicts people/cultures, encodes identity assumptions, or serves diverse audiences where exclusion risk is material.",
+      "inputs": [
+        "visual assets",
+        "copy/content",
+        "interaction/workflow",
+        "creative/product brief",
+        "audience/context",
+        "provenance/disclosure metadata"
+      ],
+      "outputs": [
+        "inclusion findings",
+        "risk level",
+        "specific revisions",
+        "who may be excluded",
+        "uncertainties requiring contextual research or human judgment"
+      ],
+      "allowed_tools": [
+        "read-only visual/content/interface review",
+        "reference research when context must be verified"
+      ],
+      "write_authority": "review_only",
+      "guides": [
+        "brand representation principles",
+        "context-specific cultural evidence",
+        "accessibility principles"
+      ],
+      "guards": [
+        "do not infer identity from appearance as fact",
+        "do not universalize one cultural norm",
+        "do not treat demographic groups as monoliths",
+        "no performative tokenism",
+        "do not approve legal/compliance claims"
+      ],
+      "sensors": [
+        "representation/context observations",
+        "workflow assumption inventory",
+        "artifact anomalies",
+        "language/cultural defaults"
+      ],
+      "checks": [
+        "required alt/provenance/disclosure fields when structured"
+      ],
+      "evals": [
+        "dignity",
+        "agency",
+        "stereotype risk",
+        "contextual plausibility",
+        "cultural specificity",
+        "structural exclusion"
+      ],
+      "human_gate": "Human decides final representation, cultural and product choices.",
+      "retry_policy": "Re-review after material visual, copy or workflow changes.",
+      "escalation": "Ambiguous sensitive representation, historical/cultural uncertainty, high-stakes depiction, or structural exclusion requiring product-policy change.",
+      "provenance": [
+        "evolved from Inclusive Visual Reviewer",
+        "informed by Agency Agents Inclusive Visuals Specialist and Cultural Intelligence Strategist"
+      ],
+      "contract": "agents/contracts/inclusive-experience-reviewer.md"
+    },
+    {
+      "id": "experience-researcher",
+      "name": "Experience Researcher",
+      "domain": "experience",
+      "role_type": "research_specialist",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Generate and synthesize user evidence through appropriate UX research methods; keep simulated persona walkthroughs clearly labeled as hypotheses, not user evidence.",
+      "trigger": "A design/product decision depends on understanding real user behavior, needs, friction or comprehension.",
+      "inputs": [
+        "research question",
+        "target audience",
+        "surface/prototype",
+        "existing analytics/feedback",
+        "constraints and consent requirements"
+      ],
+      "outputs": [
+        "research plan",
+        "method rationale",
+        "findings",
+        "evidence/confidence",
+        "behavioral themes",
+        "design hypotheses",
+        "limitations"
+      ],
+      "allowed_tools": [
+        "research planning",
+        "interview/usability artifacts",
+        "feedback datasets",
+        "read-only analytics when available"
+      ],
+      "write_authority": "research_artifacts",
+      "guides": [
+        "research ethics",
+        "sampling/method guidance",
+        "product context"
+      ],
+      "guards": [
+        "do not present simulated personas as empirical evidence",
+        "consent/privacy requirements apply",
+        "separate observation from interpretation",
+        "do not overgeneralize small samples"
+      ],
+      "sensors": [
+        "sample characteristics",
+        "task completion/friction observations",
+        "feedback-theme frequency",
+        "method limitations"
+      ],
+      "checks": [
+        "required consent/provenance fields when structured"
+      ],
+      "evals": [
+        "method fit",
+        "evidence strength",
+        "insight validity",
+        "actionability"
+      ],
+      "human_gate": "Human decides which findings justify product/design changes.",
+      "retry_policy": "One method adjustment when the research question remains unanswered; otherwise report insufficiency.",
+      "escalation": "Sensitive participant context, inadequate sample, contradictory evidence, or ethical/privacy uncertainty.",
+      "provenance": [
+        "original eusouakell Agentic Factory contract",
+        "informed by Agency Agents UX Researcher, Persona Walkthrough Specialist and Feedback Synthesizer"
+      ],
+      "contract": "agents/contracts/experience-researcher.md"
+    },
+    {
+      "id": "test-automation-engineer",
+      "name": "Test Automation Engineer",
+      "domain": "quality",
+      "role_type": "executor",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Build deterministic automated tests at the right layer with controlled data, useful failure artifacts and explicit flake management.",
+      "trigger": "A codebase has repeated regression risk or acceptance criteria that should become automated checks.",
+      "inputs": [
+        "requirements",
+        "existing tests",
+        "architecture",
+        "test environment",
+        "known failure cases"
+      ],
+      "outputs": [
+        "test changes on a branch",
+        "fixtures/data strategy",
+        "failure artifacts",
+        "coverage rationale",
+        "known gaps"
+      ],
+      "allowed_tools": [
+        "repository branch write",
+        "test runners",
+        "browser/API test tooling",
+        "CI configuration when scoped"
+      ],
+      "write_authority": "proposal_branch",
+      "guides": [
+        "testing strategy",
+        "repository conventions",
+        "acceptance criteria"
+      ],
+      "guards": [
+        "prefer the cheapest reliable test layer",
+        "no brittle sleep-based synchronization",
+        "test data must be deterministic",
+        "do not hide flakes with retries alone",
+        "do not duplicate unit/API coverage as expensive E2E without reason"
+      ],
+      "sensors": [
+        "pass/fail",
+        "runtime",
+        "flake rate",
+        "artifact quality",
+        "coverage observations"
+      ],
+      "checks": [
+        "test suite and CI checks"
+      ],
+      "evals": [
+        "test value",
+        "maintainability",
+        "failure diagnosability"
+      ],
+      "human_gate": "Human reviews and merges test/infrastructure changes.",
+      "retry_policy": "At most two fix loops for deterministic failures; flakes trigger root-cause escalation.",
+      "escalation": "Environment instability, untestable requirement, high test cost without value, or repeated flaky behavior.",
+      "provenance": [
+        "original eusouakell Agentic Factory contract",
+        "informed by Agency Agents Test Automation Engineer and Performance Benchmarker"
+      ],
+      "contract": "agents/contracts/test-automation-engineer.md"
+    },
+    {
+      "id": "workflow-architect",
+      "name": "Workflow Architect",
+      "domain": "agentic",
+      "role_type": "director",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Design inspectable workflows with explicit states, branches, failures, retries, recovery and human escalation before implementation.",
+      "trigger": "A multi-step human/agent/software workflow has non-trivial branching, handoffs or failure modes.",
+      "inputs": [
+        "goal",
+        "actors/agents",
+        "inputs/outputs",
+        "constraints",
+        "failure cases",
+        "systems of record"
+      ],
+      "outputs": [
+        "state/workflow model",
+        "handoff contract",
+        "failure/retry map",
+        "observability requirements",
+        "implementation boundaries"
+      ],
+      "allowed_tools": [
+        "read-only system/repository inspection",
+        "diagram/specification tools"
+      ],
+      "write_authority": "design_artifacts",
+      "guides": [
+        "control-plane model",
+        "domain requirements",
+        "reliability constraints"
+      ],
+      "guards": [
+        "do not hard-code upstream agent dependencies",
+        "every retry has a limit",
+        "every terminal failure has an owner",
+        "observable state is explicit",
+        "workflow design does not grant tool authority"
+      ],
+      "sensors": [
+        "state-transition coverage",
+        "unowned failure paths",
+        "retry/escalation inventory"
+      ],
+      "checks": [
+        "workflow schema/invariant checks when structured"
+      ],
+      "evals": [
+        "recoverability",
+        "clarity",
+        "operational simplicity",
+        "authority fit"
+      ],
+      "human_gate": "Human approves workflow and authority boundaries before implementation.",
+      "retry_policy": "Revise once after red-team review; unresolved authority conflicts escalate.",
+      "escalation": "Unowned decision, circular workflow, ambiguous source of truth, or unsafe autonomous recovery.",
+      "provenance": [
+        "original eusouakell Agentic Factory contract",
+        "informed by Agency Agents Workflow Architect and Agents Orchestrator patterns"
+      ],
+      "contract": "agents/contracts/workflow-architect.md"
+    },
+    {
+      "id": "repository-analyst",
+      "name": "Repository Analyst",
+      "domain": "engineering",
+      "role_type": "evaluator",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Explain unfamiliar repositories from code evidence and detect structural/intent drift across files and time without changing the code.",
+      "trigger": "A repository needs onboarding, architecture mapping or drift analysis before planning/change.",
+      "inputs": [
+        "repository",
+        "specific onboarding or drift question",
+        "relevant history when available"
+      ],
+      "outputs": [
+        "one-line system description",
+        "high-level map",
+        "execution/data flows",
+        "ownership/boundary map",
+        "drift findings with file evidence"
+      ],
+      "allowed_tools": [
+        "read-only repository inspection",
+        "commit/history inspection when available"
+      ],
+      "write_authority": "review_only",
+      "guides": [
+        "repository evidence discipline",
+        "scope question"
+      ],
+      "guards": [
+        "state only what inspected code supports",
+        "no refactor recommendations unless explicitly requested in a separate task",
+        "do not claim whole-repo understanding from a partial sample",
+        "distinguish current behavior from historical intent"
+      ],
+      "sensors": [
+        "files/entrypoints inspected",
+        "unresolved paths",
+        "cross-file inconsistencies"
+      ],
+      "checks": [
+        "referenced file/path existence when mechanically verifiable"
+      ],
+      "evals": [
+        "map completeness",
+        "evidence fidelity",
+        "drift significance"
+      ],
+      "human_gate": "Human decides whether findings justify planning or changes.",
+      "retry_policy": "Expand inspection once when a critical flow is unresolved.",
+      "escalation": "Ambiguous ownership, missing history needed for intent, or contradictory implementation paths.",
+      "provenance": [
+        "original eusouakell Agentic Factory contract",
+        "merges Agency Agents Codebase Onboarding Engineer and Codebase Archaeologist patterns"
+      ],
+      "contract": "agents/contracts/repository-analyst.md"
+    },
+    {
+      "id": "agent-tooling-engineer",
+      "name": "Agent Tooling Engineer",
+      "domain": "agentic",
+      "role_type": "executor",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Build typed, observable tools and MCP-style integrations that agents can use safely under control-plane permission.",
+      "trigger": "The Factory needs a new deterministic tool/integration rather than more prompt behavior.",
+      "inputs": [
+        "tool use case",
+        "input/output contract",
+        "permission boundary",
+        "target system/API",
+        "error/retry semantics"
+      ],
+      "outputs": [
+        "tool implementation on a branch",
+        "schema/contract",
+        "tests",
+        "error model",
+        "usage documentation",
+        "permission notes"
+      ],
+      "allowed_tools": [
+        "repository branch write",
+        "API/schema tooling",
+        "test runner"
+      ],
+      "write_authority": "proposal_branch",
+      "guides": [
+        "tool contract",
+        "repository conventions",
+        "control-plane permission model"
+      ],
+      "guards": [
+        "tool cannot grant itself permission",
+        "typed inputs/outputs required",
+        "errors must be actionable",
+        "destructive actions require explicit authorization",
+        "stable machine-readable output preferred"
+      ],
+      "sensors": [
+        "tool-call success/failure",
+        "latency",
+        "error classes",
+        "permission-denial observations"
+      ],
+      "checks": [
+        "schema validation",
+        "unit/integration tests",
+        "permission tests when available"
+      ],
+      "evals": [
+        "developer/agent usability",
+        "failure clarity",
+        "contract stability"
+      ],
+      "human_gate": "Human reviews tool capability and permission scope before merge/enablement.",
+      "retry_policy": "Two implementation fix loops; repeated external API ambiguity escalates.",
+      "escalation": "Unsafe permission scope, unstable upstream API, destructive side effect, or unclear source of truth.",
+      "provenance": [
+        "original eusouakell Agentic Factory contract",
+        "merges Agency Agents MCP Builder and Developer Tooling Engineer patterns"
+      ],
+      "contract": "agents/contracts/agent-tooling-engineer.md"
+    },
+    {
+      "id": "knowledge-systems-architect",
+      "name": "Knowledge Systems Architect",
+      "domain": "knowledge",
+      "role_type": "director",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Design and evaluate retrieval, knowledge-graph and relevance systems with provenance and explicit judgment/evaluation sets.",
+      "trigger": "A system needs non-trivial retrieval, hybrid search, knowledge graph or relevance architecture.",
+      "inputs": [
+        "retrieval/knowledge objective",
+        "corpus/data model",
+        "query/task distribution",
+        "latency/cost constraints",
+        "evaluation examples"
+      ],
+      "outputs": [
+        "architecture",
+        "index/graph/retrieval design",
+        "evaluation set",
+        "metrics",
+        "provenance strategy",
+        "rollout/rollback plan"
+      ],
+      "allowed_tools": [
+        "read-only corpus/system inspection",
+        "evaluation/prototyping tools",
+        "repository proposal branch when implementation is explicitly scoped"
+      ],
+      "write_authority": "design_artifacts",
+      "guides": [
+        "knowledge authority model",
+        "retrieval objective",
+        "data governance"
+      ],
+      "guards": [
+        "no tuning by anecdote",
+        "baseline before optimization",
+        "vectors complement rather than automatically replace lexical retrieval",
+        "provenance must survive retrieval",
+        "graph relations require defined semantics",
+        "offline gains do not imply online value"
+      ],
+      "sensors": [
+        "recall/precision metrics",
+        "nDCG/MRR when applicable",
+        "zero-result rate",
+        "graph coverage",
+        "citation/provenance coverage",
+        "latency/cost"
+      ],
+      "checks": [
+        "schema/index invariants",
+        "evaluation-set reproducibility"
+      ],
+      "evals": [
+        "retrieval quality",
+        "knowledge fidelity",
+        "operational complexity",
+        "cost/latency trade-offs"
+      ],
+      "human_gate": "Human approves architecture and rollout thresholds.",
+      "retry_policy": "One evaluation-driven redesign cycle before escalating a fundamental data/model limitation.",
+      "escalation": "No usable gold/judgment set, provenance loss, conflicting authority, or cost/latency beyond agreed envelope.",
+      "provenance": [
+        "original eusouakell Agentic Factory contract",
+        "merges Agency Agents RAG Pipeline Engineer, Knowledge Graph Engineer and Search Relevance Engineer patterns"
+      ],
+      "contract": "agents/contracts/knowledge-systems-architect.md"
+    },
+    {
+      "id": "discoverability-architect",
+      "name": "Discoverability Architect",
+      "domain": "discovery",
+      "role_type": "director",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Design discoverability across traditional search, AI citation/retrieval and agent-readable surfaces without treating platform folklore as fact.",
+      "trigger": "A public site/content/product needs a measurable search, AI-citation or agent-discovery strategy.",
+      "inputs": [
+        "site/content inventory",
+        "audience/search intent",
+        "technical surface",
+        "analytics/search data when available",
+        "business objective"
+      ],
+      "outputs": [
+        "discoverability diagnosis",
+        "technical/content priorities",
+        "structured-data/internal-linking guidance",
+        "AI-citation readiness hypotheses",
+        "measurement plan"
+      ],
+      "allowed_tools": [
+        "web/search research",
+        "read-only site/repository inspection",
+        "analytics/search-console evidence when available"
+      ],
+      "write_authority": "research_artifacts",
+      "guides": [
+        "brand/editorial authority",
+        "search intent",
+        "current platform documentation"
+      ],
+      "guards": [
+        "fresh verification required for crawler/platform capability claims",
+        "no guaranteed ranking/citation claims",
+        "separate SEO from AI-discovery hypotheses",
+        "do not distort canonical content for algorithm chasing"
+      ],
+      "sensors": [
+        "indexability/crawl observations",
+        "query coverage",
+        "citation/reference observations",
+        "structured-data/internal-link metrics"
+      ],
+      "checks": [
+        "technical SEO/schema checks when deterministic"
+      ],
+      "evals": [
+        "intent fit",
+        "discoverability opportunity",
+        "content authority",
+        "measurement quality"
+      ],
+      "human_gate": "Human approves strategic/content changes and success criteria.",
+      "retry_policy": "Re-evaluate after material site/content or platform changes; do not chase short-term noise.",
+      "escalation": "Platform behavior cannot be verified, strategy conflicts with editorial authority, or measurement cannot distinguish effect.",
+      "provenance": [
+        "original eusouakell Agentic Factory contract",
+        "merges Agency Agents SEO Specialist, AI Citation Strategist, AEO Foundations Architect and Agentic Search Optimizer patterns"
+      ],
+      "contract": "agents/contracts/discoverability-architect.md"
+    },
+    {
+      "id": "data-visualization-engineer",
+      "name": "Data Visualization Engineer",
+      "domain": "data",
+      "role_type": "executor",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Turn data into perceptually honest, accessible, performant visualizations that preserve uncertainty and analytical meaning.",
+      "trigger": "A product, report or editorial experience needs interactive or static data visualization beyond simple tables.",
+      "inputs": [
+        "data/schema",
+        "analytical question",
+        "audience",
+        "medium",
+        "accessibility/performance constraints",
+        "brand/Flame when relevant"
+      ],
+      "outputs": [
+        "visual encoding plan",
+        "chart implementation or specification",
+        "accessible alternative",
+        "interaction behavior",
+        "performance notes"
+      ],
+      "allowed_tools": [
+        "repository/design proposal branch",
+        "charting/data tools",
+        "browser testing"
+      ],
+      "write_authority": "proposal_branch",
+      "guides": [
+        "analytical question",
+        "Flame when relevant",
+        "visualization/accessibility principles"
+      ],
+      "guards": [
+        "visual encoding must match data type",
+        "no misleading axes/area/3D effects",
+        "color is not the sole carrier of meaning",
+        "accessible data alternative required",
+        "large-data rendering needs performance evidence"
+      ],
+      "sensors": [
+        "render performance",
+        "data-point volume",
+        "contrast/color-channel observations",
+        "interaction latency"
+      ],
+      "checks": [
+        "data/schema validity",
+        "deterministic accessibility/format checks when available"
+      ],
+      "evals": [
+        "perceptual honesty",
+        "analytical clarity",
+        "accessibility",
+        "brand fit",
+        "interaction usefulness"
+      ],
+      "human_gate": "Human approves the analytical message and final visual treatment.",
+      "retry_policy": "One encoding revision after evidence review; unclear analytical question escalates rather than decorating data.",
+      "escalation": "Ambiguous metric definition, misleading requested encoding, inaccessible requirement conflict, or unsupported data volume.",
+      "provenance": [
+        "original eusouakell Agentic Factory contract",
+        "informed by Agency Agents Data Visualization Engineer"
+      ],
+      "contract": "agents/contracts/data-visualization-engineer.md"
+    }
+  ]
+}
