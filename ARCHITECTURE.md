@@ -32,6 +32,7 @@ GUIDES / GUARDS / SENSORS / CHECKS
 ### Control plane owns
 
 - routing;
+- context eligibility and progressive disclosure;
 - task/run state;
 - tool authorization;
 - retries;
@@ -71,6 +72,22 @@ Automation routes authority; it does not invent authority.
 - knowledge;
 - editorial intent;
 - product-specific constraints.
+
+### Context resolution
+
+The control plane resolves which domain artifacts are eligible for a run. It should not dump entire domain repositories into the active agent.
+
+Use [progressive context loading](governance/context-loading.md):
+
+```text
+task / approved handoff
+→ applicable domain canon
+→ surface/project contract
+→ agent contract
+→ execution aid
+```
+
+A downstream role inherits approved decisions. Reopening them requires a documented conflict, missing authority or explicit human instruction.
 
 ## Non-goals
 
