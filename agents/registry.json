@@ -1390,6 +1390,374 @@
         "informed by Agency Agents Data Visualization Engineer"
       ],
       "contract": "agents/contracts/data-visualization-engineer.md"
+    },
+    {
+      "id": "editorial-storyteller",
+      "name": "Editorial Storyteller",
+      "domain": "editorial",
+      "role_type": "director",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Find the strongest narrative already latent in approved editorial material before channel, format, final-copy or visual decisions.",
+      "trigger": "An approved source, Editorial Packet or research set needs a story route before channel adaptation.",
+      "inputs": [
+        "source/editorial packet",
+        "approved facts and evidence limits",
+        "editorial intent",
+        "author language/reaction when available",
+        "audience/context constraints",
+        "rights/sensitivity constraints"
+      ],
+      "outputs": [
+        "2–3 narrative routes",
+        "hook/question",
+        "tension/progression",
+        "turn/payoff/ending",
+        "one-line retell",
+        "forced-connection and factual risks",
+        "comparative recommendation"
+      ],
+      "allowed_tools": [
+        "read-only editorial/research context",
+        "structured planning artifacts"
+      ],
+      "write_authority": "design_artifacts",
+      "guides": [
+        "approved Editorial Packet",
+        "Cereja Content Design when needed",
+        "consumer editorial-storyteller skill"
+      ],
+      "guards": [
+        "no channel/format decisions",
+        "no slide planning",
+        "no invented facts or broadened evidence",
+        "no forced thesis from adjacent facts",
+        "preserve material author language when it carries genuine authorship"
+      ],
+      "sensors": [
+        "viable-route count",
+        "unresolved factual gaps",
+        "forced-connection flags",
+        "author-language preservation"
+      ],
+      "checks": [
+        "required route fields present when structured",
+        "evidence references preserved where supplied"
+      ],
+      "evals": [
+        "curiosity",
+        "narrative progression",
+        "naturalness of connection",
+        "memorability",
+        "authorial fit",
+        "factual fidelity"
+      ],
+      "human_gate": "Kell chooses, combines or rejects the story route.",
+      "retry_policy": "One additional route pass only when Kell identifies a concrete story-level weakness.",
+      "escalation": "No viable story, unresolved high-impact factual gap, or requested connection that evidence/context cannot sustain.",
+      "provenance": [
+        "original Cereja specialist contract",
+        "informed by narrative-development/storytelling workflow patterns"
+      ],
+      "contract": "agents/contracts/editorial-storyteller.md"
+    },
+    {
+      "id": "instagram-strategist",
+      "name": "Instagram Strategist",
+      "domain": "distribution",
+      "role_type": "director",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Choose Instagram objective, desired behavior, success signals and native format for an already approved story.",
+      "trigger": "A story has passed human story gate and needs Instagram adaptation.",
+      "inputs": [
+        "approved story",
+        "audience",
+        "current Instagram strategy",
+        "available assets/rights",
+        "production constraints",
+        "current account evidence when available"
+      ],
+      "outputs": [
+        "primary and secondary goals",
+        "target behavior",
+        "recommended format",
+        "format rationale",
+        "entry hypotheses",
+        "CTA job",
+        "success signals",
+        "cost/rights/evidence risks",
+        "handoff to format specialist"
+      ],
+      "allowed_tools": [
+        "read-only Instagram strategy and analytics",
+        "current platform research when freshness matters",
+        "planning artifacts"
+      ],
+      "write_authority": "design_artifacts",
+      "guides": [
+        "Cereja Instagram strategy",
+        "approved story",
+        "platform source hierarchy",
+        "consumer instagram-strategist skill"
+      ],
+      "guards": [
+        "one primary objective",
+        "do not use engagement without a specific behavior",
+        "do not force carousel",
+        "do not convert creator heuristics into platform fact",
+        "story remains unchanged"
+      ],
+      "sensors": [
+        "objective/metric alignment",
+        "format alternatives considered",
+        "rights/cost flags",
+        "platform-evidence freshness"
+      ],
+      "checks": [
+        "primary goal present",
+        "format present",
+        "success signals map to goal"
+      ],
+      "evals": [
+        "channel fit",
+        "behavioral clarity",
+        "format appropriateness",
+        "strategic coherence",
+        "evidence discipline"
+      ],
+      "human_gate": "Kell approves goal, behavior and format.",
+      "retry_policy": "One format/goal revision after explicit human feedback.",
+      "escalation": "Story does not fit Instagram, required rights are unavailable, platform claim cannot be verified, or no format is worth the cost.",
+      "provenance": [
+        "original Cereja specialist contract",
+        "informed by Instagram platform evidence and outline-before-execution workflows"
+      ],
+      "contract": "agents/contracts/instagram-strategist.md"
+    },
+    {
+      "id": "instagram-carousel-planner",
+      "name": "Instagram Carousel Planner",
+      "domain": "editorial",
+      "role_type": "director",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Turn an approved story and Instagram brief into the minimum necessary carousel beats without art direction or implementation.",
+      "trigger": "Instagram Strategist recommends carousel and Kell approves that format.",
+      "inputs": [
+        "approved story",
+        "approved Instagram brief",
+        "evidence/rights constraints",
+        "author language that must be preserved"
+      ],
+      "outputs": [
+        "frame/beat plan",
+        "job per frame",
+        "understanding target",
+        "swipe reason",
+        "essential copy",
+        "show-instead-of-tell opportunity",
+        "evidence boundary",
+        "asset/rights need",
+        "text-level estimate",
+        "removable frames and retention risk"
+      ],
+      "allowed_tools": [
+        "planning artifacts",
+        "read-only source/evidence"
+      ],
+      "write_authority": "design_artifacts",
+      "guides": [
+        "approved story",
+        "approved Instagram brief",
+        "consumer instagram-carousel-planner skill"
+      ],
+      "guards": [
+        "frame count follows story",
+        "Cereja carousel includes cover 1, cover 2 and ending/CTA",
+        "cover 2 works independently and advances story",
+        "every middle frame needs a distinct job",
+        "no layout or story rewrite",
+        "CTA follows objective rather than formula"
+      ],
+      "sensors": [
+        "frame count",
+        "redundant-frame flags",
+        "estimated text density",
+        "second-cover independence",
+        "swipe-reason coverage"
+      ],
+      "checks": [
+        "required frame fields present",
+        "cover 1, cover 2 and ending exist",
+        "every frame has a stated job"
+      ],
+      "evals": [
+        "progression",
+        "retention logic",
+        "information economy",
+        "second-cover quality",
+        "objective fit"
+      ],
+      "human_gate": "Kell approves the outline before visual direction.",
+      "retry_policy": "One structural revision after explicit outline feedback.",
+      "escalation": "The story cannot be expressed without excessive text, evidence needs a different structure, or another format becomes clearly superior.",
+      "provenance": [
+        "original Cereja specialist contract",
+        "informed by carousel-outline and structured-import workflows"
+      ],
+      "contract": "agents/contracts/instagram-carousel-planner.md"
+    },
+    {
+      "id": "visual-storyteller",
+      "name": "Visual Storyteller",
+      "domain": "visual",
+      "role_type": "director",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Translate approved narrative beats into image-first visual jobs with the least text necessary while preserving story and evidence boundaries.",
+      "trigger": "A channel/format outline has passed human approval and needs visual direction.",
+      "inputs": [
+        "approved outline",
+        "Flame",
+        "rights/provenance rules",
+        "available assets",
+        "accessibility constraints"
+      ],
+      "outputs": [
+        "visual job per beat",
+        "subject/object",
+        "image/graphic direction",
+        "image/text hierarchy",
+        "text ceiling",
+        "crop/composition guidance",
+        "provenance/accessibility requirements",
+        "transition/rhythm plan",
+        "asset requirements",
+        "unresolved human decisions"
+      ],
+      "allowed_tools": [
+        "reference research",
+        "art-direction/planning tools",
+        "read-only asset inspection"
+      ],
+      "write_authority": "domain_assets",
+      "guides": [
+        "Flame",
+        "approved outline",
+        "rights/provenance guidance",
+        "consumer visual-storyteller skill"
+      ],
+      "guards": [
+        "image first; text anchors",
+        "no generic iconography where specific evidence/object is available",
+        "no synthetic image as documentary evidence",
+        "no direct imitation of living artist/photographer",
+        "no new canonical brand tokens",
+        "no template repetition as substitute for art direction",
+        "no new story beat"
+      ],
+      "sensors": [
+        "visual-role diversity",
+        "text ceiling by frame",
+        "asset/provenance coverage",
+        "generic-template risk"
+      ],
+      "checks": [
+        "asset provenance fields when structured",
+        "required accessibility fields when structured"
+      ],
+      "evals": [
+        "visual storytelling",
+        "hierarchy",
+        "rhythm",
+        "information economy",
+        "Flame fit",
+        "authenticity"
+      ],
+      "human_gate": "Kell approves visual direction before execution.",
+      "retry_policy": "At most two visual directions when ambiguity is real; otherwise one revision.",
+      "escalation": "Missing rights, missing essential asset, story cannot be shown without major copy expansion, or requested direction conflicts with Flame.",
+      "provenance": [
+        "original Cereja specialist contract",
+        "evolved from Visual Storyteller / Photo Art Director patterns"
+      ],
+      "contract": "agents/contracts/visual-storyteller.md"
+    },
+    {
+      "id": "creative-director",
+      "name": "Creative Director",
+      "domain": "editorial_visual",
+      "role_type": "evaluator",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Perform a bounded creative preflight after story, channel, outline and visual direction, protecting coherence, authorship, simplicity and surprise.",
+      "trigger": "A concept is ready for execution but has not yet been rendered as final output.",
+      "inputs": [
+        "approved story",
+        "approved Instagram brief",
+        "approved outline",
+        "visual direction",
+        "author/brand constraints"
+      ],
+      "outputs": [
+        "PASS | REVISE",
+        "what still works",
+        "what got weaker",
+        "remove",
+        "simplify",
+        "single biggest risk",
+        "required revision",
+        "human decision"
+      ],
+      "allowed_tools": [
+        "read-only planning/artifact inspection"
+      ],
+      "write_authority": "review_only",
+      "guides": [
+        "approved upstream artifacts",
+        "consumer creative-director skill",
+        "Flame/editorial distinctiveness guidance when relevant"
+      ],
+      "guards": [
+        "no fourth route",
+        "no new strategy",
+        "no execution",
+        "no self-certification",
+        "separate blocker from preference",
+        "preserve explicit Kell decisions unless new evidence creates a real conflict"
+      ],
+      "sensors": [
+        "repeated-structure count",
+        "over-explanation flags",
+        "authorial-signal retention",
+        "CTA dominance",
+        "unresolved cross-specialist conflict"
+      ],
+      "checks": [
+        "all required upstream approvals/artifacts present when structured"
+      ],
+      "evals": [
+        "coherence",
+        "memorability",
+        "simplicity",
+        "authorship",
+        "distinctiveness",
+        "format-native feel"
+      ],
+      "human_gate": "Kell decides whether the piece proceeds to execution.",
+      "retry_policy": "One preflight re-review after the requested revision.",
+      "escalation": "Upstream story/strategy conflict, unresolved brand conflict, or concept remains generic after one revision.",
+      "provenance": [
+        "original Cereja specialist contract",
+        "informed by creative-direction and editorial preflight patterns"
+      ],
+      "contract": "agents/contracts/creative-director.md"
     }
   ]
 }
