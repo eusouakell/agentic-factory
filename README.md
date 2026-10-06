@@ -106,6 +106,8 @@ See [progressive context loading](governance/context-loading.md).
 
 The Factory is reusable infrastructure. Domain systems remain independent consumers.
 
+Architecture, authority, workflow and context-routing changes follow the [README synchronization invariant](ARCHITECTURE.md#readme-synchronization-invariant): affected README files are reviewed in the same change so navigation stays aligned with the canonical system.
+
 See [integrations/](integrations/).
 
 ## Migration provenance
