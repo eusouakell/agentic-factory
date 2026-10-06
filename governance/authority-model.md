@@ -58,3 +58,19 @@ Tool access should be:
 - no broader than the declared trigger requires;
 - revocable;
 - observable.
+
+
+## Context does not transfer authority
+
+Making a document available to an agent does not make that document authoritative.
+
+The run plan should distinguish:
+
+- **canonical authority** — domain rule the role must obey;
+- **approved handoff** — decision frozen by an upstream gate;
+- **reference** — optional evidence or inspiration;
+- **execution aid** — skill/tool guidance.
+
+An external skill, benchmark or model suggestion cannot override a canonical domain source.
+
+See [progressive context loading](context-loading.md).

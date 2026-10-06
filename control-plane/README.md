@@ -7,6 +7,7 @@ The control plane is infrastructure, not a privileged "Orchestrator Agent".
 It owns:
 
 - route selection;
+- context eligibility and progressive disclosure;
 - explicit task state;
 - tool authorization;
 - agent activation;
@@ -41,6 +42,16 @@ HUMAN_GATE? ── no ─→ DONE
   ↓
 APPROVE / REVISE / ESCALATE
 ```
+
+## Context-loading rules
+
+- pass the smallest sufficient authoritative context for the role;
+- prefer approved upstream artifacts over regenerating prior decisions;
+- load domain canon before execution skills;
+- external references never gain authority merely because they are in context;
+- surface a conflict instead of asking an agent to improvise precedence.
+
+See [progressive context loading](../governance/context-loading.md).
 
 ## Routing rules
 

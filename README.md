@@ -96,6 +96,12 @@ Agents cannot:
 
 See [governance/authority-model.md](governance/authority-model.md).
 
+## Context loading
+
+The control plane should pass the **smallest sufficient authoritative context** to each role. Canonical domain rules come before project artifacts; project artifacts come before execution skills. Downstream agents do not reopen approved gates without a documented conflict.
+
+See [progressive context loading](governance/context-loading.md).
+
 ## Repository boundaries
 
 The Factory is reusable infrastructure. Domain systems remain independent consumers.
