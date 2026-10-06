@@ -123,3 +123,21 @@ A pilot may be promoted only after real-task evidence shows that:
 2. authority is not colliding with another role;
 3. controls and escalation work;
 4. a human explicitly approves promotion.
+
+
+## README synchronization invariant
+
+README files are navigation and system-state surfaces, not secondary decoration.
+
+Any change that materially alters one or more of the following must review the affected README(s) in the same change:
+
+- architecture or system relationships;
+- canonical authority or source-of-truth location;
+- workflow, gates or handoff sequence;
+- context-loading/routing behavior;
+- agent or control-plane responsibilities;
+- repository navigation or primary entry points.
+
+If the README does not require a change, the PR should make that an explicit decision rather than silently assuming it.
+
+Detailed rules should remain in their canonical documents. README updates should summarize the changed model and point to the authoritative source, preserving progressive disclosure rather than duplicating full specifications.
