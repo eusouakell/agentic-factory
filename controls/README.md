@@ -11,6 +11,42 @@ The Factory separates control responsibilities instead of calling every rule an 
 | Eval | semantic judgment with rubric | not necessarily binary |
 | Human Gate | accountable approval | yes |
 
+## Conceptual axes
+
+The four core control types can also be understood through two orthogonal axes:
+
+- **Feedforward ↔ Feedback** — whether the control acts before generation/execution or inspects what happened after it.
+- **Descriptive ↔ Normative** — whether the control explains/observes the system or constrains/judges it against an expectation.
+
+```text
+                         DESCRIPTIVE
+                              ↑
+                Guides        │        Sensors
+                              │
+FEEDFORWARD ──────────────────┼────────────────── FEEDBACK
+                              │
+                Guards        │        Checks
+                              ↓
+                          NORMATIVE
+```
+
+This gives the four core classes a clear placement:
+
+| Control | Timing | Nature | Role |
+|---|---|---|---|
+| **Guide** | feedforward | descriptive | explains context, method, intent and available paths |
+| **Guard** | feedforward | normative | constrains or blocks an invalid/consequential action before it proceeds |
+| **Sensor** | feedback | descriptive | observes and reports what actually happened |
+| **Check** | feedback | normative | compares an observation/result against an explicit expectation |
+
+### Evals and Human Gates
+
+**Evals** extend the feedback side for semantic judgment that should not be reduced to a deterministic boolean. An eval must declare its rubric and whether it is primarily diagnostic/descriptive or normative against a quality threshold.
+
+**Human Gates** are not a fifth quadrant. They are a cross-cutting authority mechanism used when intent, accountability, canonical change or residual risk requires an explicit human decision. A human gate may occur before or after execution depending on the decision being governed.
+
+Conceptual framing adapted from the four-quadrant model shared by Kell from Chris Ford's *Agentic Engineering at Scale* (O'Reilly Media). The Factory extends that model with Evals and Human Gates because semantic quality and accountable authority are not fully represented by the four core quadrants.
+
 ## Guides
 
 Guides provide orientation, context contracts, method and sequencing.
