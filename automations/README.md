@@ -124,6 +124,24 @@ Codex is treated as an execution surface optimized for interactive browser/IDE w
 
 See [execution-surfaces/codex.md](../execution-surfaces/codex.md).
 
+## Work-state automation target
+
+A future Project adapter may react to durable work-state events such as a dependency closing.
+
+Allowed pattern:
+
+```text
+dependency closes
+→ evaluate declared dependents
+→ confirm no remaining open blockers
+→ confirm required authority/context conditions
+→ move eligible issue to Ready
+```
+
+This automation may expose newly eligible work. It may not cross a human gate, mark acceptance complete or start consequential execution merely because a blocker closed.
+
+The Project/Issue operating model is defined in [operational work state](../governance/operational-work-state.md). Adapter implementation is a separate task and must not be claimed from documentation alone.
+
 ## Safety invariant
 
 Automation may route authority.
