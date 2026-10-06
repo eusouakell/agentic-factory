@@ -102,6 +102,21 @@ The control plane should pass the **smallest sufficient authoritative context** 
 
 See [progressive context loading](governance/context-loading.md).
 
+## Operational work state
+
+Chat history is working context, not durable roadmap state.
+
+The operating model externalizes state so work can survive context-window exhaustion, a new chat or a different execution surface:
+
+- canonical docs — what is true;
+- Issues — what needs to happen;
+- one cross-repository GitHub Project — current flow and priority;
+- Gates — who may authorize the next transition.
+
+Default flow: `Backlog → Ready → In Progress → Gate / Review → Done`.
+
+See [operational work state](governance/operational-work-state.md).
+
 ## Repository boundaries
 
 The Factory is reusable infrastructure. Domain systems remain independent consumers.

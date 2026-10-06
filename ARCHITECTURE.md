@@ -34,12 +34,15 @@ GUIDES / GUARDS / SENSORS / CHECKS
 - routing;
 - context eligibility and progressive disclosure;
 - task/run state;
+- operational work-state interpretation;
 - tool authorization;
 - retries;
 - handoffs;
 - escalation;
 - failure ownership;
 - execution evidence requirements.
+
+Operational roadmap state is externalized rather than reconstructed from chat history. Canonical docs remain truth; Issues define work; GitHub Projects expose current flow; Gates preserve authority. See [operational work state](governance/operational-work-state.md).
 
 ### Automation layer owns
 
@@ -75,7 +78,9 @@ Automation routes authority; it does not invent authority.
 
 ### Context resolution
 
-The control plane resolves which domain artifacts are eligible for a run. It should not dump entire domain repositories into the active agent.
+The control plane resolves both **where work stands** and which domain artifacts are eligible for a run. Durable work state should come from the Project/Issue/approved-artifact chain rather than depending on a previous conversation still fitting in context.
+
+The control plane should not dump entire domain repositories into the active agent.
 
 Use [progressive context loading](governance/context-loading.md):
 
