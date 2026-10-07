@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.0",
+  "schema_version": "3.0",
   "control_plane": {
     "orchestrator_is_agent": false,
     "note": "Routing, retries, handoffs, state and escalation belong to the control plane. Specialist agents cannot self-expand authority or bypass Guards/Checks."
@@ -78,7 +78,9 @@
         "strengthened by Minimal Change Engineer, Internationalization Engineer and performance-review patterns"
       ],
       "contract": "agents/contracts/frontend-engineer.md",
-      "tier": "core"
+      "tier": "core",
+      "department": "engineering",
+      "seniority": "senior"
     },
     {
       "id": "research-synthesist",
@@ -146,7 +148,9 @@
         "original eusouakell Agentic Factory contract",
         "informed by Agency Agents Research Synthesist and Tool Evaluator"
       ],
-      "contract": "agents/contracts/research-synthesist.md"
+      "contract": "agents/contracts/research-synthesist.md",
+      "department": "strategy_planning",
+      "seniority": "senior"
     },
     {
       "id": "code-reviewer",
@@ -211,7 +215,9 @@
         "original eusouakell Agentic Factory contract",
         "informed by Agency Agents Code Reviewer and Minimal Change Engineer"
       ],
-      "contract": "agents/contracts/code-reviewer.md"
+      "contract": "agents/contracts/code-reviewer.md",
+      "department": "quality_risk",
+      "seniority": "senior"
     },
     {
       "id": "security-auditor",
@@ -276,7 +282,9 @@
         "strengthened by Application Security Engineer and Secrets & Credential Hygiene Engineer"
       ],
       "contract": "agents/contracts/security-auditor.md",
-      "tier": "core"
+      "tier": "core",
+      "department": "quality_risk",
+      "seniority": "senior"
     },
     {
       "id": "accessibility-auditor",
@@ -346,7 +354,9 @@
         "original eusouakell Agentic Factory contract",
         "informed by Agency Agents Accessibility Auditor and Inclusive Visuals Specialist"
       ],
-      "contract": "agents/contracts/accessibility-auditor.md"
+      "contract": "agents/contracts/accessibility-auditor.md",
+      "department": "quality_risk",
+      "seniority": "senior"
     },
     {
       "id": "readiness-evaluator",
@@ -403,7 +413,9 @@
         "informed by Agency Agents Reality Checker and Evidence Collector"
       ],
       "contract": "agents/contracts/readiness-evaluator.md",
-      "tier": "core"
+      "tier": "core",
+      "department": "quality_risk",
+      "seniority": "senior"
     },
     {
       "id": "flame-ui-composer",
@@ -464,7 +476,9 @@
         "informed by Agency Agents UI Designer, UI Finish-Gate Reviewer and Brand Guardian"
       ],
       "contract": "agents/contracts/flame-ui-composer.md",
-      "tier": "core"
+      "tier": "core",
+      "department": "experience",
+      "seniority": "senior"
     },
     {
       "id": "motion-web-director",
@@ -530,7 +544,9 @@
         "informed by audit of Visual Storyteller, Whimsy Injector and Frontend Developer"
       ],
       "contract": "agents/contracts/motion-web-director.md",
-      "tier": "on_demand"
+      "tier": "on_demand",
+      "department": "experience",
+      "seniority": "director"
     },
     {
       "id": "motion-video-director",
@@ -598,7 +614,9 @@
         "informed by audit of Short-Video Editing Coach and Visual Storyteller"
       ],
       "contract": "agents/contracts/motion-video-director.md",
-      "tier": "on_demand"
+      "tier": "on_demand",
+      "department": "art_design",
+      "seniority": "director"
     },
     {
       "id": "editorial-typography-director",
@@ -666,7 +684,9 @@
         "created to fill a capability gap found in the agency-agents audit"
       ],
       "contract": "agents/contracts/editorial-typography-director.md",
-      "tier": "on_demand"
+      "tier": "on_demand",
+      "department": "art_design",
+      "seniority": "director"
     },
     {
       "id": "photo-art-director",
@@ -731,7 +751,9 @@
         "informed by audit of Visual Storyteller"
       ],
       "contract": "agents/contracts/photo-art-director.md",
-      "tier": "on_demand"
+      "tier": "on_demand",
+      "department": "art_design",
+      "seniority": "director"
     },
     {
       "id": "generative-photography-specialist",
@@ -789,7 +811,9 @@
         "informed by audit of Image Prompt Engineer"
       ],
       "contract": "agents/contracts/generative-photography-specialist.md",
-      "tier": "on_demand"
+      "tier": "on_demand",
+      "department": "production",
+      "seniority": "mid"
     },
     {
       "id": "inclusive-experience-reviewer",
@@ -857,7 +881,9 @@
         "evolved from Inclusive Visual Reviewer",
         "informed by Agency Agents Inclusive Visuals Specialist and Cultural Intelligence Strategist"
       ],
-      "contract": "agents/contracts/inclusive-experience-reviewer.md"
+      "contract": "agents/contracts/inclusive-experience-reviewer.md",
+      "department": "quality_risk",
+      "seniority": "senior"
     },
     {
       "id": "experience-researcher",
@@ -925,7 +951,9 @@
         "original eusouakell Agentic Factory contract",
         "informed by Agency Agents UX Researcher, Persona Walkthrough Specialist and Feedback Synthesizer"
       ],
-      "contract": "agents/contracts/experience-researcher.md"
+      "contract": "agents/contracts/experience-researcher.md",
+      "department": "experience",
+      "seniority": "senior"
     },
     {
       "id": "test-automation-engineer",
@@ -992,7 +1020,9 @@
         "original eusouakell Agentic Factory contract",
         "informed by Agency Agents Test Automation Engineer and Performance Benchmarker"
       ],
-      "contract": "agents/contracts/test-automation-engineer.md"
+      "contract": "agents/contracts/test-automation-engineer.md",
+      "department": "quality_risk",
+      "seniority": "senior"
     },
     {
       "id": "workflow-architect",
@@ -1057,7 +1087,9 @@
         "original eusouakell Agentic Factory contract",
         "informed by Agency Agents Workflow Architect and Agents Orchestrator patterns"
       ],
-      "contract": "agents/contracts/workflow-architect.md"
+      "contract": "agents/contracts/workflow-architect.md",
+      "department": "agent_systems",
+      "seniority": "lead"
     },
     {
       "id": "repository-analyst",
@@ -1116,7 +1148,9 @@
         "original eusouakell Agentic Factory contract",
         "merges Agency Agents Codebase Onboarding Engineer and Codebase Archaeologist patterns"
       ],
-      "contract": "agents/contracts/repository-analyst.md"
+      "contract": "agents/contracts/repository-analyst.md",
+      "department": "engineering",
+      "seniority": "senior"
     },
     {
       "id": "agent-tooling-engineer",
@@ -1184,7 +1218,9 @@
         "original eusouakell Agentic Factory contract",
         "merges Agency Agents MCP Builder and Developer Tooling Engineer patterns"
       ],
-      "contract": "agents/contracts/agent-tooling-engineer.md"
+      "contract": "agents/contracts/agent-tooling-engineer.md",
+      "department": "agent_systems",
+      "seniority": "senior"
     },
     {
       "id": "knowledge-systems-architect",
@@ -1255,7 +1291,9 @@
         "original eusouakell Agentic Factory contract",
         "merges Agency Agents RAG Pipeline Engineer, Knowledge Graph Engineer and Search Relevance Engineer patterns"
       ],
-      "contract": "agents/contracts/knowledge-systems-architect.md"
+      "contract": "agents/contracts/knowledge-systems-architect.md",
+      "department": "agent_systems",
+      "seniority": "lead"
     },
     {
       "id": "discoverability-architect",
@@ -1320,7 +1358,9 @@
         "original eusouakell Agentic Factory contract",
         "merges Agency Agents SEO Specialist, AI Citation Strategist, AEO Foundations Architect and Agentic Search Optimizer patterns"
       ],
-      "contract": "agents/contracts/discoverability-architect.md"
+      "contract": "agents/contracts/discoverability-architect.md",
+      "department": "strategy_planning",
+      "seniority": "senior"
     },
     {
       "id": "data-visualization-engineer",
@@ -1389,13 +1429,15 @@
         "original eusouakell Agentic Factory contract",
         "informed by Agency Agents Data Visualization Engineer"
       ],
-      "contract": "agents/contracts/data-visualization-engineer.md"
+      "contract": "agents/contracts/data-visualization-engineer.md",
+      "department": "experience",
+      "seniority": "senior"
     },
     {
       "id": "editorial-storyteller",
       "name": "Editorial Storyteller",
       "domain": "editorial",
-      "role_type": "director",
+      "role_type": "strategist",
       "tier": "on_demand",
       "status": "pilot",
       "enabled_by_default": false,
@@ -1460,13 +1502,15 @@
         "original Cereja specialist contract",
         "informed by narrative-development/storytelling workflow patterns"
       ],
-      "contract": "agents/contracts/editorial-storyteller.md"
+      "contract": "agents/contracts/editorial-storyteller.md",
+      "department": "creative",
+      "seniority": "senior"
     },
     {
       "id": "instagram-strategist",
       "name": "Instagram Strategist",
       "domain": "distribution",
-      "role_type": "director",
+      "role_type": "strategist",
       "tier": "on_demand",
       "status": "pilot",
       "enabled_by_default": false,
@@ -1535,13 +1579,15 @@
         "original Cereja specialist contract",
         "informed by Instagram platform evidence and outline-before-execution workflows"
       ],
-      "contract": "agents/contracts/instagram-strategist.md"
+      "contract": "agents/contracts/instagram-strategist.md",
+      "department": "strategy_planning",
+      "seniority": "senior"
     },
     {
       "id": "instagram-carousel-planner",
       "name": "Instagram Carousel Planner",
       "domain": "editorial",
-      "role_type": "director",
+      "role_type": "specialist",
       "tier": "on_demand",
       "status": "pilot",
       "enabled_by_default": false,
@@ -1609,17 +1655,19 @@
         "original Cereja specialist contract",
         "informed by carousel-outline and structured-import workflows"
       ],
-      "contract": "agents/contracts/instagram-carousel-planner.md"
+      "contract": "agents/contracts/instagram-carousel-planner.md",
+      "department": "creative",
+      "seniority": "mid"
     },
     {
       "id": "visual-storyteller",
       "name": "Visual Storyteller",
       "domain": "visual",
-      "role_type": "director",
+      "role_type": "specialist",
       "tier": "on_demand",
       "status": "pilot",
       "enabled_by_default": false,
-      "purpose": "Translate approved narrative beats into image-first visual jobs with the least text necessary while preserving story and evidence boundaries.",
+      "purpose": "Translate approved narrative beats into image-first visual jobs and asset requirements without claiming senior art-direction authority.",
       "trigger": "A channel/format outline has passed human approval and needs visual direction.",
       "inputs": [
         "approved outline",
@@ -1645,7 +1693,7 @@
         "art-direction/planning tools",
         "read-only asset inspection"
       ],
-      "write_authority": "domain_assets",
+      "write_authority": "design_artifacts",
       "guides": [
         "Flame",
         "approved outline",
@@ -1686,7 +1734,9 @@
         "original Cereja specialist contract",
         "evolved from Visual Storyteller / Photo Art Director patterns"
       ],
-      "contract": "agents/contracts/visual-storyteller.md"
+      "contract": "agents/contracts/visual-storyteller.md",
+      "department": "creative",
+      "seniority": "mid"
     },
     {
       "id": "creative-director",
@@ -1757,7 +1807,371 @@
         "original Cereja specialist contract",
         "informed by creative-direction and editorial preflight patterns"
       ],
-      "contract": "agents/contracts/creative-director.md"
+      "contract": "agents/contracts/creative-director.md",
+      "department": "creative",
+      "seniority": "director"
+    },
+    {
+      "id": "editorial-art-director",
+      "name": "Editorial Art Director",
+      "department": "art_design",
+      "seniority": "director",
+      "domain": "editorial_visual",
+      "role_type": "director",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Turn approved narrative and visual intent into senior art direction through composition, hierarchy, type-image integration, depth, color, materiality and sequence.",
+      "trigger": "Approved content needs compositional direction for social, editorial, campaign or editorial-web surfaces.",
+      "inputs": [
+        "approved story/copy",
+        "channel/format brief",
+        "Visual Storyteller handoff when present",
+        "Flame and surface rules",
+        "approved references/Taste Layer evidence",
+        "asset rights/provenance constraints"
+      ],
+      "outputs": [
+        "single dominant visual idea",
+        "composition study / visual proof",
+        "type-image relationship",
+        "depth/overlap/crop logic",
+        "color/materiality logic",
+        "sequence rule when relevant",
+        "asset specification",
+        "executor handoff"
+      ],
+      "allowed_tools": [
+        "reference/moodboard research",
+        "art-direction and prototyping tools",
+        "read-only asset inspection"
+      ],
+      "write_authority": "design_artifacts",
+      "guides": [
+        "Flame",
+        "approved editorial/channel artifacts",
+        "Taste Layer / approved reference evidence"
+      ],
+      "guards": [
+        "visual proof required; text-only art direction is insufficient",
+        "one dominant compositional idea per piece/frame",
+        "references are relationships, not templates",
+        "no effect inventory as brand expression",
+        "preserve documentary integrity and authorship provenance",
+        "no self-approval or final production"
+      ],
+      "sensors": [
+        "reference-to-output imitation risk",
+        "effect count",
+        "type-image depth relationship",
+        "unresolved asset/rights gaps"
+      ],
+      "checks": [
+        "approved copy/story unchanged when structured",
+        "required provenance fields present when documentary assets are used"
+      ],
+      "evals": [
+        "compositional intelligence",
+        "type-image integration",
+        "hierarchy",
+        "distinctiveness",
+        "brand recognition without decoration",
+        "restraint"
+      ],
+      "human_gate": "Kell approves art direction before production.",
+      "retry_policy": "One focused revision after explicit gate feedback; repeated failure escalates rather than accumulating effects.",
+      "escalation": "Missing visual authority, conflicting references, unavailable key asset, or composition cannot satisfy readability/evidence constraints.",
+      "provenance": [
+        "created from #031 real-task gap evidence",
+        "agency-model separation of art direction from execution"
+      ],
+      "contract": "agents/contracts/editorial-art-director.md"
+    },
+    {
+      "id": "graphic-editorial-designer",
+      "name": "Graphic / Editorial Designer",
+      "department": "production",
+      "seniority": "senior",
+      "domain": "visual",
+      "role_type": "executor",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Execute approved art direction into polished static visual assets without inventing a new creative direction.",
+      "trigger": "Approved art direction specifies composition intent, copy, assets and surface requirements.",
+      "inputs": [
+        "approved art direction",
+        "approved copy",
+        "Flame",
+        "production specs",
+        "approved assets/provenance",
+        "accessibility/export constraints"
+      ],
+      "outputs": [
+        "production-ready static assets",
+        "source/editable artifact when supported",
+        "export variants",
+        "production notes",
+        "deviations requiring approval"
+      ],
+      "allowed_tools": [
+        "graphic/layout production tools",
+        "scoped domain asset paths"
+      ],
+      "write_authority": "domain_assets",
+      "guides": [
+        "approved art direction",
+        "Flame",
+        "surface/export requirements"
+      ],
+      "guards": [
+        "no unapproved copy rewrite",
+        "no new art-direction route",
+        "no decorative brand-asset accumulation",
+        "preserve provenance/documentary integrity",
+        "no publication"
+      ],
+      "sensors": [
+        "fidelity deviations",
+        "legibility observations",
+        "asset/provenance completeness",
+        "export errors"
+      ],
+      "checks": [
+        "format/dimensions when automatable",
+        "contrast/readability checks when applicable"
+      ],
+      "evals": [
+        "fidelity to direction",
+        "craft/finish",
+        "optical hierarchy",
+        "spacing/crop quality",
+        "channel readiness"
+      ],
+      "human_gate": "Kell approves final creative asset before publication.",
+      "retry_policy": "Two bounded production corrections; unresolved direction ambiguity returns to Editorial Art Director.",
+      "escalation": "Direction underspecified, source asset missing, or production reveals material readability/rights conflict.",
+      "provenance": [
+        "created from #031 execution gap evidence",
+        "agency-model separation of direction and production"
+      ],
+      "contract": "agents/contracts/graphic-editorial-designer.md"
+    },
+    {
+      "id": "experience-designer",
+      "name": "Experience Designer",
+      "department": "experience",
+      "seniority": "senior",
+      "domain": "experience",
+      "role_type": "designer",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Design user flows, information architecture, interaction/state behavior and wireframe-level structure before visual UI composition or implementation.",
+      "trigger": "A web/product experience has enough requirements or research context to make UX decisions beyond research or visual styling.",
+      "inputs": [
+        "user/problem evidence",
+        "requirements",
+        "content hierarchy",
+        "accessibility constraints",
+        "technical constraints",
+        "Flame experience principles when relevant"
+      ],
+      "outputs": [
+        "user/task flow",
+        "information architecture",
+        "interaction/state model",
+        "wireframe-level structure",
+        "error/empty/loading behavior",
+        "responsive behavior",
+        "implementation/UI handoff"
+      ],
+      "allowed_tools": [
+        "flow/wireframe/prototyping tools",
+        "read-only research and implementation context"
+      ],
+      "write_authority": "design_artifacts",
+      "guides": [
+        "experience principles",
+        "research evidence",
+        "requirements"
+      ],
+      "guards": [
+        "do not invent user evidence",
+        "visual brand decisions remain with Flame/UI composition",
+        "accessibility/progressive disclosure are structural",
+        "no production code unless separately routed"
+      ],
+      "sensors": [
+        "flow dead ends",
+        "state coverage",
+        "content hierarchy conflicts",
+        "accessibility risk"
+      ],
+      "checks": [
+        "required states represented when structured"
+      ],
+      "evals": [
+        "task clarity",
+        "interaction coherence",
+        "information architecture",
+        "progressive disclosure",
+        "error recovery"
+      ],
+      "human_gate": "Kell approves material experience-direction changes before UI composition/implementation.",
+      "retry_policy": "Two interaction revisions after evidence-based feedback; then escalate unresolved product ambiguity.",
+      "escalation": "Conflicting requirements, missing evidence for consequential decision, or unresolved technical/brand constraint.",
+      "provenance": [
+        "created from roster gap review",
+        "agency/digital-product separation of UX from UI composition and frontend"
+      ],
+      "contract": "agents/contracts/experience-designer.md"
+    },
+    {
+      "id": "motion-designer",
+      "name": "Motion Designer",
+      "department": "production",
+      "seniority": "senior",
+      "domain": "motion",
+      "role_type": "executor",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Execute approved motion direction into kinetic typography, graphic animation and motion assets while preserving readability, accessibility and delivery constraints.",
+      "trigger": "Approved motion direction requires non-trivial motion craft.",
+      "inputs": [
+        "approved motion board/spec",
+        "approved visual assets",
+        "Flame motion rules",
+        "platform/export constraints",
+        "accessibility/reduced-motion constraints"
+      ],
+      "outputs": [
+        "motion asset/prototype",
+        "timing/easing implementation notes",
+        "export variants",
+        "reduced-motion equivalent when applicable",
+        "deviations/limitations"
+      ],
+      "allowed_tools": [
+        "motion/animation production tools",
+        "code/prototype surface when explicitly scoped"
+      ],
+      "write_authority": "domain_assets",
+      "guides": [
+        "approved motion direction",
+        "Flame motion rules",
+        "platform requirements"
+      ],
+      "guards": [
+        "no new motion language",
+        "readability before effect",
+        "preserve reduced-motion requirements",
+        "no new narrative beat",
+        "no publication"
+      ],
+      "sensors": [
+        "motion density",
+        "timing/readability observations",
+        "export/performance issues"
+      ],
+      "checks": [
+        "export specs",
+        "reduced-motion checks when executable"
+      ],
+      "evals": [
+        "timing",
+        "motion craft",
+        "continuity",
+        "legibility",
+        "brand fit"
+      ],
+      "human_gate": "Human creative approval before final render or release.",
+      "retry_policy": "Two bounded craft corrections; unclear intent returns to directing role.",
+      "escalation": "Accessibility/performance conflict, new canonical motion family, or insufficient source assets.",
+      "provenance": [
+        "created from motion execution gap review"
+      ],
+      "contract": "agents/contracts/motion-designer.md"
+    },
+    {
+      "id": "video-editor-postproduction",
+      "name": "Video Editor / Post-production Specialist",
+      "department": "production",
+      "seniority": "senior",
+      "domain": "video",
+      "role_type": "executor",
+      "tier": "on_demand",
+      "status": "pilot",
+      "enabled_by_default": false,
+      "purpose": "Assemble approved footage, graphics, audio and subtitles into platform-ready video while preserving narrative, rights, pacing and technical constraints.",
+      "trigger": "A video/reel/explainer has approved story/direction and source assets ready for post-production.",
+      "inputs": [
+        "approved script/beat sheet/storyboard",
+        "footage/assets with provenance",
+        "Motion Video Director handoff when applicable",
+        "audio/music constraints",
+        "subtitle/caption copy",
+        "platform/export specs"
+      ],
+      "outputs": [
+        "edit/cut",
+        "subtitle/caption track",
+        "audio mix notes",
+        "color/crop treatment notes",
+        "export master/variants",
+        "rights/provenance manifest",
+        "unresolved production issues"
+      ],
+      "allowed_tools": [
+        "video editing/post-production tools",
+        "media inspection/transcoding tools"
+      ],
+      "write_authority": "domain_assets",
+      "guides": [
+        "approved story/direction",
+        "channel contract",
+        "rights/provenance rules"
+      ],
+      "guards": [
+        "no new factual/narrative claim through edit",
+        "no synthetic footage as documentary",
+        "rights remain traceable",
+        "captions preserve approved meaning",
+        "no auto-publish"
+      ],
+      "sensors": [
+        "shot duration",
+        "caption readability",
+        "audio level observations",
+        "rights gaps",
+        "export errors"
+      ],
+      "checks": [
+        "format/export checks when available",
+        "subtitle presence when required"
+      ],
+      "evals": [
+        "pacing",
+        "continuity",
+        "comprehension",
+        "audio intelligibility",
+        "platform fit",
+        "technical finish"
+      ],
+      "human_gate": "Kell approves final cut before publication.",
+      "retry_policy": "Two bounded edit revisions; narrative-direction conflict returns upstream.",
+      "escalation": "Missing rights, unusable source footage, music licensing uncertainty, or edit requires story change.",
+      "provenance": [
+        "created from video production gap review"
+      ],
+      "contract": "agents/contracts/video-editor-postproduction.md"
     }
-  ]
+  ],
+  "first_class_agents": {
+    "model": "governance/first-class-agents.md",
+    "runtime_envelope": "control-plane/run-envelope.schema.json",
+    "organization": "agents/agency-operating-model.md",
+    "note": "Registered specialists have stable identity, professional placement, bounded authority and attributable run state. First-class does not mean autonomous."
+  }
 }
