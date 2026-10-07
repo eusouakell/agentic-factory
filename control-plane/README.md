@@ -17,6 +17,14 @@ It owns:
 - run evidence;
 - terminal-state ownership.
 
+## First-class run identity
+
+Before execution, the control plane should bind a registered `agent_id` to a run envelope containing the task, contract ref, authority snapshot, context manifest, tool grants, state, evidence and human gate.
+
+See [run envelope schema](run-envelope.schema.json) and [first-class agents](../governance/first-class-agents.md).
+
+A runner such as Codex does not replace or widen that identity.
+
 ## Run state
 
 Recommended generic lifecycle:
