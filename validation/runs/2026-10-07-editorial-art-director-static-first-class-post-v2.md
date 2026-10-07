@@ -3,8 +3,8 @@
 **Date:** 2026-10-07  
 **Agent ID:** `editorial-art-director`  
 **Task:** issue #27  
-**State:** `waiting_gate` after visual proof  
-**Outcome:** pending human gate
+**State:** `completed` after human art-direction gate  
+**Outcome:** `PASS` — approved for downstream production with bounded refinements
 
 ## Trigger
 
@@ -100,9 +100,27 @@ If the direction passes, the executor may place the **official isolated flame in
 
 The credential metaphor can become a generic conference badge or cybersecurity visual. The proof passes only if scale, crop, light, type-object integration and material treatment make it feel like a specific editorial composition rather than a literal stock metaphor.
 
-## Executor handoff if approved
+## Human-gate refinements
 
-Codex / Graphic & Editorial Designer receives only after Kell gate:
+Kell approved the direction with two explicit refinements:
+
+- improve headline edge/outline treatment for stronger readability without turning the type into a sticker or effect;
+- replace the ambiguous red texture/photo area on the credential with a **character portrait that is clearly an agent identity, not a real human employee**.
+
+The agent/non-human identity should be communicated through a coherent set of system cues, not robot imagery. Preferred cues:
+
+- `type: agent`;
+- `non-human principal` or `runtime identity`;
+- stable agent/principal ID;
+- bounded authority / authority scope;
+- active/verified state;
+- subtle scan/grid/interface treatment on the portrait only if it supports the identity cue.
+
+The portrait remains conceptual/synthetic and must not be presented as documentary evidence or a real person. Avoid sci-fi glow, android anatomy, circuit-face effects, cyberpunk color language or decorative HUD overload.
+
+## Executor handoff
+
+Codex / Graphic & Editorial Designer is now authorized to execute after Kell's PASS:
 
 - approved proof;
 - this art-direction record;
@@ -123,6 +141,8 @@ Codex / Graphic & Editorial Designer receives only after Kell gate:
 
 ## Human gate
 
-**KELL — ART DIRECTION GATE**
+**KELL — ART DIRECTION GATE: PASS**
 
-Stop here after the proof. No final production, lifecycle promotion or publication.
+Approved visual direction: tactile credential object, warm editorial photography, integrated headline, restrained cherry/ink palette and system-identity metaphor.
+
+This PASS authorizes only downstream production by the Graphic / Editorial Designer. It does **not** authorize publication or lifecycle promotion of the Art Director.
