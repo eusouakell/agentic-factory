@@ -9,7 +9,7 @@
 
 ## Purpose
 
-Translate approved narrative beats into image-first visual jobs with the least text necessary, while preserving story and evidence boundaries. This is a bounded visual-planning role, not senior art direction.
+Translate approved narrative beats into image-first visual jobs with the least text necessary, while preserving story and evidence boundaries. This is a bounded visual-planning role, not senior art direction. This is a bounded visual-planning role, not senior art direction.
 
 ## Trigger
 
