@@ -30,6 +30,8 @@ Agents are capabilities, not the architecture. The agency-inspired structure is 
 ```text
 OUTCOME / INTENT
       ↓
+DOMAIN AUTHORITIES + ELIGIBLE CONTEXT
+      ↓
 GOVERNED DECISION
 owner · criteria · value · risk · frequency · reversibility · oversight
       ↓
