@@ -80,3 +80,18 @@ The run plan should distinguish:
 An external skill, benchmark or model suggestion cannot override a canonical domain source.
 
 See [progressive context loading](context-loading.md).
+
+
+## Decision authority
+
+Decision authority is separate from execution authority.
+
+A first-class decision declares an accountable owner, required decision authority, oversight mode, exception conditions and evidence. An agent may recommend a decision without owning it, own a bounded decision without executing the consequence, or execute a task whose decision was frozen upstream.
+
+See [first-class decisions](first-class-decisions.md).
+
+## Oversight modes do not widen permissions
+
+Reducing per-instance human review for an approved decision class does not automatically grant new tools, broader writes, merge or publication authority, additional context, or permission to alter canonical truth.
+
+Both decision authority and action authority must allow the consequence before execution proceeds.
