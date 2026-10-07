@@ -4,9 +4,11 @@
 
 The Factory uses the useful part of a traditional agency model: **clear professional disciplines, seniority, handoffs and separation of strategy, direction, craft, production and review**.
 
+This is a **capability map, not the Factory's top-level architecture**. Work starts from an outcome and, when a real choice exists, a governed first-class decision. The control plane selects only the capabilities required to support or execute that decision.
+
 It does not reproduce account-management bureaucracy or create an agent for every historical agency job.
 
-The control plane performs traffic/routing/state responsibilities. It is infrastructure, not a Traffic Manager persona.
+The control plane performs decision routing, traffic/state and authority responsibilities. It is infrastructure, not a Traffic Manager persona.
 
 ## Departments
 
@@ -93,7 +95,11 @@ Registry seniority is a professional-depth signal, not an authority grant:
 - `lead` — system/discipline-level decisions across multiple artifacts;
 - `director` — directional judgment spanning specialists and craft disciplines.
 
-## Standard creative flows
+## Reference capability flows
+
+These flows are reusable defaults, not mandatory org-chart pipelines. A decision record may skip capabilities that add no value.
+
+Named Kell gates below describe the **current calibration phase**. They are not permanent architecture. When a recurring decision class has enough evidence and an explicitly approved oversight policy, the control plane may replace per-instance gates with human-on-exception or sampled review while preserving authority, evidence and escalation.
 
 ### Static social / editorial post
 
