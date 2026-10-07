@@ -65,6 +65,8 @@ Automation routes authority; it does not invent authority.
 - controls;
 - retry and escalation policy;
 - lifecycle and tier;
+- department and seniority;
+- stable first-class identity;
 - provenance.
 
 ### Domain repositories own
@@ -103,6 +105,12 @@ The Factory is not:
 - a reason to turn every capability into an agent;
 - permission for one agent to design, execute and approve its own work;
 - proof that more agents produce better outcomes.
+
+## First-class agents
+
+Registered specialist agents have stable identity, professional placement, bounded authority and attributable runtime state. The execution surface does not become the agent identity.
+
+See [first-class agents](governance/first-class-agents.md) and [agency operating model](agents/agency-operating-model.md).
 
 ## Agent tiers
 
