@@ -2,7 +2,7 @@
 
 **Agent ID:** `instagram-strategist`  
 **Domain:** distribution  
-**Role type:** director  
+**Role type:** strategist  
 **Tier:** on_demand  
 **Lifecycle:** pilot  
 **Enabled by default:** no
