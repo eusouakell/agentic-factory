@@ -99,6 +99,8 @@ Registry seniority is a professional-depth signal, not an authority grant:
 
 These flows are reusable defaults, not mandatory org-chart pipelines. A decision record may skip capabilities that add no value.
 
+Named Kell gates below describe the **current calibration phase**. They are not permanent architecture. When a recurring decision class has enough evidence and an explicitly approved oversight policy, the control plane may replace per-instance gates with human-on-exception or sampled review while preserving authority, evidence and escalation.
+
 ### Static social / editorial post
 
 ```text
