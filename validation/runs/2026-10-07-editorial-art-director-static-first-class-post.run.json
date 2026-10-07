@@ -1,0 +1,58 @@
+{
+  "run_id": "2026-10-07-editorial-art-director-static-first-class-post",
+  "agent_id": "editorial-art-director",
+  "agent_contract_ref": "agents/contracts/editorial-art-director.md@main",
+  "task_ref": "https://github.com/eusouakell/agentic-factory/issues/27",
+  "trigger": "Approved canonical first-class-agent content needs senior compositional direction for one static social/editorial post.",
+  "authority_snapshot": {
+    "write_authority": "design_artifacts",
+    "notes": "May create art-direction study/proof only. No final production asset, publication, copy authorship claim, lifecycle promotion or self-approval."
+  },
+  "context_manifest": [
+    {
+      "ref": "governance/first-class-agents.md",
+      "classification": "canonical_authority"
+    },
+    {
+      "ref": "agents/contracts/editorial-art-director.md",
+      "classification": "canonical_authority"
+    },
+    {
+      "ref": "eusouakell/cereja-knowledge-system/brand/flame/DESIGN.md",
+      "classification": "canonical_authority"
+    },
+    {
+      "ref": "eusouakell/cereja-knowledge-system/brand/flame/distinctiveness.md",
+      "classification": "canonical_authority"
+    },
+    {
+      "ref": "eusouakell/cereja-knowledge-system/brand/flame/brand-media-rules.md",
+      "classification": "canonical_authority"
+    },
+    {
+      "ref": "eusouakell/cereja-editorial-engine@cb503c8/growth/cycles/031-visual-calibration/taste-fingerprint.md",
+      "classification": "reference"
+    },
+    {
+      "ref": "eusouakell/cereja-editorial-engine@cb503c8/growth/cycles/031-visual-calibration/brand-asset-grammar.md",
+      "classification": "reference"
+    }
+  ],
+  "tool_grants": [
+    "reference/moodboard research",
+    "art-direction/prototyping tool",
+    "read-only asset inspection",
+    "design-artifact branch writes"
+  ],
+  "state": "waiting_gate",
+  "evidence": [
+    "validation/runs/2026-10-07-editorial-art-director-static-first-class-post.md",
+    "https://github.com/eusouakell/agentic-factory/issues/27",
+    "visual proof presented to Kell in validation conversation"
+  ],
+  "human_gate": "KELL — ART DIRECTION GATE",
+  "handoff": null,
+  "uncertainty": [
+    "Visual proof has not yet been judged by Kell; validation outcome remains unset."
+  ]
+}
