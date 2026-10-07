@@ -12,25 +12,40 @@ It does not decide domain truth.
 
 ## System relationship
 
+The Factory is **decision-oriented, capability-routed and evidence-driven**.
+
 ```text
+OUTCOME / INTENT
+      ↓
+GOVERNED DECISION
+      ↓
 DOMAIN AUTHORITIES
 Núcleo · Flame · Editorial Engine · Context System
-             ↓
-        CONTROL PLANE
-             ↓
-    AGENT REGISTRY + TOOLS
-             ↓
-GUIDES / GUARDS / SENSORS / CHECKS
-             ↓
-            EVALS
-             ↓
-       HUMAN DECISIONS
+      ↓
+CONTROL PLANE
+route · authorize · select capabilities · set oversight
+      ↓
+AGENTS / SKILLS / TOOLS
+      ↓
+TASKS / EXECUTION
+      ↓
+GUIDES / GUARDS / SENSORS / CHECKS / EVALS
+      ↓
+EVIDENCE
+      ↓
+OUTCOME OBSERVED
+      ↓
+LEARN-BACK
 ```
+
+Tasks remain execution units. They are not the primary abstraction for choices that affect outcomes, risk, authority or downstream work. See [first-class decisions](governance/first-class-decisions.md).
 
 ## Responsibilities
 
 ### Control plane owns
 
+- decision intake and decision-to-capability routing;
+- oversight-mode enforcement;
 - routing;
 - context eligibility and progressive disclosure;
 - task/run state;
@@ -106,11 +121,15 @@ The Factory is not:
 - permission for one agent to design, execute and approve its own work;
 - proof that more agents produce better outcomes.
 
-## First-class agents
+## First-class decisions and agents
 
-Registered specialist agents have stable identity, professional placement, bounded authority and attributable runtime state. The execution surface does not become the agent identity.
+Governed decisions are first-class entities with stable identity, ownership, criteria, governance profile, oversight mode, evidence and learn-back.
 
-See [first-class agents](governance/first-class-agents.md) and [agency operating model](agents/agency-operating-model.md).
+Registered specialist agents are also first-class entities with stable identity, professional placement, bounded authority and attributable runtime state. The execution surface does not become the agent identity.
+
+The agency-inspired model is a **capability map**, not the top-level architecture. The control plane starts from the outcome and decision, then routes only the professional capabilities needed to support or execute it.
+
+See [first-class decisions](governance/first-class-decisions.md), [first-class agents](governance/first-class-agents.md) and [agency operating model](agents/agency-operating-model.md).
 
 ## Agent tiers
 
