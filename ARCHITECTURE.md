@@ -17,10 +17,11 @@ The Factory is **decision-oriented, capability-routed and evidence-driven**.
 ```text
 OUTCOME / INTENT
       ↓
-GOVERNED DECISION
-      ↓
-DOMAIN AUTHORITIES
+DOMAIN AUTHORITIES + ELIGIBLE CONTEXT
 Núcleo · Flame · Editorial Engine · Context System
+      ↓
+GOVERNED DECISION
+owner · criteria · authority · oversight
       ↓
 CONTROL PLANE
 route · authorize · select capabilities · set oversight
