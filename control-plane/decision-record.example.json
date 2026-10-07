@@ -1,0 +1,56 @@
+{
+  "decision_id": "example-editorial-visual-direction-001",
+  "decision_type": "editorial_visual_direction",
+  "title": "Choose the visual direction for an approved editorial post",
+  "outcome_ref": "Create a channel-fit editorial asset that preserves the approved story and Flame standards.",
+  "decision_owner": {
+    "type": "human",
+    "ref": "kell"
+  },
+  "governance_profile": {
+    "business_value": 4,
+    "risk": 3,
+    "frequency": 4,
+    "reversibility": "reversible",
+    "notes": "Recurring brand decision with reputational impact; production can be revised before publication."
+  },
+  "inputs": [
+    "approved story",
+    "Flame",
+    "channel production spec",
+    "approved references"
+  ],
+  "criteria": [
+    "one dominant compositional idea",
+    "authorial fit",
+    "channel fit",
+    "brand recognition without decoration",
+    "readability",
+    "provenance integrity"
+  ],
+  "authority_required": {
+    "decision_authority": "shared",
+    "agent_ids": [
+      "editorial-art-director"
+    ],
+    "notes": "Agent proposes; Kell currently approves while the decision class is calibrated."
+  },
+  "oversight_mode": "human_gate",
+  "exception_conditions": [
+    "canonical conflict",
+    "missing asset rights",
+    "unresolved readability conflict"
+  ],
+  "state": "decided",
+  "decision": {
+    "selected_option": "approved visual direction",
+    "rationale": "Chosen after human gate against the declared criteria."
+  },
+  "evidence": [
+    "art-direction proof",
+    "human gate record"
+  ],
+  "expected_outcome": "Production can execute the approved direction without inventing a new concept.",
+  "observed_outcome": null,
+  "learn_back": []
+}
