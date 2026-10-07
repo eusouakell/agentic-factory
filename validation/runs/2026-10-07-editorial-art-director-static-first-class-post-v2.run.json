@@ -39,16 +39,29 @@
     "read-only canonical context",
     "design-artifact branch writes"
   ],
-  "state": "waiting_gate",
+  "state": "completed",
   "evidence": [
     "validation/runs/2026-10-07-editorial-art-director-static-first-class-post-v2.md",
     "validation/runs/2026-10-07-editorial-art-director-static-first-class-post-v1-retrospective.md",
     "https://github.com/eusouakell/agentic-factory/issues/27",
     "visual proof presented to Kell in validation conversation"
   ],
-  "human_gate": "KELL — ART DIRECTION GATE",
-  "handoff": null,
+  "human_gate": "KELL — ART DIRECTION GATE: PASS",
+  "handoff": {
+    "to_agent_id": "graphic-editorial-designer",
+    "status": "authorized",
+    "requirements": [
+      "Execute the approved 1080x1350 / 4:5 composition rather than creating a new direction.",
+      "Strengthen headline readability with a restrained edge/outline treatment.",
+      "Replace the ambiguous credential image area with a conceptual/synthetic agent-character portrait.",
+      "Signal non-human agent identity through bounded system cues such as type: agent, non-human principal/runtime identity, principal_id, authority_scope and active/verified state.",
+      "Avoid robot/cyberpunk/HUD clichés and do not present the synthetic portrait as a real person.",
+      "Use only official Flame brand assets; isolated flame in negative is optional when composition supports it.",
+      "Preserve copy provenance and stop at final creative review; no publish."
+    ]
+  },
   "uncertainty": [
-    "Visual proof not yet judged by Kell; outcome remains unset."
+    "Final production fidelity has not yet been evaluated by the independent Creative Director.",
+    "Public caption is not approved and must pass the content-specialist workflow separately."
   ]
 }
