@@ -50,6 +50,12 @@ No agent may:
 - merge directly to `main`;
 - redefine canonical domain rules without the declared human gate.
 
+## Seniority is not authority
+
+Department, title and seniority describe professional placement and expected judgment. They do not grant tools, writes, publication rights or lifecycle promotion.
+
+A Director may be review-only. A Senior executor may still be limited to scoped domain assets.
+
 ## Least privilege
 
 Tool access should be:
