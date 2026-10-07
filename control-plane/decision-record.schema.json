@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/eusouakell/agentic-factory/control-plane/decision-record.schema.json",
+  "title": "Agentic Factory first-class decision record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "decision_id",
+    "decision_type",
+    "title",
+    "outcome_ref",
+    "decision_owner",
+    "governance_profile",
+    "inputs",
+    "criteria",
+    "authority_required",
+    "oversight_mode",
+    "state",
+    "evidence",
+    "expected_outcome"
+  ],
+  "properties": {
+    "decision_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outcome_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision_owner": {
+      "type": "object",
+      "required": [
+        "type",
+        "ref"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "human",
+            "agent",
+            "system"
+          ]
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "governance_profile": {
+      "type": "object",
+      "required": [
+        "business_value",
+        "risk",
+        "frequency",
+        "reversibility"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "business_value": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "risk": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "frequency": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "reversibility": {
+          "enum": [
+            "reversible",
+            "partially_reversible",
+            "hard_to_reverse",
+            "irreversible"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "authority_required": {
+      "type": "object",
+      "required": [
+        "decision_authority"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "decision_authority": {
+          "enum": [
+            "human",
+            "agent",
+            "system",
+            "shared"
+          ]
+        },
+        "agent_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "oversight_mode": {
+      "enum": [
+        "human_only",
+        "human_gate",
+        "human_on_exception",
+        "sampled_review",
+        "autonomous_bounded"
+      ]
+    },
+    "exception_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "state": {
+      "enum": [
+        "proposed",
+        "ready",
+        "deciding",
+        "decided",
+        "executing",
+        "observing",
+        "closed",
+        "escalated",
+        "cancelled"
+      ]
+    },
+    "decision": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "expected_outcome": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_outcome": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "learn_back": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
