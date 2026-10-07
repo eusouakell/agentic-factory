@@ -6,8 +6,9 @@ This directory records **real-task evidence** used to decide whether a registere
 
 A passing prompt demo is not validation.
 
-A useful validation run must have:
+A useful validation run must be attributable to a registered first-class agent identity and have:
 
+- a run envelope or equivalent evidence identifying agent, task, contract/authority snapshot and state;
 - a real task with a consequence;
 - an explicit trigger and scope;
 - observable evidence;

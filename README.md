@@ -49,20 +49,25 @@ The Orchestrator is **not** an agent persona. Routing and authority are control-
 
 See [ARCHITECTURE.md](ARCHITECTURE.md).
 
-## Agent Registry V2
+## Agent Registry V3
 
-The current Registry V2 contains **21 agents**:
+The current Registry V3 contains **31 agents**:
 
-- **7 core** — 6 active, 1 pilot;
-- **14 on-demand** — 4 active, 10 pilot.
+- **7 core** — existing lifecycle states preserved;
+- **24 on-demand** — including five new production/design pilots identified by the 2026-10 expertise review.
 
 `active` means validated capability, not autonomous execution. All agents remain disabled by default unless the control plane explicitly routes them.
+
+Registry V3 treats agents as first-class entities with stable identity, department, seniority, bounded authority and attributable runtime state. Seniority does not grant authority.
 
 Start with:
 
 - [Agent Registry](agents/registry.json)
 - [Registry documentation](agents/README.md)
 - [Agent contracts](agents/contracts/)
+- [Agency-inspired operating model](agents/agency-operating-model.md)
+- [First-class agent model](governance/first-class-agents.md)
+- [Roster expertise review](agents/audit/roster-expertise-review-2026-10.md)
 - [Agency Agents audit](agents/audit/agency-agents/)
 
 ## Automation Layer
@@ -127,7 +132,7 @@ See [integrations/](integrations/).
 
 ## Migration provenance
 
-Registry V2 and its audit artifacts were migrated from `eusouakell/marketing-context-system` after the extraction boundary was approved.
+Registry V2 originated from the migration described below; Registry V3 evolves that foundation with first-class identity and professional role separation. The original audit artifacts were migrated from `eusouakell/marketing-context-system` after the extraction boundary was approved.
 
 Migration rule:
 

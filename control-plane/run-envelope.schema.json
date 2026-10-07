@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/eusouakell/agentic-factory/control-plane/run-envelope.schema.json",
+  "title": "Agentic Factory run envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "agent_id",
+    "agent_contract_ref",
+    "task_ref",
+    "trigger",
+    "authority_snapshot",
+    "context_manifest",
+    "tool_grants",
+    "state",
+    "evidence",
+    "human_gate"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agent_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agent_contract_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "trigger": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority_snapshot": {
+      "type": "object",
+      "required": [
+        "write_authority"
+      ],
+      "properties": {
+        "write_authority": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "context_manifest": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "ref",
+          "classification"
+        ],
+        "properties": {
+          "ref": {
+            "type": "string"
+          },
+          "classification": {
+            "enum": [
+              "canonical_authority",
+              "approved_handoff",
+              "reference",
+              "execution_aid"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "tool_grants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "state": {
+      "enum": [
+        "queued",
+        "authorized",
+        "running",
+        "waiting_gate",
+        "blocked",
+        "completed",
+        "failed",
+        "escalated",
+        "cancelled"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "human_gate": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "handoff": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "uncertainty": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
