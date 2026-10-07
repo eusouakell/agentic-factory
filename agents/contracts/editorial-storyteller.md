@@ -2,7 +2,7 @@
 
 **Agent ID:** `editorial-storyteller`  
 **Domain:** editorial  
-**Role type:** director  
+**Role type:** strategist  
 **Tier:** on_demand  
 **Lifecycle:** pilot  
 **Enabled by default:** no
