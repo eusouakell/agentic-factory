@@ -4,6 +4,7 @@
 
 This repository defines:
 
+- first-class governed decisions and their oversight;
 - the Agent Registry and specialist contracts;
 - control-plane responsibilities;
 - Guides / Guards / Sensors / Checks / Evals / Human Gates;
@@ -20,34 +21,41 @@ Current domain authorities remain:
 
 ## Core principle
 
-> Agents are bounded capabilities. Authority lives in the control plane and canonical domain systems.
+> Outcomes drive decisions. Decisions route bounded capabilities. Authority remains explicit, observable and evidence-based.
+
+Agents are capabilities, not the architecture. The agency-inspired structure is a professional capability map, not the primary unit of work.
 
 ## Architecture
 
 ```text
-INTENT / TASK
-     ↓
+OUTCOME / INTENT
+      ↓
+GOVERNED DECISION
+owner · criteria · value · risk · frequency · reversibility · oversight
+      ↓
 CONTROL PLANE
-route · authorize · state · retries · handoffs · escalation
-     ↓
-GUIDES + GUARDS
-     ↓
+route · authorize · select capabilities · state · retries · escalation
+      ↓
 AGENT / SKILL / TOOL
-     ↓
-SENSORS
-     ↓
-CHECKS
-     ↓
-EVALS
-     ↓
-HUMAN GATE when required
-     ↓
-DONE / REVISE / ESCALATE
+      ↓
+TASKS / EXECUTION
+      ↓
+SENSORS → CHECKS → EVALS
+      ↓
+EVIDENCE → OUTCOME OBSERVED → LEARN-BACK
 ```
 
 The Orchestrator is **not** an agent persona. Routing and authority are control-plane concerns.
 
 See [ARCHITECTURE.md](ARCHITECTURE.md).
+
+## First-class decisions
+
+Governed decisions are modeled independently from their implementation tasks. Each decision can carry ownership, criteria, business value, risk, frequency, reversibility, oversight mode, evidence and learn-back.
+
+Human gates are a calibration mechanism, not a permanent assumption. Mature recurring decision classes may move toward exception-based, sampled or bounded autonomous oversight only after evidence and explicit approval.
+
+See [first-class decisions](governance/first-class-decisions.md) and the [decision record schema](control-plane/decision-record.schema.json).
 
 ## Agent Registry V3
 
