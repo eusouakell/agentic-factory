@@ -119,6 +119,12 @@
       "items": {
         "type": "string"
       }
+    },
+    "decision_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
     }
   }
 }
