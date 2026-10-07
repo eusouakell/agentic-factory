@@ -2,7 +2,7 @@
 
 **Agent ID:** `instagram-carousel-planner`  
 **Domain:** editorial  
-**Role type:** director  
+**Role type:** specialist  
 **Tier:** on_demand  
 **Lifecycle:** pilot  
 **Enabled by default:** no
