@@ -83,7 +83,21 @@ State, timestamps, attempts, handoffs and artifact refs are required run evidenc
 ### 4.7 Measurement quality is explicit
 Exact token usage is captured only when the execution surface exposes it. Estimated or unavailable usage must be labelled as such rather than fabricated.
 
-### 4.8 Portfolio-first observability
+### 4.8 Quality gates are first-class workflow state
+Quality checklists are part of workflow execution, not a final administrative step.
+
+The Factory uses three distinct classes:
+- deterministic checks;
+- semantic evaluations;
+- human decisions.
+
+A blocker check in `fail` or required `unknown` prevents a gate transition unless an authorized human explicitly overrides it with recorded residual risk.
+
+Quality-gate events feed the same portfolio-level observability stream so recurring failures can be analyzed by project, repository, workflow type, agent and stage.
+
+Canonical V1 contract: `docs/orchestration/quality-gates-v1.md`.
+
+### 4.9 Portfolio-first observability
 Observability is a Factory capability, not a feature scoped to Bússola or to one repository.
 
 The default analytical scope is **all instrumented workflows**. Project, repository, workflow type, agent, execution surface, state and time window are filters over the same event model.
@@ -189,6 +203,11 @@ Required event types:
 - `human_gate_resolved`
 - `artifact_created`
 - `artifact_accepted`
+- `quality_gate_opened`
+- `quality_check_recorded`
+- `quality_gate_passed`
+- `quality_gate_failed`
+- `quality_gate_overridden`
 - `workflow_completed`
 
 Optional usage event:
@@ -248,6 +267,18 @@ When available:
 - tokens discarded in rejected/reworked artifacts;
 - tool-call count and failure count;
 - model/execution-surface breakdown.
+
+### Quality
+
+- first-pass quality-gate pass rate;
+- most frequently failed checks;
+- blocker recurrence;
+- quality failure → upstream owner distribution;
+- gate override count;
+- escaped defects found in a later stage;
+- quality-failure correlation with rework.
+
+Do not collapse these into one opaque quality score in V1.
 
 ### Human attention
 
@@ -344,7 +375,18 @@ Across completed workflows:
 
 Do not rank agents by token count alone.
 
-#### F. Project / repository comparison
+#### F. Quality gates
+For the selected workflow or portfolio slice, show:
+
+- current gate;
+- pass/fail/unknown status by criterion;
+- deterministic vs semantic vs human-owned checks;
+- blocker failures;
+- evidence refs;
+- overrides and residual risk;
+- most recurrent failed criteria in the selected period.
+
+#### G. Project / repository comparison
 Across the same normalized event stream, compare:
 
 - cycle time;
@@ -457,11 +499,12 @@ The first implementation slice should contain only:
 1. workflow definition schema;
 2. append-only run event schema/logger;
 3. local runner capable of sequential + parallel dependencies and bounded revision edges;
-4. static dashboard generator;
-5. project/workflow metadata registry and repository-agnostic ingestion contract;
-6. Bússola case workflow definition;
-7. one second-project validation workflow from another GitHub repository;
-8. tests for state transitions, retry limit, cross-project filtering and telemetry derivation.
+4. quality checklist/gate schema and deterministic blocker evaluation;
+5. static dashboard generator including gate status/failure hotspots;
+6. project/workflow metadata registry and repository-agnostic ingestion contract;
+7. Bússola case workflow definition + quality-gate templates;
+8. one second-project validation workflow from another GitHub repository;
+9. tests for state transitions, retry limit, checklist semantics, cross-project filtering and telemetry derivation.
 
 Do **not** add external databases, queues or distributed tracing in V1.
 
