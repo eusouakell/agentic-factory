@@ -222,7 +222,25 @@ Evaluate:
 
 One focused revision only. If the same failure repeats, escalate to Kell instead of generating more routes.
 
-## 5. First human gate
+## 5. Quality Gate A — Direction readiness
+
+Before Kell receives the packet, run the Bússola Direction Readiness checklist defined in `docs/orchestration/quality-gates-v1.md`.
+
+Blockers include:
+
+- source-of-truth/evidence boundaries incomplete;
+- narrative or section purpose unresolved;
+- mobile reading order undefined;
+- no representative mobile proof;
+- generic SaaS/card-grid grammar remains;
+- motion is required to make the static composition work;
+- Creative Director = REVISE.
+
+A blocker failure routes back to its owning upstream task. It does **not** become another vague manual review request to Kell.
+
+Checklist execution emits portfolio-level quality events.
+
+## 6. First human gate
 
 ### KELL — DIRECTION / PRD GATE
 
@@ -246,7 +264,7 @@ Possible outcomes:
 
 No production implementation before approval.
 
-## 6. Production after approval
+## 7. Production after approval
 
 ### T7 — Visual/interface execution
 
@@ -299,7 +317,21 @@ Run after implementation:
 
 Accessibility and code review may run in parallel. Readiness consumes both.
 
-## 7. Final human gate
+## 8. Quality Gate B — Release readiness
+
+Before the final human decision, run the Bússola Release Readiness checklist defined in `docs/orchestration/quality-gates-v1.md`.
+
+Blockers include:
+
+- implementation drift from approved direction;
+- missing desktop/390/320 evidence;
+- unresolved accessibility/code blocker;
+- incomplete provenance/publication risk;
+- reduced-motion behavior missing when motion exists;
+- readiness evidence incomplete;
+- telemetry insufficient to compute pilot metrics.
+
+## 9. Final human gate
 
 ### KELL — FINAL / MERGE GATE
 
@@ -315,7 +347,7 @@ Packet:
 
 Kell decides merge/publication.
 
-## 8. Content-design standard
+## 10. Content-design standard
 
 The case must demonstrate content-design judgment, not only visual polish.
 
@@ -331,7 +363,7 @@ Required qualities:
 - no “AI agentic/agentiva” jargon where “agentes de IA” is clearer;
 - visual hierarchy and text hierarchy tell the same story.
 
-## 9. Visual quality bar
+## 11. Visual quality bar
 
 The page should be rejected before production if it can be accurately described as any of:
 
@@ -350,7 +382,7 @@ The desired synthesis remains:
 
 but this phrase is a design criterion, not a layout prescription.
 
-## 10. Pilot observability
+## 12. Pilot observability
 
 Every task emits telemetry events defined by the Orchestration & Observability V1 PRD.
 
@@ -364,7 +396,9 @@ For this pilot, record:
 - human gate open/close;
 - retries;
 - token usage quality;
-- final acceptance.
+- final acceptance;
+- quality-gate open/pass/fail/override events;
+- checklist criterion evidence and owner.
 
 At completion, compare:
 
@@ -376,7 +410,7 @@ At completion, compare:
 - first-pass acceptance;
 - token consumption where available.
 
-## 11. Pilot hypothesis
+## 13. Pilot hypothesis
 
 The workflow succeeds if it produces a stronger design with fewer human-directed micro-iterations than the current manual loop.
 
