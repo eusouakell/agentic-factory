@@ -525,6 +525,7 @@ V1 should be intentionally small:
 - append-only JSONL or JSON event storage in-repo/local workspace;
 - Python stdlib preferred for aggregation;
 - static HTML/CSS/JS dashboard output;
+- GitHub Pages as the default portfolio visualization surface;
 - no database required;
 - no external observability SaaS required;
 - no new model dependency;
@@ -534,7 +535,31 @@ V1 should be intentionally small:
 - planning baselines and point sizing use a shared schema across projects;
 - no per-project telemetry implementation or dashboard fork.
 
-The visualizer should be runnable locally and publishable as a static artifact later if useful.
+The visualizer must be runnable locally **and** publishable to GitHub Pages from the `agentic-factory` repository.
+
+Pages is the read surface, not the system of record:
+
+```text
+instrumented repositories / execution surfaces
+        ↓
+normalized portfolio events
+        ↓
+aggregator + derived metrics
+        ↓
+static dashboard build
+        ↓
+GitHub Pages
+```
+
+The dashboard must not read private repository data directly in the browser. Any data intended for Pages must already be normalized and safe for publication. Sensitive/raw evidence remains referenced by opaque IDs or repository links according to access policy.
+
+The Pages build should support:
+
+- local preview from the same generated files;
+- deployment from `main` only;
+- PR build/test without publishing;
+- cache-busting/version metadata showing the data/build timestamp;
+- no project-specific fork of the site.
 
 ## 10. Control-plane changes
 
@@ -625,12 +650,13 @@ The first implementation slice should contain only:
 3. local runner capable of sequential + parallel dependencies and bounded revision edges;
 4. quality checklist/gate schema and deterministic blocker evaluation;
 5. static dashboard generator including gate status/failure hotspots;
-6. project/workflow metadata registry and repository-agnostic ingestion contract;
-7. Bússola case workflow definition + quality-gate templates;
-8. one second-project validation workflow from another GitHub repository;
-9. planning-baseline + point-sizing model;
-10. plan-vs-actual and improvement-opportunity dashboard views;
-11. tests for state transitions, retry limit, checklist semantics, sizing/baseline history, cross-project filtering and telemetry derivation.
+6. GitHub Pages build/deploy workflow with local-preview parity;
+7. project/workflow metadata registry and repository-agnostic ingestion contract;
+8. Bússola case workflow definition + quality-gate templates;
+9. one second-project validation workflow from another GitHub repository;
+10. planning-baseline + point-sizing model;
+11. plan-vs-actual and improvement-opportunity dashboard views;
+12. tests for state transitions, retry limit, checklist semantics, sizing/baseline history, cross-project filtering and telemetry derivation.
 
 Do **not** add external databases, queues or distributed tracing in V1.
 
