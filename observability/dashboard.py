@@ -56,6 +56,22 @@ function fill(sel, values){{ for(const v of values){{const o=document.createElem
 fill(project,uniq(RAW.runs.map(x=>x.project_id)));fill(repo,uniq(RAW.runs.map(x=>x.repository)));fill(type,uniq(RAW.runs.map(x=>x.workflow_type)));
 function fmtPct(v){{return Math.round((v||0)*100)+'%'}}function n(v){{return Number(v||0).toLocaleString('pt-BR')}}
 function filteredRuns(){{return RAW.runs.filter(x=>(!project.value||x.project_id===project.value)&&(!repo.value||x.repository===repo.value)&&(!type.value||x.workflow_type===type.value))}}
+function deriveOpp(runs){{
+ const out=[]; if(!runs.length)return out;
+ const totalPoints=runs.reduce((a,x)=>a+x.committed_points+x.unplanned_points,0);
+ const unplanned=runs.reduce((a,x)=>a+x.unplanned_points,0);
+ const spill=runs.reduce((a,x)=>a+x.spillover_points,0);
+ const cycle=runs.reduce((a,x)=>a+x.cycle_seconds,0);
+ const wait=runs.reduce((a,x)=>a+x.human_wait_seconds,0);
+ const retries=runs.reduce((a,x)=>a+x.retries,0);
+ const failed={{}}; runs.forEach(x=>Object.entries(x.failed_checks||{{}}).forEach(([k,v])=>failed[k]=(failed[k]||0)+v));
+ if(totalPoints && unplanned/totalPoints>=.25) out.push({{signal:'High unplanned-work ratio',hypothesis:'Intake or planning may be incomplete before execution begins.',recommended_intervention:'Tighten intake/PRD completeness and record scope additions explicitly.',metric:'unplanned-work ratio',confidence:'medium'}});
+ if(runs.reduce((a,x)=>a+x.committed_points,0) && spill>0) out.push({{signal:'Committed points spilled beyond target',hypothesis:'Capacity, dependencies or sizing may be miscalibrated.',recommended_intervention:'Inspect spillover tasks by point bucket and blocker/retry history.',metric:'spillover points',confidence:'medium'}});
+ if(cycle && wait/cycle>=.4) out.push({{signal:'Human-wait share is high',hypothesis:'Human gates may be too frequent or positioned too early.',recommended_intervention:'Consolidate low-risk reviews behind meaningful decision gates.',metric:'human-wait ratio',confidence:'medium'}});
+ if(retries) out.push({{signal:'Retry/revision loops detected',hypothesis:'Upstream acceptance criteria or handoffs may be underspecified.',recommended_intervention:'Trace retries to the earliest failed quality criterion and owning role.',metric:'retry rate / rework ratio',confidence:'medium'}});
+ const ranked=Object.entries(failed).sort((a,b)=>b[1]-a[1]); if(ranked.length){{const [check,count]=ranked[0];out.push({{signal:'Recurring quality failure: '+check+' ('+count+'x)',hypothesis:'A repeatable quality weakness may exist upstream of the gate.',recommended_intervention:'Move the criterion earlier or strengthen the owning specialist handoff.',metric:'first-pass quality-gate pass rate',confidence:count>=3?'high':'medium'}})}}
+ return out;
+}}
 function render(){{
  const runs=filteredRuns(); const ids=new Set(runs.map(x=>x.run_id));
  const committed=runs.reduce((a,x)=>a+x.committed_points,0), accepted=runs.reduce((a,x)=>a+x.accepted_planned_points,0), unplanned=runs.reduce((a,x)=>a+x.unplanned_points,0), spill=runs.reduce((a,x)=>a+x.spillover_points,0), retries=runs.reduce((a,x)=>a+x.retries,0), tokens=runs.reduce((a,x)=>a+x.usage.total_tokens,0);
@@ -67,7 +83,7 @@ function render(){{
  const deviations=RAW.deviations.filter(x=>ids.has(x.run_id));
  document.querySelector('#deviations').innerHTML=deviations.length?deviations.map(x=>'<tr><td>'+x.project_id+'</td><td><span class="badge '+(x.type==='quality'?'bad':x.type==='spillover'?'warn':'')+'">'+x.type+'</span></td><td>'+String(x.task_id||'—')+'</td><td>'+n(x.points)+'</td><td>'+x.detail+'</td></tr>').join(''):'<tr><td colspan="5" class="empty">Nenhum desvio registrado neste filtro.</td></tr>';
  document.querySelector('#runs').innerHTML=runs.length?runs.map(x=>'<tr><td>'+x.project_id+'</td><td>'+x.workflow_id+'</td><td>'+x.repository+'</td><td>'+n(x.committed_points)+'</td><td>'+n(x.accepted_planned_points)+'</td><td>'+n(x.unplanned_points)+'</td><td>'+n(x.spillover_points)+'</td><td>'+n(x.retries)+'</td><td>'+n(x.quality_gate_failures)+' falhas</td><td>'+n(x.usage.total_tokens)+' <span class="meta">'+x.usage_quality+'</span></td></tr>').join(''):'<tr><td colspan="10" class="empty">Ainda não há runs instrumentados para este filtro.</td></tr>';
- const opp=RAW.opportunities;
+ const opp=deriveOpp(runs);
  document.querySelector('#opportunities').innerHTML=opp.length?opp.map(x=>'<div class="opportunity"><strong>'+x.signal+'</strong><p>'+x.hypothesis+'</p><p><b>Ação sugerida:</b> '+x.recommended_intervention+'</p><span class="meta">Métrica: '+x.metric+' · confiança '+x.confidence+'</span></div>').join(''):'<div class="empty">Ainda não há sinal suficiente para gerar oportunidades.</div>';
 }}
 [project,repo,type].forEach(x=>x.addEventListener('change',render));render();
