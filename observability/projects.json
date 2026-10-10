@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "projects": [
+    {
+      "project_id": "bussola-public-case",
+      "name": "Bússola — case público",
+      "repositories": ["eusouakell/bussola"],
+      "status": "active"
+    },
+    {
+      "project_id": "cereja-editorial",
+      "name": "Cereja Flamejante — editorial",
+      "repositories": ["eusouakell/cereja-editorial-engine"],
+      "status": "active"
+    },
+    {
+      "project_id": "agentic-factory",
+      "name": "Agentic Factory",
+      "repositories": ["eusouakell/agentic-factory"],
+      "status": "active"
+    }
+  ]
+}
