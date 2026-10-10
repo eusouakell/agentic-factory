@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "gates": [
+    {
+      "gate_id": "bussola-direction-readiness",
+      "title": "Bússola — direction readiness",
+      "items": [
+        {"check_id":"context.sources_complete","title":"Source-of-truth packet is complete","class":"deterministic","owner":"repository-analyst","severity":"blocker"},
+        {"check_id":"content.poc_boundary","title":"PoC vs later refinement is explicit","class":"semantic","owner":"editorial-storyteller","severity":"blocker"},
+        {"check_id":"experience.mobile_authored","title":"Mobile reading/composition is intentionally authored","class":"semantic","owner":"experience-designer","severity":"blocker"},
+        {"check_id":"visual.single_idea","title":"One dominant visual idea is present","class":"semantic","owner":"editorial-art-director","severity":"blocker"},
+        {"check_id":"visual.not_generic_saas","title":"Direction does not rely on generic SaaS/card-grid grammar","class":"semantic","owner":"creative-director","severity":"blocker"},
+        {"check_id":"visual.static_passes","title":"Static composition works without motion","class":"semantic","owner":"creative-director","severity":"blocker"},
+        {"check_id":"creative.preflight","title":"Creative Director preflight is PASS","class":"semantic","owner":"creative-director","severity":"blocker"}
+      ]
+    },
+    {
+      "gate_id": "bussola-release-readiness",
+      "title": "Bússola — release readiness",
+      "items": [
+        {"check_id":"implementation.fidelity","title":"Implementation matches approved direction","class":"semantic","owner":"code-reviewer","severity":"blocker"},
+        {"check_id":"responsive.evidence","title":"Desktop, 390px and 320px evidence exists","class":"deterministic","owner":"frontend-engineer","severity":"blocker"},
+        {"check_id":"accessibility.review","title":"Accessibility review has no unresolved blocker","class":"semantic","owner":"accessibility-auditor","severity":"blocker"},
+        {"check_id":"code.review","title":"Code review has no unresolved blocker","class":"semantic","owner":"code-reviewer","severity":"blocker"},
+        {"check_id":"motion.reduced","title":"Reduced-motion behavior exists when motion is present","class":"deterministic","owner":"accessibility-auditor","severity":"blocker"},
+        {"check_id":"provenance.complete","title":"Publication provenance and risk notes are complete","class":"semantic","owner":"readiness-evaluator","severity":"blocker"},
+        {"check_id":"telemetry.complete","title":"Pilot telemetry is complete enough to compute metrics","class":"deterministic","owner":"readiness-evaluator","severity":"blocker"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+name: Observability Dashboard
+
+on:
+  pull_request:
+    paths:
+      - "observability/**"
+      - "orchestration/**"
+      - "quality/**"
+      - "runs/**"
+      - "tests/test_observability_v1.py"
+      - ".github/workflows/observability-pages.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "observability/**"
+      - "orchestration/**"
+      - "quality/**"
+      - "runs/**"
+      - "tests/test_observability_v1.py"
+      - ".github/workflows/observability-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "observability-pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - name: Run observability tests
+        run: python -m unittest tests.test_observability_v1 -v
+      - name: Build static dashboard
+        run: python -m observability.dashboard --events runs/events --output _site/index.html
+      - name: Configure Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v6
+      - name: Upload Pages artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      actions: read
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy observability dashboard
+        id: deployment
+        uses: actions/deploy-pages@v4
