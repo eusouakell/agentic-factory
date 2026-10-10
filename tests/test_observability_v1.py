@@ -120,12 +120,50 @@ class RuntimeAndMetricsTests(unittest.TestCase):
 
             self.assertEqual(summary["committed_points"], 3)
             self.assertEqual(summary["accepted_planned_points"], 3)
+            self.assertEqual(summary["remaining_planned_points"], 0)
             self.assertEqual(summary["spillover_points"], 0)
             self.assertEqual(summary["retries"], 1)
             self.assertGreater(summary["rework_seconds"], 0)
             self.assertGreater(summary["human_wait_seconds"], 0)
             self.assertEqual(summary["usage"]["total_tokens"], 150)
             self.assertEqual(summary["usage_quality"], "exact")
+
+    def test_in_progress_work_is_remaining_not_spillover(self):
+        events = [
+            {
+                "event_id": "1",
+                "workflow_id": "w",
+                "project_id": "p",
+                "repository": "o/r",
+                "workflow_type": "x",
+                "run_id": "r",
+                "task_id": None,
+                "agent_id": None,
+                "event_type": "workflow_created",
+                "timestamp": "2026-10-10T10:00:00+00:00",
+                "execution_surface": "codex",
+                "artifact_refs": [],
+                "metadata": {},
+            },
+            {
+                "event_id": "2",
+                "workflow_id": "w",
+                "project_id": "p",
+                "repository": "o/r",
+                "workflow_type": "x",
+                "run_id": "r",
+                "task_id": "t",
+                "agent_id": "a",
+                "event_type": "task_planned",
+                "timestamp": "2026-10-10T10:00:01+00:00",
+                "execution_surface": "codex",
+                "artifact_refs": [],
+                "metadata": {"sizing_points": 5, "baseline_points": 5, "planning_origin": "planned"},
+            },
+        ]
+        summary = summarize_run(events)
+        self.assertEqual(summary["remaining_planned_points"], 5)
+        self.assertEqual(summary["spillover_points"], 0)
 
     def test_point_sizing_is_not_converted_to_hours(self):
         events = [
