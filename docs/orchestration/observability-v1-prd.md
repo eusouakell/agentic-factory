@@ -3,7 +3,7 @@
 **Status:** proposal  
 **Owner:** Kell  
 **Repository:** `eusouakell/agentic-factory`  
-**Primary goal:** reduce human orchestration overhead and make agent productivity measurable before increasing autonomy.
+**Primary goal:** reduce human orchestration overhead and make agent productivity measurable across the GitHub portfolio before increasing autonomy.
 
 ## 1. Problem
 
@@ -32,7 +32,7 @@ The current Bússola public-case redesign is the motivating real task. Multiple 
 
 The Factory should optimize for **accepted outcome per unit of human attention**, not number of agent calls.
 
-V1 should answer, for every workflow:
+V1 should answer, across the portfolio and for every workflow:
 
 - What is being worked on now?
 - Which agent owns the current step?
@@ -44,6 +44,7 @@ V1 should answer, for every workflow:
 - Which artifact was accepted?
 - Where did the flow return upstream?
 - Did automation reduce or increase human handling?
+- Which projects/repositories/workflow types concentrate the most rework, waiting and failed first passes?
 
 ## 3. Non-goals
 
@@ -82,9 +83,33 @@ State, timestamps, attempts, handoffs and artifact refs are required run evidenc
 ### 4.7 Measurement quality is explicit
 Exact token usage is captured only when the execution surface exposes it. Estimated or unavailable usage must be labelled as such rather than fabricated.
 
+### 4.8 Portfolio-first observability
+Observability is a Factory capability, not a feature scoped to Bússola or to one repository.
+
+The default analytical scope is **all instrumented workflows**. Project, repository, workflow type, agent, execution surface, state and time window are filters over the same event model.
+
+A project is not assumed to equal a repository:
+
+- one project may span several repositories;
+- one repository may contain several projects/workstreams;
+- internal Factory work is observable under the same model.
+
+This separation is required so the system can reveal whether a recurring problem belongs to a specific project, repository, workflow type, agent boundary or operating pattern.
+
 ## 5. V1 workflow model
 
-A workflow is a directed acyclic graph of **tasks**. A task binds:
+A workflow is a directed acyclic graph of **tasks**.
+
+Every workflow also binds portfolio dimensions:
+
+- `project_id` — stable analytical project/workstream identifier;
+- `repository` — GitHub `owner/name` where the primary work is happening;
+- `workflow_type` — reusable class such as `web_design`, `editorial`, `agent_governance`, `frontend_change`;
+- optional `related_repositories` — other repositories materially involved in the same workflow.
+
+`project_id` is an analytical dimension, not a storage boundary. Runs from all projects feed the same observability layer.
+
+A task binds:
 
 - `task_id`;
 - `run_id`;
@@ -133,6 +158,9 @@ Each event should contain:
 {
   "event_id": "evt_...",
   "workflow_id": "wf_...",
+  "project_id": "bussola-public-case",
+  "repository": "eusouakell/bussola",
+  "workflow_type": "web_design",
   "run_id": "run_...",
   "task_id": "task_...",
   "agent_id": "editorial-art-director",
@@ -143,6 +171,10 @@ Each event should contain:
   "metadata": {}
 }
 ```
+
+Portfolio dimensions (`project_id`, `repository`, `workflow_type`) should be copied onto every event or resolved deterministically from immutable workflow metadata so aggregations do not need repository-specific joins.
+
+Maintain a small registry such as `observability/projects.json` for human-readable project names, optional repository membership and lifecycle metadata. The registry organizes filters; it does not own workflow state.
 
 Required event types:
 
@@ -181,6 +213,16 @@ No field should be populated with a synthetic estimate unless `usage_quality=est
 ## 7. Derived metrics
 
 V1 visualizes metrics that can change operating behavior.
+
+Every metric must be aggregatable at portfolio level and sliceable by:
+
+- project;
+- repository;
+- workflow type;
+- agent;
+- execution surface;
+- outcome status;
+- time window.
 
 ### Flow efficiency
 
@@ -223,7 +265,34 @@ Build a repo-native, dependency-light visualizer generated from JSONL events.
 
 ### Required views
 
-#### A. Current workflow board
+#### A. Portfolio overview
+Default view: all instrumented projects.
+
+Show:
+
+- active workflows;
+- accepted outcomes;
+- median cycle time;
+- median active time;
+- median human-wait time;
+- first-pass acceptance;
+- rework ratio;
+- observable token consumption;
+- top rework hotspots.
+
+Global filters:
+
+- project;
+- repository;
+- workflow type;
+- agent;
+- execution surface;
+- status/outcome;
+- date range.
+
+Project is therefore a **filter**, not a separate dashboard or data silo.
+
+#### B. Current workflow board
 Columns:
 
 - Ready
@@ -241,7 +310,7 @@ Each task card shows:
 - current artifact;
 - next gate.
 
-#### B. Timeline
+#### C. Timeline
 A horizontal timeline/Gantt-like view showing:
 
 - active agent spans;
@@ -251,7 +320,7 @@ A horizontal timeline/Gantt-like view showing:
 
 This should make “we spent 8 minutes executing and 3 hours waiting/reworking” immediately visible.
 
-#### C. Efficiency summary
+#### D. Efficiency summary
 For selected workflow:
 
 - cycle time;
@@ -263,7 +332,7 @@ For selected workflow:
 - token usage and quality label;
 - accepted artifact.
 
-#### D. Agent comparison
+#### E. Agent comparison
 Across completed workflows:
 
 - tasks completed;
@@ -274,6 +343,19 @@ Across completed workflows:
 - human revisions triggered.
 
 Do not rank agents by token count alone.
+
+#### F. Project / repository comparison
+Across the same normalized event stream, compare:
+
+- cycle time;
+- first-pass acceptance;
+- rework ratio;
+- human-wait ratio;
+- average gates per accepted outcome;
+- observable tokens per accepted outcome;
+- dominant failure/revision reason.
+
+The purpose is diagnosis, not a simplistic league table. A high-rework project may indicate poor upstream requirements rather than a weak agent.
 
 ## 9. Implementation constraints
 
@@ -286,7 +368,9 @@ V1 should be intentionally small:
 - no external observability SaaS required;
 - no new model dependency;
 - exact token capture remains adapter-specific and optional;
-- GitHub remains the canonical source for issues, branches, PRs and accepted code/artifacts.
+- GitHub remains the canonical source for issues, branches, PRs and accepted code/artifacts;
+- adapters from multiple GitHub repositories emit into the same normalized event model;
+- no per-project telemetry implementation or dashboard fork.
 
 The visualizer should be runnable locally and publishable as a static artifact later if useful.
 
@@ -316,7 +400,7 @@ The deterministic router can continue selecting a workflow. A runner then materi
 
 ## 11. Acceptance criteria
 
-V1 is successful when one real workflow can run end-to-end and the dashboard can answer:
+V1 is successful when real workflows from multiple GitHub projects can feed the same observability layer and the dashboard can answer:
 
 1. which task is current;
 2. which agent owns it;
@@ -327,9 +411,11 @@ V1 is successful when one real workflow can run end-to-end and the dashboard can
 7. token usage with an explicit exact/estimated/unavailable label;
 8. final accepted artifact;
 9. total cycle time;
-10. whether a revision returned to the right upstream role.
+10. whether a revision returned to the right upstream role;
+11. how the same metrics compare across projects/repositories;
+12. whether project filtering changes the diagnosis of the productivity bottleneck.
 
-For the first pilot, use the Bússola public-case redesign.
+Use the Bússola public-case redesign as the first pilot, but do not call V1 operational until at least one additional GitHub project/repository emits a compatible workflow and appears in the same dashboard without custom code.
 
 ## 12. Pilot success thresholds
 
@@ -372,8 +458,10 @@ The first implementation slice should contain only:
 2. append-only run event schema/logger;
 3. local runner capable of sequential + parallel dependencies and bounded revision edges;
 4. static dashboard generator;
-5. Bússola case workflow definition;
-6. tests for state transitions, retry limit and telemetry derivation.
+5. project/workflow metadata registry and repository-agnostic ingestion contract;
+6. Bússola case workflow definition;
+7. one second-project validation workflow from another GitHub repository;
+8. tests for state transitions, retry limit, cross-project filtering and telemetry derivation.
 
 Do **not** add external databases, queues or distributed tracing in V1.
 
@@ -384,6 +472,6 @@ Kell approves:
 - the V1 scope;
 - telemetry fields;
 - dashboard metrics;
-- Bússola as the first pilot;
+- Bússola as the first pilot, with a second GitHub project required for cross-project validation;
 - whether the implementation may proceed to a proposal branch.
 
