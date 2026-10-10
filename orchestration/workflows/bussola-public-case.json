@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "bussola-public-case-v1",
+  "project_id": "bussola-public-case",
+  "repository": "eusouakell/bussola",
+  "workflow_type": "web_design",
+  "target_period": "pilot-v1",
+  "quality_gates": ["bussola-direction-readiness", "bussola-release-readiness"],
+  "tasks": [
+    {"task_id":"context","agent_id":"repository-analyst","sizing_points":2,"planning_origin":"planned","retry_budget":0,"depends_on":[]},
+    {"task_id":"references","agent_id":"research-synthesist","sizing_points":2,"planning_origin":"planned","retry_budget":0,"depends_on":[]},
+    {"task_id":"story","agent_id":"editorial-storyteller","sizing_points":3,"planning_origin":"planned","retry_budget":1,"depends_on":["context","references"]},
+    {"task_id":"experience","agent_id":"experience-designer","sizing_points":3,"planning_origin":"planned","retry_budget":1,"depends_on":["story"]},
+    {"task_id":"art-direction","agent_id":"editorial-art-director","sizing_points":5,"planning_origin":"planned","retry_budget":1,"depends_on":["experience"]},
+    {"task_id":"creative-preflight","agent_id":"creative-director","sizing_points":2,"planning_origin":"planned","retry_budget":1,"depends_on":["art-direction"]},
+    {"task_id":"production","agent_id":"flame-ui-composer","sizing_points":5,"planning_origin":"planned","retry_budget":1,"depends_on":["creative-preflight"]},
+    {"task_id":"frontend","agent_id":"frontend-engineer","sizing_points":5,"planning_origin":"planned","retry_budget":2,"depends_on":["production"]},
+    {"task_id":"accessibility","agent_id":"accessibility-auditor","sizing_points":2,"planning_origin":"planned","retry_budget":1,"depends_on":["frontend"]},
+    {"task_id":"code-review","agent_id":"code-reviewer","sizing_points":2,"planning_origin":"planned","retry_budget":1,"depends_on":["frontend"]},
+    {"task_id":"readiness","agent_id":"readiness-evaluator","sizing_points":2,"planning_origin":"planned","retry_budget":1,"depends_on":["accessibility","code-review"]}
+  ]
+}

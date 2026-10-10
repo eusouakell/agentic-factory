@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "cereja-editorial-draft-v1",
+  "project_id": "cereja-editorial",
+  "repository": "eusouakell/cereja-editorial-engine",
+  "workflow_type": "editorial",
+  "target_period": "pilot-v1",
+  "quality_gates": ["editorial-readiness"],
+  "tasks": [
+    {"task_id":"story","agent_id":"editorial-storyteller","sizing_points":3,"planning_origin":"planned","retry_budget":1,"depends_on":[]},
+    {"task_id":"quality","agent_id":"readiness-evaluator","sizing_points":1,"planning_origin":"planned","retry_budget":1,"depends_on":["story"]}
+  ]
+}
