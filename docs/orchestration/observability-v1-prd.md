@@ -614,9 +614,9 @@ These are learning thresholds, not permanent SLAs.
 
 For the Bússola pilot:
 
-- no more than **2 human gates** before implementation begins:
-  1. direction/PRD gate;
-  2. final release/merge gate;
+- no more than **2 human gates** across the full pilot workflow:
+  1. direction/PRD gate before implementation;
+  2. final release/merge gate after implementation;
 - no more than **1 focused revision** per director-level task before escalation;
 - no implementation begins before PRD + art-direction packet is accepted;
 - no motion task starts before static composition passes;
