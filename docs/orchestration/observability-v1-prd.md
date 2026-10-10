@@ -97,7 +97,28 @@ Quality-gate events feed the same portfolio-level observability stream so recurr
 
 Canonical V1 contract: `docs/orchestration/quality-gates-v1.md`.
 
-### 4.9 Portfolio-first observability
+### 4.9 Plan vs. actual is first-class
+Execution telemetry is not enough to diagnose productivity. The Factory must preserve a planning baseline so actual work can be compared with what was expected before execution started.
+
+Tasks may carry a **relative sizing value in points**, following agile/IT sizing logic. Points represent relative complexity/effort/risk; they are not hours and must not be automatically converted into time.
+
+For every planning period or committed workflow slice, preserve:
+
+- baseline task set;
+- baseline points;
+- planned/unplanned origin;
+- date added to the plan;
+- scope/size changes after baseline;
+- current state and accepted outcome.
+
+This enables the system to distinguish:
+- execution that followed the plan;
+- work added after the plan;
+- work that spilled over;
+- tasks that grew materially after discovery;
+- rework caused by failed quality gates or revision loops.
+
+### 4.10 Portfolio-first observability
 Observability is a Factory capability, not a feature scoped to Bússola or to one repository.
 
 The default analytical scope is **all instrumented workflows**. Project, repository, workflow type, agent, execution surface, state and time window are filters over the same event model.
@@ -124,6 +145,13 @@ Every workflow also binds portfolio dimensions:
 `project_id` is an analytical dimension, not a storage boundary. Runs from all projects feed the same observability layer.
 
 A task binds:
+
+- `sizing_points` — relative sizing value such as 1, 2, 3, 5, 8;
+- `planning_origin` — `planned | unplanned`;
+- `baseline_points` — original committed size when present;
+- `planned_at` — timestamp or planning-period reference;
+- optional `due_or_target_period`;
+- optional `scope_change_reason`;
 
 - `task_id`;
 - `run_id`;
@@ -192,6 +220,11 @@ Maintain a small registry such as `observability/projects.json` for human-readab
 
 Required event types:
 
+- `planning_baseline_created`
+- `task_planned`
+- `task_added_unplanned`
+- `task_resized`
+- `task_scope_changed`
 - `workflow_created`
 - `task_queued`
 - `task_started`
@@ -243,6 +276,21 @@ Every metric must be aggregatable at portfolio level and sliceable by:
 - outcome status;
 - time window.
 
+### Planning / predictability
+
+- **committed points:** sum of baseline points at planning lock;
+- **accepted planned points:** committed points completed and accepted in the target period;
+- **baseline attainment:** accepted planned points / committed points;
+- **unplanned points:** points introduced after planning lock;
+- **unplanned-work ratio:** unplanned points / total points entering execution in the period;
+- **spillover points:** committed points not accepted by the end of the target period;
+- **scope-growth delta:** current points minus baseline points for resized work;
+- **throughput:** accepted points per period;
+- **WIP by points:** relative load currently running/review/waiting;
+- **cycle time by point bucket:** actual duration grouped by relative size, without converting points into hours.
+
+Keep both the original baseline and current scope. Do not rewrite history when a task is resized or descoped.
+
 ### Flow efficiency
 
 - **cycle time:** workflow created → accepted/cancelled;
@@ -276,7 +324,8 @@ When available:
 - quality failure → upstream owner distribution;
 - gate override count;
 - escaped defects found in a later stage;
-- quality-failure correlation with rework.
+- quality-failure correlation with rework;
+- quality-failure correlation with scope growth/spillover.
 
 Do not collapse these into one opaque quality score in V1.
 
@@ -301,6 +350,11 @@ Default view: all instrumented projects.
 
 Show:
 
+- committed points for the selected period;
+- accepted planned points;
+- baseline attainment;
+- unplanned points / unplanned-work ratio;
+- spillover points;
 - active workflows;
 - accepted outcomes;
 - median cycle time;
@@ -309,7 +363,8 @@ Show:
 - first-pass acceptance;
 - rework ratio;
 - observable token consumption;
-- top rework hotspots.
+- top rework hotspots;
+- top plan-deviation hotspots.
 
 Global filters:
 
@@ -323,7 +378,38 @@ Global filters:
 
 Project is therefore a **filter**, not a separate dashboard or data silo.
 
-#### B. Current workflow board
+#### B. Plan vs. actual / task ledger
+
+Use a compact operational table inspired by engineering delivery views.
+
+Minimum columns:
+
+- objective/outcome;
+- project;
+- repository or area;
+- task;
+- owner/agent;
+- sizing points;
+- planning origin (`planned | unplanned`);
+- target period;
+- actual state;
+- active time;
+- human wait;
+- attempts/revisions;
+- quality-gate status;
+- accepted artifact.
+
+Visually call out:
+
+- work added after planning lock;
+- resized work;
+- spillover;
+- blocked/waiting tasks;
+- tasks whose cycle time is anomalous for their point bucket.
+
+This is not a timesheet and does not infer hours from points.
+
+#### C. Current workflow board
 Columns:
 
 - Ready
@@ -341,7 +427,7 @@ Each task card shows:
 - current artifact;
 - next gate.
 
-#### C. Timeline
+#### D. Timeline
 A horizontal timeline/Gantt-like view showing:
 
 - active agent spans;
@@ -351,7 +437,7 @@ A horizontal timeline/Gantt-like view showing:
 
 This should make “we spent 8 minutes executing and 3 hours waiting/reworking” immediately visible.
 
-#### D. Efficiency summary
+#### E. Efficiency summary
 For selected workflow:
 
 - cycle time;
@@ -363,7 +449,7 @@ For selected workflow:
 - token usage and quality label;
 - accepted artifact.
 
-#### E. Agent comparison
+#### F. Agent comparison
 Across completed workflows:
 
 - tasks completed;
@@ -375,7 +461,7 @@ Across completed workflows:
 
 Do not rank agents by token count alone.
 
-#### F. Quality gates
+#### G. Quality gates
 For the selected workflow or portfolio slice, show:
 
 - current gate;
@@ -386,7 +472,7 @@ For the selected workflow or portfolio slice, show:
 - overrides and residual risk;
 - most recurrent failed criteria in the selected period.
 
-#### G. Project / repository comparison
+#### H. Project / repository comparison
 Across the same normalized event stream, compare:
 
 - cycle time;
@@ -398,6 +484,39 @@ Across the same normalized event stream, compare:
 - dominant failure/revision reason.
 
 The purpose is diagnosis, not a simplistic league table. A high-rework project may indicate poor upstream requirements rather than a weak agent.
+
+#### I. Improvement opportunities
+
+Generate evidence-backed opportunities from recurring telemetry patterns. Each opportunity must include:
+
+- observed signal;
+- affected project/repository/workflow/agent/stage;
+- sample size/time window;
+- likely process cause stated as a hypothesis, not fact;
+- recommended intervention;
+- expected metric to improve;
+- confidence.
+
+Examples:
+- repeated mobile-quality failures → strengthen the responsive art-direction gate;
+- high human-wait ratio → consolidate or relocate gates;
+- high unplanned-work ratio → improve intake/planning completeness;
+- repeated scope-growth in 1–2 point tasks → sizing rubric may be underestimating uncertainty;
+- high retries after frontend implementation → upstream design/acceptance criteria may be underspecified.
+
+#### J. Work that left the plan
+
+A dedicated exception list should show work that deviated from baseline:
+
+- unplanned tasks;
+- spillover tasks;
+- resized tasks above a configurable delta;
+- reopened/retried tasks;
+- tasks blocked beyond a threshold;
+- tasks that failed a blocker quality gate;
+- tasks cancelled or descoped after commitment.
+
+This is intended for inspection and improvement, not blame.
 
 ## 9. Implementation constraints
 
@@ -412,6 +531,7 @@ V1 should be intentionally small:
 - exact token capture remains adapter-specific and optional;
 - GitHub remains the canonical source for issues, branches, PRs and accepted code/artifacts;
 - adapters from multiple GitHub repositories emit into the same normalized event model;
+- planning baselines and point sizing use a shared schema across projects;
 - no per-project telemetry implementation or dashboard fork.
 
 The visualizer should be runnable locally and publishable as a static artifact later if useful.
@@ -455,7 +575,11 @@ V1 is successful when real workflows from multiple GitHub projects can feed the 
 9. total cycle time;
 10. whether a revision returned to the right upstream role;
 11. how the same metrics compare across projects/repositories;
-12. whether project filtering changes the diagnosis of the productivity bottleneck.
+12. whether project filtering changes the diagnosis of the productivity bottleneck;
+13. what was planned vs unplanned;
+14. how many committed points were accepted;
+15. which tasks spilled over, grew in scope or required rework;
+16. which evidence-backed improvement opportunities should be investigated.
 
 Use the Bússola public-case redesign as the first pilot, but do not call V1 operational until at least one additional GitHub project/repository emits a compatible workflow and appears in the same dashboard without custom code.
 
@@ -504,7 +628,9 @@ The first implementation slice should contain only:
 6. project/workflow metadata registry and repository-agnostic ingestion contract;
 7. Bússola case workflow definition + quality-gate templates;
 8. one second-project validation workflow from another GitHub repository;
-9. tests for state transitions, retry limit, checklist semantics, cross-project filtering and telemetry derivation.
+9. planning-baseline + point-sizing model;
+10. plan-vs-actual and improvement-opportunity dashboard views;
+11. tests for state transitions, retry limit, checklist semantics, sizing/baseline history, cross-project filtering and telemetry derivation.
 
 Do **not** add external databases, queues or distributed tracing in V1.
 
