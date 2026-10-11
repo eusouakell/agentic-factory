@@ -58,7 +58,7 @@ jobs:
             --manifest /tmp/factory-visual-qa/manifest.json \
             --section 'hero=#hero' \
             --viewport 800x600
-          python quality/validate_visual_manifest.py /tmp/factory-visual-qa/manifest.json
+          python -m quality.validate_visual_manifest /tmp/factory-visual-qa/manifest.json
       - name: Route this pull request
         shell: bash
         run: |
