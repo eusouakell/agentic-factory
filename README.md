@@ -86,6 +86,12 @@ Event-driven routing and execution-surface contracts live in [automations/](auto
 
 Codex is modeled as an [execution surface](execution-surfaces/codex.md), not as a privileged agent.
 
+## Observability dashboard
+
+The portfolio-level observability dashboard is published at **[eusouakell.github.io/agentic-factory](https://eusouakell.github.io/agentic-factory/)**.
+
+It consolidates instrumented workflows across projects and repositories to compare planned vs. accepted work, remaining planned work, unplanned work, real spillover, retries, quality gates, observable token usage and evidence-backed improvement opportunities. Project, repository and workflow type are analytical filters over the same event stream rather than separate telemetry silos.
+
 ## Controls
 
 The Factory separates:
