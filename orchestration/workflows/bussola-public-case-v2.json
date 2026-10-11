@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.0",
+  "schema_version": "2.1",
   "workflow_id": "bussola-public-case-v2-deliberative",
   "project_id": "bussola-public-case",
   "repository": "eusouakell/bussola",
@@ -104,12 +104,21 @@
       "weighted score >= 9.2",
       "every applicable dimension >= 9.0",
       "desktop, 390 and 320 inspected",
-      "readiness evaluator returns READY"
+      "readiness evaluator returns READY",
+      "primary and secondary rubric reviews use distinct review_run_id values",
+      "visual evidence manifest passes required viewport/section/hash integrity checks"
     ],
     "human_exception": [
       "declared exception condition triggered",
       "same root cause fails after two production revision cycles",
       "material disagreement unresolved after three deliberation rounds"
     ]
+  },
+  "runtime_contract": {
+    "deliberation_runtime": "orchestration/deliberation.py",
+    "review_evaluator": "quality/reviews.py",
+    "visual_evidence_validator": "quality/visual_evidence.py",
+    "bounded_executor": "automations/executor.py",
+    "autonomous_model_adapter_required_for_true_a2": true
   }
 }
