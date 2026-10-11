@@ -29,12 +29,24 @@ GATES
 authority to advance consequential transitions
 ```
 
-- **Docs say what is true.**
+- **Canonical docs say what is true. ADRs say why a consequential durable decision was made and where its authority lives.**
 - **Issues say what needs to happen.**
 - **Projects show the state of work.**
 - **Gates determine who may authorize the next transition.**
 
 The Project is an operational index, not a new source of domain truth.
+
+## Decision records across repositories
+
+Use ADRs when a decision must survive a chat or has consequences beyond one implementation artifact.
+
+- shared governance, orchestration, authority and observability decisions live in `agentic-factory/docs/decisions/`;
+- domain decisions live in the repository that owns the relevant truth;
+- implementation PRs link their ADRs and affected repositories;
+- concurrent work should use explicit dependencies or stacked PRs rather than copy pending rules;
+- a local project may consume a shared ADR but must not silently redefine it.
+
+See [ADR-0001 — Cross-repository decision governance](../docs/decisions/ADR-0001-cross-repository-decision-governance.md).
 
 ## One cross-repository Project
 
