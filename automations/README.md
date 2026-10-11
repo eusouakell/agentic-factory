@@ -107,14 +107,21 @@ Human selects agent + executor.
 ### A1 — autonomous routing
 System detects an event and produces the required agent/eval plan.
 
-**Automation Layer V1 reaches A1.** The A2 authority/budget guard is implemented, but no headless autonomous model adapter is yet declared installed.
+**Automation Layer V1 reaches A1.** The repository now also contains the A2 execution substrate: authority/budget guards, a provider-neutral isolated-process adapter, independent specialist orchestration, deliberation and run evidence. A provider-backed model runner still has to be configured on the execution surface before a production workflow may claim model-backed A2 execution.
 
 ### A2 — bounded execution
 Approved adapters invoke the selected agent on an execution surface using task-scoped credentials/context.
 
-The repository now includes the **bounded executor guard** in `automations/executor.py`. It enforces repository allowlists, agent allowlists, explicit context, tool grants and retry ceilings before an adapter can run.
+The repository includes the **bounded executor guard** in `automations/executor.py`. It enforces repository allowlists, agent allowlists, explicit context, tool grants and retry ceilings before an adapter can run. Human-owned permissions such as merge, publish and authority modification are denied to agent execution.
 
-A `PacketOnlyAdapter` is available to materialize a governed execution packet, but it is deliberately **not autonomous** and cannot claim task completion. This means the control contract is implemented, while true A2 remains contingent on an installed model/execution adapter with task-scoped credentials.
+Two execution modes are implemented:
+
+- `PacketOnlyAdapter` — produces a governed packet and never claims autonomous completion;
+- `JsonSubprocessAdapter` — starts a distinct process for each specialist, passes only the declared JSON packet, captures duration/usage/uncertainty, and persists request/result evidence with a unique `execution_id`.
+
+`orchestration/a2.py` builds on this adapter to run independent rubric reviewers and owner/challenger/arbiter deliberation. Distinct execution IDs are mandatory for independent roles.
+
+The adapter is **provider-neutral**. A command may wrap Codex, an API worker or another approved model runtime. The Factory does not treat the deterministic test runner as production model evidence; a real pilot must use a configured provider-backed runner and retain its execution IDs.
 
 ### A3 — bounded remediation
 Low-risk changes may be proposed automatically on a branch, followed by independent review/checks.
@@ -151,3 +158,15 @@ The Project/Issue operating model is defined in [operational work state](../gove
 Automation may route authority.
 
 It may not invent authority.
+
+
+## A2 evidence and visual acceptance
+
+A2 quality review uses:
+
+- `quality/review-output.schema.json` for specialist review output;
+- `quality/visual-evidence.schema.json` for browser evidence;
+- `quality/browser_probe.mjs` for real Chrome screenshots and geometry;
+- `quality/validate_visual_manifest.py` for deterministic visual blockers.
+
+The visual probe records screenshot hashes, DOM anchors, heading/body scale, image natural/rendered dimensions and document overflow. This catches failures that a label-only screenshot manifest cannot, while art direction remains a semantic specialist judgment.
