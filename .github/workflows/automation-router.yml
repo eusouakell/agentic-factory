@@ -39,6 +39,26 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Validate browser probe syntax
         run: node --check quality/browser_probe.mjs
+      - name: Exercise real-browser visual probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m http.server 8765 --directory tests/fixtures >/tmp/factory-visual-fixture.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for _ in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:8765/visual-probe.html >/dev/null; then
+              break
+            fi
+            sleep .25
+          done
+          node quality/browser_probe.mjs \
+            --url http://127.0.0.1:8765/visual-probe.html \
+            --output-dir /tmp/factory-visual-qa \
+            --manifest /tmp/factory-visual-qa/manifest.json \
+            --section 'hero=#hero' \
+            --viewport 800x600
+          python quality/validate_visual_manifest.py /tmp/factory-visual-qa/manifest.json
       - name: Route this pull request
         shell: bash
         run: |
