@@ -13,6 +13,7 @@
     "raised_by",
     "owner",
     "severity",
+    "root_cause",
     "status",
     "round"
   ],
@@ -39,6 +40,7 @@
     "owner": {"type": "string", "minLength": 1},
     "arbiter": {"type": ["string", "null"]},
     "severity": {"type": "string", "enum": ["advisory", "major", "blocker"]},
+    "root_cause": {"type": "string", "minLength": 1},
     "round": {"type": "integer", "minimum": 1, "maximum": 3},
     "same_blocker_attempt": {"type": "integer", "minimum": 1, "maximum": 2},
     "evidence_refs": {
