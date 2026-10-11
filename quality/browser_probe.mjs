@@ -152,6 +152,30 @@ async function main() {
 
       for (const section of sections) {
         await cdp.send("Page.navigate", { url: args.url });
+        let pageReady = false;
+        let lastPageState = null;
+        for (let attempt = 0; attempt < 50; attempt += 1) {
+          const state = await cdp.send("Runtime.evaluate", {
+            expression: `(() => ({
+              href: location.href,
+              ready: document.readyState,
+              hasSection: !!document.querySelector(${JSON.stringify(section.selector)}),
+              title: document.title
+            }))()`,
+            returnByValue: true,
+          });
+          lastPageState = state?.result?.value || null;
+          if (lastPageState?.ready === "complete" && lastPageState?.hasSection) {
+            pageReady = true;
+            break;
+          }
+          await sleep(100);
+        }
+        if (!pageReady) {
+          throw new Error(
+            `page did not become ready for ${section.id}: ${JSON.stringify(lastPageState)}`
+          );
+        }
         await sleep(args.waitMs);
 
         const expression = `(() => {
