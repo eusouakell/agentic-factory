@@ -203,7 +203,7 @@ A page reaches the final human gate only when:
 7. the weighted publish-readiness score is at least **9.2/10**;
 8. no dimension is below **9.0/10**;
 9. subjective reviewer spread above **1.5 points** has been debated and resolved;
-10. desktop + 390 + 320 renders have been inspected;
+10. desktop + 390 + 320 renders have been inspected through a visual-evidence manifest with section anchors, content hashes and independent review IDs;
 11. static composition passes with motion disabled;
 12. accessibility/code/implementation reviews have no unresolved blocker;
 13. provenance and public claims are publish-safe.
@@ -233,6 +233,10 @@ Conditional:
 - Inclusive Experience Reviewer.
 
 The implementation producer does not score its own production-craft criterion as the deciding reviewer.
+
+Primary and secondary reviews must come from **different execution runs** (`review_run_id`). Merely relabelling one execution as two specialist roles is not independent review.
+
+Visual evidence must also be machine-checkable enough to catch QA failures such as a single screenshot being saved under multiple section names. Required captures therefore include section ID, DOM anchor, observed heading, artifact reference and SHA-256 content hash. Duplicate image content across different required sections in the same viewport is a blocker until explained and re-reviewed.
 
 ## 12. Final output to Kell
 
