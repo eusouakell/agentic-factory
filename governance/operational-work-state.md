@@ -129,7 +129,9 @@ Closing a dependency does not authorize execution if another gate or prerequisit
 | Type | Feature · Research · Content · Governance · Maintenance |
 | Owner | accountable human or operational responsibility |
 
-Avoid story points, percent-complete, duplicate blocker fields, speculative dates and health scores unless evidence later shows they solve a real problem.
+Avoid percent-complete, duplicate blocker fields, speculative dates and health scores unless evidence later shows they solve a real problem.
+
+Relative sizing points are allowed where an instrumented workflow already uses them for plan-vs-actual observability. If exposed in a GitHub Project, they should mirror the workflow baseline rather than create a second sizing source of truth. Points remain relative sizing and are never converted automatically into hours.
 
 ## Issue as a context-recovery packet
 

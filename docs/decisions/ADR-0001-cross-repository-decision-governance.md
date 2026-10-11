@@ -1,9 +1,10 @@
 # ADR-0001 — Cross-repository decision governance
 
-**Status:** proposed — merge implies acceptance  
+**Status:** accepted  
 **Decision owner:** Kell  
 **Scope:** Agentic Factory and all consumer repositories  
-**Date:** 2026-10-11
+**Date:** 2026-10-11  
+**Decision ID:** `cross-repo-decision-governance`
 
 ## Context
 
@@ -111,3 +112,4 @@ The intended cost is small. ADRs should record decisions, not become project dia
 - `governance/first-class-decisions.md`
 - `docs/orchestration/creative-convergence-v1.md`
 - PR #36 — Creative Convergence V1
+- PR #37 — accepted this ADR

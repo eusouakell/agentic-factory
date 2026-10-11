@@ -67,7 +67,7 @@ Governed decisions are modeled independently from their implementation tasks. Ea
 
 Human gates are a calibration mechanism, not a permanent assumption. Mature recurring decision classes may move toward exception-based, sampled or bounded autonomous oversight only after evidence and explicit approval.
 
-See [first-class decisions](governance/first-class-decisions.md) and the [decision record schema](control-plane/decision-record.schema.json).
+See [first-class decisions](governance/first-class-decisions.md), the [decision record schema](control-plane/decision-record.schema.json), and the [durable decision records](docs/decisions/README.md).
 
 ## Agent Registry V3
 
