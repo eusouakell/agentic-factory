@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/eusouakell/agentic-factory/orchestration/event.schema.json",
+  "title": "Agentic Factory observability event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "workflow_id",
+    "project_id",
+    "repository",
+    "workflow_type",
+    "run_id",
+    "event_type",
+    "timestamp",
+    "execution_surface",
+    "artifact_refs",
+    "metadata"
+  ],
+  "properties": {
+    "event_id": {"type": "string", "minLength": 1},
+    "workflow_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "repository": {"type": "string", "minLength": 1},
+    "workflow_type": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": ["string", "null"]},
+    "agent_id": {"type": ["string", "null"]},
+    "event_type": {"type": "string", "minLength": 1},
+    "timestamp": {"type": "string", "minLength": 1},
+    "execution_surface": {"type": "string", "minLength": 1},
+    "artifact_refs": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "metadata": {"type": "object"}
+  }
+}

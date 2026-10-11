@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "rubric_id": "editorial-web-publish-ready-v1",
   "title": "Editorial web publish-readiness 10/10 rubric",
   "score_usage": "Calibration and disagreement detection only. Blocker checks override numeric scores.",
@@ -140,5 +140,12 @@
     "implementation materially diverges from approved narrative/experience/art direction",
     "open material specialist dissent",
     "readiness evaluator != READY"
-  ]
+  ],
+  "review_requirements": {
+    "independent_execution_runs": true,
+    "evidence_refs_required": true,
+    "producer_self_certification": false,
+    "visual_manifest_ref": "quality/visual-evidence.schema.json",
+    "visual_capture_integrity": "Distinct sections in the same viewport may not reuse the same screenshot content hash."
+  }
 }
