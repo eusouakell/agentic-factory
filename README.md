@@ -148,6 +148,8 @@ Default flow: `Backlog → Ready → In Progress → Gate / Review → Done`.
 
 See [operational work state](governance/operational-work-state.md).
 
+Cross-repository decisions are recorded as ADRs at the authority that owns them: shared governance decisions in the Factory, domain decisions in the owning repository, with implementation PRs linking both. See [decision records](docs/decisions/README.md).
+
 ## Repository boundaries
 
 The Factory is reusable infrastructure. Domain systems remain independent consumers.
