@@ -195,6 +195,20 @@ It should not determine the top-level workflow.
 
 The control plane starts from the outcome and governed decision, then routes only the capabilities required to support or execute that decision.
 
+## Human orchestration principle
+
+Human attention is a governed resource.
+
+A workflow should not require human review merely because an internal specialist decision occurred. Oversight belongs to the **decision class**, not to every task or handoff.
+
+For bounded creative/knowledge workflows, the preferred maturity path is:
+
+`human reviews every handoff → human reviews meaningful gates → human on exception → sampled review`
+
+while final publication/merge authority may remain human-owned.
+
+A successful workflow therefore reduces **human coordination work** without hiding consequential decisions.
+
 ## Learning loop
 
 The Factory should preserve:
