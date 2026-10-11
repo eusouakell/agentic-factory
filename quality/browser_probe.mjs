@@ -125,8 +125,14 @@ async function main() {
 
   try {
     const targets = await waitForJson(`http://127.0.0.1:${port}/json/list`);
-    if (!targets.length) throw new Error("Chrome did not expose a page target");
-    const cdp = new Cdp(targets[0].webSocketDebuggerUrl);
+    const target =
+      targets.find(
+        (item) =>
+          item.type === "page" &&
+          !String(item.url || "").startsWith("chrome-extension://")
+      ) || targets.find((item) => item.type === "page");
+    if (!target) throw new Error("Chrome did not expose a page target");
+    const cdp = new Cdp(target.webSocketDebuggerUrl);
     await cdp.connect();
     await cdp.send("Page.enable");
     await cdp.send("Runtime.enable");
