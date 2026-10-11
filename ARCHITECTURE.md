@@ -41,6 +41,33 @@ LEARN-BACK
 
 Tasks remain execution units. They are not the primary abstraction for choices that affect outcomes, risk, authority or downstream work. See [first-class decisions](governance/first-class-decisions.md).
 
+## Human operating model
+
+The intended human role is **orchestrator**, not traffic manager.
+
+The human owner defines:
+
+- desired outcome;
+- non-delegable authority;
+- risk tolerance;
+- quality threshold;
+- final publication/merge decision.
+
+The Factory owns routine coordination between those boundaries:
+
+- specialist routing;
+- authoritative context propagation;
+- bounded internal debate;
+- retries and revision loops;
+- quality checks and independent evaluation;
+- escalation only when declared authority or evidence is insufficient.
+
+A workflow should not externalize ordinary craft or domain questions to the human simply because two specialists disagree. It should first exhaust the declared owner → challenger → arbiter path.
+
+This is the architectural distinction between **human-in-every-loop** and **human-at-meaningful-gates**.
+
+See [Creative Convergence V1](docs/orchestration/creative-convergence-v1.md).
+
 ## Responsibilities
 
 ### Control plane owns
