@@ -107,10 +107,14 @@ Human selects agent + executor.
 ### A1 — autonomous routing
 System detects an event and produces the required agent/eval plan.
 
-**Automation Layer V1 reaches A1.**
+**Automation Layer V1 reaches A1.** The A2 authority/budget guard is implemented, but no headless autonomous model adapter is yet declared installed.
 
 ### A2 — bounded execution
 Approved adapters invoke the selected agent on an execution surface using task-scoped credentials/context.
+
+The repository now includes the **bounded executor guard** in `automations/executor.py`. It enforces repository allowlists, agent allowlists, explicit context, tool grants and retry ceilings before an adapter can run.
+
+A `PacketOnlyAdapter` is available to materialize a governed execution packet, but it is deliberately **not autonomous** and cannot claim task completion. This means the control contract is implemented, while true A2 remains contingent on an installed model/execution adapter with task-scoped credentials.
 
 ### A3 — bounded remediation
 Low-risk changes may be proposed automatically on a branch, followed by independent review/checks.
