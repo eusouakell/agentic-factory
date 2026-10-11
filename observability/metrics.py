@@ -149,6 +149,27 @@ def summarize_run(events: list[dict]) -> dict:
         and e.get("metadata", {}).get("status") in {"fail", "unknown"}
     )
 
+    material_issues_created = sum(
+        1
+        for e in events
+        if e["event_type"] == "convergence_issue_created"
+        and e.get("metadata", {}).get("severity") in {"major", "blocker"}
+    )
+    material_issues_resolved = sum(
+        1
+        for e in events
+        if e["event_type"] == "convergence_issue_resolved"
+        and e.get("metadata", {}).get("severity") in {"major", "blocker"}
+    )
+    human_escalations = sum(1 for e in events if e["event_type"] == "human_escalation_opened")
+    human_gates = sum(1 for e in events if e["event_type"] == "human_gate_opened")
+    human_interventions = human_escalations + human_gates
+    internal_resolution_rate = (
+        material_issues_resolved / material_issues_created
+        if material_issues_created
+        else 1.0
+    )
+
     deviations = []
     for event in events:
         metadata = event.get("metadata", {})
@@ -223,6 +244,12 @@ def summarize_run(events: list[dict]) -> dict:
         "usage_quality": usage_quality,
         "quality_gate_failures": len(quality_failures),
         "failed_checks": dict(failed_checks),
+        "convergence_issues": material_issues_created,
+        "convergence_resolved": material_issues_resolved,
+        "internal_resolution_rate": round(internal_resolution_rate, 4),
+        "human_escalations": human_escalations,
+        "human_gates": human_gates,
+        "human_interventions": human_interventions,
         "deviations": deviations,
     }
 
@@ -267,6 +294,19 @@ def summarize_portfolio(events: list[dict]) -> dict:
             "median_human_wait_seconds": med("human_wait_seconds"),
             "median_rework_ratio": med("rework_ratio"),
             "total_tokens_observed": sum(run["usage"]["total_tokens"] for run in runs),
+            "convergence_issues": sum(run["convergence_issues"] for run in runs),
+            "convergence_resolved": sum(run["convergence_resolved"] for run in runs),
+            "human_escalations": sum(run["human_escalations"] for run in runs),
+            "human_interventions": sum(run["human_interventions"] for run in runs),
+            "internal_resolution_rate": round(
+                (
+                    sum(run["convergence_resolved"] for run in runs)
+                    / sum(run["convergence_issues"] for run in runs)
+                )
+                if sum(run["convergence_issues"] for run in runs)
+                else 1.0,
+                4,
+            ),
         },
         "failed_checks": dict(failure_counter),
         "opportunities": opportunities,
@@ -289,6 +329,9 @@ def derive_opportunities(runs: list[dict], failed_checks: Counter[str]) -> list[
     cycle = sum(run["cycle_seconds"] for run in runs)
     wait = sum(run["human_wait_seconds"] for run in runs)
     retries = sum(run["retries"] for run in runs)
+    convergence_issues = sum(run["convergence_issues"] for run in runs)
+    convergence_resolved = sum(run["convergence_resolved"] for run in runs)
+    human_escalations = sum(run["human_escalations"] for run in runs)
 
     if total_points and unplanned / total_points >= 0.25:
         opportunities.append({
@@ -320,6 +363,22 @@ def derive_opportunities(runs: list[dict], failed_checks: Counter[str]) -> list[
             "hypothesis": "Upstream acceptance criteria or handoffs may be underspecified.",
             "recommended_intervention": "Trace retries to the earliest failed quality criterion and owning role.",
             "metric": "retry rate / rework ratio",
+            "confidence": "medium",
+        })
+    if convergence_issues and convergence_resolved / convergence_issues < 0.8:
+        opportunities.append({
+            "signal": "Internal resolution rate is below 80%",
+            "hypothesis": "The workflow may be escalating or abandoning specialist disagreements too early.",
+            "recommended_intervention": "Inspect unresolved issue classes, owner routing and arbitration budgets before adding human gates.",
+            "metric": "internal-resolution rate",
+            "confidence": "medium",
+        })
+    if human_escalations:
+        opportunities.append({
+            "signal": f"Human escalations detected ({human_escalations})",
+            "hypothesis": "Some questions exceeded declared internal authority, evidence or revision budgets.",
+            "recommended_intervention": "Classify escalation reasons and decide whether authority/context should move upstream.",
+            "metric": "human escalation rate",
             "confidence": "medium",
         })
     if failed_checks:
