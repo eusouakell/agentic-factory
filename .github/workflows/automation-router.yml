@@ -30,7 +30,7 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
-      - uses: actions/setup-node@1e60f620b9541d84893a1c8c239a2b1d28c0b5f8 # v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "24"
       - name: Validate automation registry
