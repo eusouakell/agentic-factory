@@ -256,7 +256,10 @@ async function main() {
     process.stdout.write(JSON.stringify({ manifest: resolve(args.manifest), captures: captures.length }) + "\n");
   } finally {
     chrome.kill("SIGTERM");
-    await rm(profileDir, { recursive: true, force: true });
+    await sleep(250);
+    if (chrome.exitCode === null) chrome.kill("SIGKILL");
+    await sleep(100);
+    await rm(profileDir, { recursive: true, force: true }).catch(() => {});
   }
 }
 
