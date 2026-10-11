@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Deliberation arbitration output",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["decision", "rationale"],
+  "properties": {
+    "decision": {"enum": ["KEEP", "REVISE_OWNER", "COMBINE", "ESCALATE"]},
+    "rationale": {"type": "string", "minLength": 1},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}}
+  }
+}
