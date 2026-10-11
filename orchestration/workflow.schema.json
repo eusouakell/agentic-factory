@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/eusouakell/agentic-factory/orchestration/workflow.schema.json",
+  "title": "Agentic Factory workflow definition",
+  "type": "object",
+  "required": ["schema_version", "workflow_id", "project_id", "repository", "workflow_type"],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "workflow_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "workflow_type": {"type": "string", "minLength": 1},
+    "oversight_mode": {
+      "enum": ["human_in_loop", "human_on_exception", "publish_ready_only"]
+    },
+    "decision_ref": {"type": ["string", "null"]},
+    "rubric_ref": {"type": ["string", "null"]},
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["task_id", "agent_id"],
+        "properties": {
+          "task_id": {"type": "string", "minLength": 1},
+          "agent_id": {"type": "string", "minLength": 1},
+          "sizing_points": {"type": "integer", "minimum": 0},
+          "planning_origin": {"enum": ["planned", "unplanned"]},
+          "retry_budget": {"type": "integer", "minimum": 0},
+          "depends_on": {
+            "type": "array",
+            "items": {"type": "string"},
+            "uniqueItems": true
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "phases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["phase_id", "purpose"],
+        "properties": {
+          "phase_id": {"type": "string", "minLength": 1},
+          "purpose": {"type": "string", "minLength": 1},
+          "participants": {
+            "type": "array",
+            "items": {"type": "string"},
+            "uniqueItems": true
+          },
+          "arbiter": {"type": ["string", "null"]},
+          "max_material_rounds": {"type": "integer", "minimum": 1},
+          "max_revision_cycles_per_root_cause": {"type": "integer", "minimum": 1}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "anyOf": [
+    {"required": ["tasks"]},
+    {"required": ["phases"]}
+  ],
+  "additionalProperties": true
+}
