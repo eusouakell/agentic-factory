@@ -3,7 +3,7 @@ import { createHash, randomUUID } from "node:crypto";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { spawn, spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 
 function parseArgs(argv) {
   const out = { sections: [], viewports: [] };
@@ -251,7 +251,7 @@ async function main() {
       },
       captures,
     };
-    await mkdir(resolve(args.manifest, ".."), { recursive: true }).catch(() => {});
+    await mkdir(dirname(resolve(args.manifest)), { recursive: true });
     await writeFile(resolve(args.manifest), JSON.stringify(manifest, null, 2) + "\n");
     process.stdout.write(JSON.stringify({ manifest: resolve(args.manifest), captures: captures.length }) + "\n");
   } finally {
