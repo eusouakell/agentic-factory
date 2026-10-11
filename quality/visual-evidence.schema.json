@@ -18,6 +18,10 @@
         "max_heading_body_ratio": {"type": "number", "minimum": 0}
       }
     },
+    "section_anchors": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "minLength": 1}
+    },
     "section_constraints": {
       "type": "object",
       "additionalProperties": {
