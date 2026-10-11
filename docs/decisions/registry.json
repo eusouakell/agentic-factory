@@ -38,13 +38,27 @@
       "title": "High-craft work may use stricter bounded deliberation before the final human gate",
       "authority_repository": "eusouakell/agentic-factory",
       "canonical_ref": "docs/orchestration/deliberative-quality-loop-v1.md",
-      "status": "proposed",
+      "status": "accepted",
       "affected_repositories": [
         "eusouakell/bussola"
       ],
       "implementation_refs": [
         "https://github.com/eusouakell/agentic-factory/pull/41",
         "https://github.com/eusouakell/bussola/pull/13"
+      ]
+    },
+    {
+      "decision_id": "a2-independent-execution",
+      "title": "Bounded A2 execution uses isolated specialist runs with inspectable evidence",
+      "authority_repository": "eusouakell/agentic-factory",
+      "canonical_adr": "docs/decisions/ADR-0002-a2-independent-execution.md",
+      "status": "proposed",
+      "affected_repositories": [
+        "eusouakell/agentic-factory",
+        "eusouakell/bussola"
+      ],
+      "implementation_refs": [
+        "https://github.com/eusouakell/agentic-factory/pull/43"
       ]
     }
   ]
