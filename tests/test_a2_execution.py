@@ -155,6 +155,32 @@ class A2OrchestrationTests(unittest.TestCase):
             self.assertEqual(len(completed), 2)
             self.assertEqual(len({e["metadata"]["execution_id"] for e in completed}), 2)
 
+    def test_rubric_council_executes_each_reviewer_independently(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            orchestrator = self.make_orchestrator(tmp)
+            rubric = {
+                "dimensions": [
+                    {
+                        "id": "narrative",
+                        "primary_reviewer": "editorial-storyteller",
+                        "secondary_reviewer": "creative-director",
+                    }
+                ]
+            }
+            council = orchestrator.run_rubric_council(
+                run_id="run-a2",
+                rubric=rubric,
+                candidate_ref="git://candidate",
+                evidence_refs=("artifact://render",),
+                context_refs=("git://prd",),
+            )
+            self.assertEqual(len(council.reviews), 2)
+            self.assertEqual(len(set(council.execution_run_ids)), 2)
+            self.assertEqual(
+                {review["reviewer_id"] for review in council.reviews},
+                {"editorial-storyteller", "creative-director"},
+            )
+
     def test_deliberation_runs_owner_challenger_and_arbiter_independently(self):
         with tempfile.TemporaryDirectory() as tmp:
             engine = A2DeliberationEngine(self.make_orchestrator(tmp))
