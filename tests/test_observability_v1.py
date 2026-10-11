@@ -228,6 +228,65 @@ class RuntimeAndMetricsTests(unittest.TestCase):
         self.assertIn("bussola", page)
         self.assertIn("cereja", page)
 
+    def test_a2_execution_and_escaped_defects_are_observable(self):
+        base = {
+            "workflow_id": "w-a2",
+            "project_id": "bussola",
+            "repository": "eusouakell/bussola",
+            "workflow_type": "web_design",
+            "run_id": "run-a2",
+            "task_id": "review",
+            "agent_id": "creative-director",
+            "execution_surface": "a2-control-plane",
+            "artifact_refs": [],
+        }
+        events = [
+            {
+                **base,
+                "event_id": "1",
+                "event_type": "workflow_created",
+                "timestamp": "2026-10-11T10:00:00+00:00",
+                "metadata": {},
+            },
+            {
+                **base,
+                "event_id": "2",
+                "event_type": "agent_execution_started",
+                "timestamp": "2026-10-11T10:00:01+00:00",
+                "metadata": {"execution_id": "exec-1"},
+            },
+            {
+                **base,
+                "event_id": "3",
+                "event_type": "agent_execution_completed",
+                "timestamp": "2026-10-11T10:00:02+00:00",
+                "metadata": {"execution_id": "exec-1", "duration_ms": 1250},
+            },
+            {
+                **base,
+                "event_id": "4",
+                "event_type": "escaped_defect_recorded",
+                "timestamp": "2026-10-11T10:00:03+00:00",
+                "metadata": {"criterion": "visual.image_proportion"},
+            },
+        ]
+        summary = summarize_run(events)
+        self.assertEqual(summary["agent_executions_started"], 1)
+        self.assertEqual(summary["agent_executions_completed"], 1)
+        self.assertEqual(summary["agent_executions_failed"], 0)
+        self.assertEqual(summary["independent_execution_ids"], 1)
+        self.assertEqual(summary["agent_execution_seconds"], 1.25)
+        self.assertEqual(summary["escaped_defects"], 1)
+
+        portfolio = summarize_portfolio(events)
+        self.assertEqual(portfolio["summary"]["escaped_defects"], 1)
+        self.assertTrue(
+            any(
+                item["metric"] == "escaped defect count"
+                for item in portfolio["opportunities"]
+            )
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
