@@ -17,6 +17,12 @@ class SpecialistRun:
 
 
 @dataclass(frozen=True)
+class CouncilRun:
+    reviews: tuple[dict[str, Any], ...]
+    execution_run_ids: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class DeliberationOutcome:
     owner_run: SpecialistRun
     challenger_run: SpecialistRun
@@ -150,6 +156,45 @@ class A2Orchestrator:
             execution_id=result.execution_id or execution_id,
             task_id=task_id,
             result=result,
+        )
+
+    def run_rubric_council(
+        self,
+        *,
+        run_id: str,
+        rubric: dict,
+        candidate_ref: str,
+        evidence_refs: tuple[str, ...],
+        context_refs: tuple[str, ...],
+        applicability: dict[str, bool] | None = None,
+    ) -> CouncilRun:
+        applicability = applicability or {}
+        reviews: list[dict[str, Any]] = []
+        execution_ids: list[str] = []
+
+        for dimension in rubric.get("dimensions", []):
+            applies_if = dimension.get("applies_if")
+            if applies_if and not applicability.get(applies_if, False):
+                continue
+            dimension_id = str(dimension["id"])
+            for reviewer_id in (
+                str(dimension["primary_reviewer"]),
+                str(dimension["secondary_reviewer"]),
+            ):
+                review = self.run_review(
+                    run_id=run_id,
+                    dimension_id=dimension_id,
+                    reviewer_id=reviewer_id,
+                    candidate_ref=candidate_ref,
+                    evidence_refs=evidence_refs,
+                    context_refs=context_refs,
+                )
+                reviews.append(review)
+                execution_ids.append(str(review["review_run_id"]))
+
+        return CouncilRun(
+            reviews=tuple(reviews),
+            execution_run_ids=tuple(execution_ids),
         )
 
     def run_review(
