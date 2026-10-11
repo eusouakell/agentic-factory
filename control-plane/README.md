@@ -108,6 +108,30 @@ A handoff should declare:
 - unresolved uncertainty;
 - authority not transferred.
 
+## Internal resolution before escalation
+
+A specialist disagreement is not automatically a human gate.
+
+When a bounded workflow has an internal resolution contract, the control plane should route:
+
+`challenger → domain owner → re-review → declared arbiter`
+
+before opening a human gate.
+
+Questions should be classified by decision domain (for example factual/source, narrative/content, experience, visual, implementation, accessibility or readiness) and routed to the role that owns that domain.
+
+Human escalation is appropriate only when:
+
+- the issue is explicitly human-owned;
+- required authority is absent;
+- authoritative evidence cannot resolve the conflict;
+- the bounded revision/arbitration budget is exhausted;
+- the remaining choice is materially consequential and equally defensible.
+
+This supports the target operating model: the human defines outcomes, authority and quality; the Factory closes routine coordination loops.
+
+See [Creative Convergence V1](../docs/orchestration/creative-convergence-v1.md).
+
 ## Escalation
 
 Escalation is expected behavior, not failure of the system.

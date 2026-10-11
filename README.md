@@ -25,6 +25,16 @@ Current domain authorities remain:
 
 Agents are capabilities, not the architecture. The agency-inspired structure is a professional capability map, not the primary unit of work.
 
+### Human operating model
+
+The human owner should act as an **orchestrator, not an agent babysitter**.
+
+The Factory should absorb routine coordination: route specialists, carry authoritative context, resolve bounded disagreements, run checks/evals and iterate within declared budgets. Human attention is reserved for outcome definition, authority changes, consequential exceptions and final publication/merge decisions.
+
+For mature or explicitly configured workflows, the target interaction model is **human-at-the-gates / human-on-exception**, not human review at every specialist handoff.
+
+See [Creative Convergence V1](docs/orchestration/creative-convergence-v1.md).
+
 ## Architecture
 
 ```text

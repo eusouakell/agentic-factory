@@ -1,0 +1,188 @@
+{
+  "schema_version": "1.0",
+  "workflow_id": "bussola-public-case-convergence-v1",
+  "project_id": "bussola-public-case",
+  "repository": "eusouakell/bussola",
+  "workflow_type": "creative_convergence",
+  "human_review_mode": "publish_ready_only",
+  "max_stage_rounds": 3,
+  "max_same_blocker_attempts": 2,
+  "final_human_gate": "publish",
+  "stages": [
+    {
+      "stage_id": "prd",
+      "title": "PRD and evidence contract",
+      "tasks": [
+        {
+          "task_id": "context",
+          "agent_id": "repository-analyst",
+          "sizing_points": 2
+        },
+        {
+          "task_id": "references",
+          "agent_id": "research-synthesist",
+          "sizing_points": 2
+        },
+        {
+          "task_id": "prd",
+          "agent_id": "workflow-architect",
+          "sizing_points": 3
+        }
+      ],
+      "reviewers": [
+        "editorial-storyteller",
+        "experience-designer"
+      ],
+      "exit_gate": "prd-ready"
+    },
+    {
+      "stage_id": "story-experience",
+      "title": "Narrative and experience convergence",
+      "tasks": [
+        {
+          "task_id": "story",
+          "agent_id": "editorial-storyteller",
+          "sizing_points": 3
+        },
+        {
+          "task_id": "experience",
+          "agent_id": "experience-designer",
+          "sizing_points": 3
+        }
+      ],
+      "cross_review": true,
+      "arbiter": "creative-director",
+      "exit_gate": "story-experience-ready"
+    },
+    {
+      "stage_id": "art-direction",
+      "title": "Art direction convergence",
+      "tasks": [
+        {
+          "task_id": "art-direction",
+          "agent_id": "editorial-art-director",
+          "sizing_points": 5
+        },
+        {
+          "task_id": "visual-proof",
+          "agent_id": "graphic-editorial-designer",
+          "sizing_points": 3
+        }
+      ],
+      "conditional_reviewers": [
+        "editorial-typography-director",
+        "motion-web-director"
+      ],
+      "reviewers": [
+        "editorial-storyteller",
+        "experience-designer",
+        "research-synthesist",
+        "creative-director"
+      ],
+      "arbiter": "creative-director",
+      "exit_gate": "art-direction-ready"
+    },
+    {
+      "stage_id": "production",
+      "title": "Landing production",
+      "tasks": [
+        {
+          "task_id": "ui-production",
+          "agent_id": "flame-ui-composer",
+          "sizing_points": 5
+        },
+        {
+          "task_id": "frontend",
+          "agent_id": "frontend-engineer",
+          "sizing_points": 5
+        }
+      ],
+      "reviewers": [
+        "creative-director",
+        "experience-designer",
+        "editorial-storyteller",
+        "accessibility-auditor"
+      ],
+      "exit_gate": "candidate-ready"
+    },
+    {
+      "stage_id": "release-challenge",
+      "title": "Independent release challenge",
+      "tasks": [
+        {
+          "task_id": "creative-final",
+          "agent_id": "creative-director",
+          "sizing_points": 2
+        },
+        {
+          "task_id": "accessibility",
+          "agent_id": "accessibility-auditor",
+          "sizing_points": 2
+        },
+        {
+          "task_id": "code-review",
+          "agent_id": "code-reviewer",
+          "sizing_points": 2
+        },
+        {
+          "task_id": "readiness",
+          "agent_id": "readiness-evaluator",
+          "sizing_points": 2
+        }
+      ],
+      "parallel_groups": [
+        [
+          "creative-final",
+          "accessibility",
+          "code-review"
+        ]
+      ],
+      "depends_on": {
+        "readiness": [
+          "creative-final",
+          "accessibility",
+          "code-review"
+        ]
+      },
+      "exit_gate": "publish-ready"
+    }
+  ],
+  "human_escalation_conditions": [
+    "authority_conflict",
+    "missing_authoritative_evidence",
+    "legal_or_consent_decision",
+    "revision_budget_exhausted",
+    "equally_defensible_material_directions_after_arbitration"
+  ],
+  "publish_ready": {
+    "min_dimension_score": 4,
+    "min_average_score": 4.5,
+    "blockers": 0,
+    "unresolved_issues": 0,
+    "required_viewports": [
+      1440,
+      390,
+      320
+    ],
+    "required_checks": [
+      "narrative",
+      "content_design",
+      "experience",
+      "visual_authorship",
+      "responsive",
+      "product_evidence",
+      "accessibility",
+      "implementation_fidelity",
+      "provenance_readiness"
+    ]
+  },
+  "debate_protocol_ref": "orchestration/convergence-issue.schema.json",
+  "observability_events": [
+    "convergence_issue_created",
+    "convergence_issue_owner_responded",
+    "convergence_issue_arbitrated",
+    "convergence_issue_resolved",
+    "human_escalation_opened",
+    "human_escalation_resolved"
+  ]
+}

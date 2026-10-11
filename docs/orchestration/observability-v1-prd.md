@@ -241,6 +241,12 @@ Required event types:
 - `quality_gate_passed`
 - `quality_gate_failed`
 - `quality_gate_overridden`
+- `convergence_issue_created`
+- `convergence_issue_owner_responded`
+- `convergence_issue_arbitrated`
+- `convergence_issue_resolved`
+- `human_escalation_opened`
+- `human_escalation_resolved`
 - `workflow_completed`
 
 Optional usage event:
@@ -332,10 +338,16 @@ Do not collapse these into one opaque quality score in V1.
 ### Human attention
 
 - number of human gates;
-- time waiting for Kell;
-- number of decisions requested from Kell;
-- revision requests initiated by Kell;
+- time waiting for the human owner;
+- number of decisions requested from the human owner;
+- revision requests initiated by the human owner;
+- **human intervention rate:** human interventions / completed workflows;
+- **internal-resolution rate:** issues resolved without human input / total routed issues;
+- **accepted outcome per human intervention**;
+- human escalations by reason;
 - accepted-outcome / human-gate ratio.
+
+The target is not zero human involvement. The target is to eliminate human **traffic management** while preserving human authority for consequential decisions.
 
 V1 must not equate “fewer tokens” with “better work”. The primary operating metric is **accepted outcome with less rework and less human handling**.
 
@@ -604,7 +616,10 @@ V1 is successful when real workflows from multiple GitHub projects can feed the 
 13. what was planned vs unplanned;
 14. how many committed points were accepted;
 15. which tasks spilled over, grew in scope or required rework;
-16. which evidence-backed improvement opportunities should be investigated.
+16. which evidence-backed improvement opportunities should be investigated;
+17. how many issues were resolved internally without human intervention;
+18. the human intervention rate by workflow/project;
+19. why each human escalation occurred.
 
 Use the Bússola public-case redesign as the first pilot, but do not call V1 operational until at least one additional GitHub project/repository emits a compatible workflow and appears in the same dashboard without custom code.
 
@@ -612,13 +627,13 @@ Use the Bússola public-case redesign as the first pilot, but do not call V1 ope
 
 These are learning thresholds, not permanent SLAs.
 
-For the Bússola pilot:
+For the Bússola creative-convergence pilot:
 
-- no more than **2 human gates** across the full pilot workflow:
-  1. direction/PRD gate before implementation;
-  2. final release/merge gate after implementation;
-- no more than **1 focused revision** per director-level task before escalation;
-- no implementation begins before PRD + art-direction packet is accepted;
+- target **1 planned human intervention**: final publish/merge decision;
+- intermediate PRD, narrative, experience, art-direction and production questions are resolved internally unless a declared escalation condition is met;
+- human escalation before publication must be classified and recorded as an exception;
+- maximum **3 convergence rounds per major stage** and **2 attempts on the same blocker class** before structured escalation;
+- production begins only after the internal PRD + art-direction quality gates pass;
 - no motion task starts before static composition passes;
 - every downstream task consumes the approved upstream artifact instead of regenerating it;
 - dashboard captures all task transitions and timestamps;

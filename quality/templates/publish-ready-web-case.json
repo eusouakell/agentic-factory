@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "gate_id": "publish-ready-web-case",
+  "title": "Publish-ready web/editorial case",
+  "scored_dimensions": [
+    {"id":"narrative","owner":"editorial-storyteller","min":4},
+    {"id":"content_design","owner":"editorial-storyteller","min":4},
+    {"id":"experience","owner":"experience-designer","min":4},
+    {"id":"visual_authorship","owner":"creative-director","min":4},
+    {"id":"responsive","owner":"experience-designer","min":4},
+    {"id":"product_evidence","owner":"creative-director","min":4},
+    {"id":"accessibility","owner":"accessibility-auditor","min":4},
+    {"id":"implementation_fidelity","owner":"code-reviewer","min":4},
+    {"id":"provenance_readiness","owner":"readiness-evaluator","min":4}
+  ],
+  "average_min": 4.5,
+  "blockers": [
+    "unsupported_public_claim",
+    "unresolved_provenance",
+    "generic_template_grammar",
+    "mobile_is_desktop_stack",
+    "essential_motion_without_reduced_equivalent",
+    "unresolved_accessibility_blocker",
+    "implementation_drift",
+    "broken_public_link",
+    "unresolved_authority_conflict"
+  ],
+  "human_gate": {
+    "id":"kell-publish",
+    "opens_only_when":"publish_ready",
+    "packet":"one_screen_release_packet"
+  }
+}
