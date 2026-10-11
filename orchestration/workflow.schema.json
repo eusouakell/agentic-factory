@@ -30,6 +30,21 @@
             "type": "array",
             "items": {"type": "string"},
             "uniqueItems": true
+          },
+          "agent_contract_ref": {"type": ["string", "null"]},
+          "output_schema_ref": {"type": ["string", "null"]},
+          "context_refs": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1},
+            "uniqueItems": true
+          },
+          "tool_grants": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1},
+            "uniqueItems": true
+          },
+          "execution_mode": {
+            "enum": ["packet_only", "isolated_agent", "human"]
           }
         },
         "additionalProperties": true
