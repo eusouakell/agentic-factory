@@ -468,7 +468,17 @@ The final packet should fit on one screen:
 
 The human should not need to perform design QA from scratch.
 
-## 16. Success criterion
+## 16. Profiles
+
+Creative Convergence is the generic contract. More demanding workflow classes may define stricter profiles without changing the base authority model.
+
+Current profile:
+
+- [Deliberative Quality Loop V1](deliberative-quality-loop-v1.md) — high-craft editorial/web/product case work with independent council review and stricter publish-readiness calibration.
+
+A profile may tighten review thresholds, reviewer composition and evidence requirements. It may not widen publication, merge, tool or canonical-domain authority.
+
+## 17. Success criterion
 
 The workflow succeeds if Kell receives a materially stronger page with fewer intermediate interventions than the previous manual loop.
 

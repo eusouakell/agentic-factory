@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "rubric_id": "editorial-web-publish-ready-v1",
+  "title": "Editorial web publish-readiness 10/10 rubric",
+  "score_usage": "Calibration and disagreement detection only. Blocker checks override numeric scores.",
+  "thresholds": {
+    "weighted_minimum": 9.2,
+    "dimension_minimum": 9,
+    "max_independent_reviewer_spread": 1.5
+  },
+  "dimensions": [
+    {
+      "id": "narrative",
+      "weight": 10,
+      "primary_reviewer": "editorial-storyteller",
+      "secondary_reviewer": "creative-director",
+      "criteria": [
+        "clear hook/tension/turn/payoff",
+        "one-line retell survives scanning",
+        "no forced claims or unnecessary exposition"
+      ]
+    },
+    {
+      "id": "content_design",
+      "weight": 12,
+      "primary_reviewer": "experience-designer",
+      "secondary_reviewer": "editorial-storyteller",
+      "criteria": [
+        "each section has one job",
+        "labels/microcopy reduce ambiguity",
+        "reading order reduces explanation burden",
+        "technical language fits audience"
+      ]
+    },
+    {
+      "id": "art_direction",
+      "weight": 15,
+      "primary_reviewer": "editorial-art-director",
+      "secondary_reviewer": "creative-director",
+      "criteria": [
+        "one coherent visual world",
+        "composition is authored rather than template-like",
+        "type/image/evidence relationships are deliberate",
+        "restraint without genericness"
+      ]
+    },
+    {
+      "id": "product_evidence",
+      "weight": 10,
+      "primary_reviewer": "repository-analyst",
+      "secondary_reviewer": "experience-designer",
+      "criteria": [
+        "real/reconstructed artifacts are distinguishable",
+        "product evidence is readable",
+        "architecture/data/UI support the story rather than decorate it"
+      ]
+    },
+    {
+      "id": "responsive_mobile",
+      "weight": 12,
+      "primary_reviewer": "experience-designer",
+      "secondary_reviewer": "editorial-art-director",
+      "criteria": [
+        "390/320 are recomposed, not stacked desktop",
+        "critical evidence remains legible",
+        "relationships survive narrow viewports",
+        "no horizontal page overflow"
+      ]
+    },
+    {
+      "id": "accessibility_inclusion",
+      "weight": 10,
+      "primary_reviewer": "accessibility-auditor",
+      "secondary_reviewer": "inclusive-experience-reviewer",
+      "criteria": [
+        "semantic structure and focus are coherent",
+        "contrast/reflow/reduced motion pass",
+        "no essential hover/motion-only information",
+        "untested AT areas are named"
+      ]
+    },
+    {
+      "id": "technical_quality",
+      "weight": 10,
+      "primary_reviewer": "code-reviewer",
+      "secondary_reviewer": "frontend-engineer",
+      "criteria": [
+        "implementation matches approved direction",
+        "tests/build pass",
+        "performance risk is acceptable",
+        "no unjustified dependency or brittle effect"
+      ]
+    },
+    {
+      "id": "provenance_honesty",
+      "weight": 8,
+      "primary_reviewer": "repository-analyst",
+      "secondary_reviewer": "readiness-evaluator",
+      "criteria": [
+        "claims trace to evidence",
+        "synthetic/reconstructed/AI-generated material is labelled",
+        "PoC vs later refinement is explicit",
+        "rights/confidentiality constraints are respected"
+      ]
+    },
+    {
+      "id": "motion_interaction",
+      "weight": 5,
+      "primary_reviewer": "motion-web-director",
+      "secondary_reviewer": "accessibility-auditor",
+      "applies_if": "material_motion_present",
+      "criteria": [
+        "motion has a job",
+        "static experience remains complete",
+        "reduced-motion equivalent exists",
+        "motion does not mask weak composition"
+      ]
+    },
+    {
+      "id": "memorability_coherence",
+      "weight": 8,
+      "primary_reviewer": "creative-director",
+      "secondary_reviewer": "editorial-art-director",
+      "criteria": [
+        "page has a memorable central idea",
+        "sections feel authored by the same system",
+        "ending pays off the opening",
+        "overall experience is distinctive without gimmicks"
+      ]
+    }
+  ],
+  "blockers": [
+    "unsupported public claim",
+    "unclear rights/confidentiality/provenance",
+    "generic SaaS/card-grid route as dominant grammar",
+    "mobile is only stacked desktop",
+    "essential content depends on hover or motion",
+    "unresolved accessibility blocker",
+    "unresolved code correctness blocker",
+    "implementation materially diverges from approved narrative/experience/art direction",
+    "open material specialist dissent",
+    "readiness evaluator != READY"
+  ]
+}

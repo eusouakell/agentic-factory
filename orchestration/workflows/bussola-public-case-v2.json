@@ -1,0 +1,115 @@
+{
+  "schema_version": "2.0",
+  "workflow_id": "bussola-public-case-v2-deliberative",
+  "project_id": "bussola-public-case",
+  "repository": "eusouakell/bussola",
+  "workflow_type": "web_design",
+  "target_period": "publish-ready-v2",
+  "oversight_mode": "human_on_exception",
+  "decision_ref": "decisions/bussola-public-case-delegated-deliberation-v2.json",
+  "rubric_ref": "quality/rubrics/editorial-web-publish-ready-v1.json",
+  "human_gate_policy": {
+    "routine_intermediate_gates": false,
+    "final_publication_gate": true,
+    "exception_conditions": [
+      "authoritative fact cannot be resolved",
+      "rights/consent/confidentiality unclear",
+      "canonical conflict",
+      "material residual risk",
+      "deliberation budget exhausted"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "prd",
+      "purpose": "Create one binding product/content/experience/art-direction PRD from repository truth and prior exploration.",
+      "participants": [
+        "repository-analyst",
+        "research-synthesist",
+        "editorial-storyteller",
+        "experience-designer",
+        "editorial-art-director"
+      ],
+      "arbiter": "creative-director",
+      "output": "publishable-case-prd-v2.md",
+      "max_material_rounds": 3
+    },
+    {
+      "phase_id": "production",
+      "purpose": "Execute the frozen PRD into a complete responsive landing on a proposal branch.",
+      "participants": [
+        "flame-ui-composer",
+        "graphic-editorial-designer",
+        "frontend-engineer"
+      ],
+      "conditional_participants": [
+        "editorial-typography-director",
+        "photo-art-director",
+        "data-visualization-engineer",
+        "motion-web-director"
+      ],
+      "output": "complete landing candidate"
+    },
+    {
+      "phase_id": "council_review",
+      "purpose": "Run independent specialist reviews against the same frozen candidate and route failures to the earliest owning decision.",
+      "participants": [
+        "editorial-storyteller",
+        "experience-designer",
+        "editorial-art-director",
+        "creative-director",
+        "accessibility-auditor",
+        "code-reviewer",
+        "readiness-evaluator"
+      ],
+      "conditional_participants": [
+        "inclusive-experience-reviewer",
+        "editorial-typography-director",
+        "photo-art-director",
+        "motion-web-director",
+        "data-visualization-engineer"
+      ],
+      "max_revision_cycles_per_root_cause": 2
+    },
+    {
+      "phase_id": "final_gate",
+      "purpose": "Present one publish-ready packet to Kell.",
+      "owner": "kell",
+      "required_state": "readiness_evaluator=READY and rubric thresholds satisfied and no open blocker/question"
+    }
+  ],
+  "question_routing": {
+    "facts": "repository-analyst",
+    "narrative": "editorial-storyteller",
+    "content_design": "experience-designer",
+    "experience": "experience-designer",
+    "art_direction": "editorial-art-director",
+    "typography": "editorial-typography-director",
+    "photography": "photo-art-director",
+    "data_visualization": "data-visualization-engineer",
+    "motion": "motion-web-director",
+    "accessibility": "accessibility-auditor",
+    "implementation": "frontend-engineer",
+    "code_quality": "code-reviewer",
+    "readiness": "readiness-evaluator",
+    "cross_disciplinary_arbiter": "creative-director",
+    "workflow_authority": "workflow-architect"
+  },
+  "stop_conditions": {
+    "publish_ready": [
+      "all deterministic blockers pass",
+      "no semantic blocker fail or unknown",
+      "no open material question",
+      "no unresolved specialist dissent",
+      "weighted score >= 9.2",
+      "every applicable dimension >= 9.0",
+      "desktop, 390 and 320 inspected",
+      "readiness evaluator returns READY"
+    ],
+    "human_exception": [
+      "declared exception condition triggered",
+      "same root cause fails after two production revision cycles",
+      "material disagreement unresolved after three deliberation rounds"
+    ]
+  }
+}
