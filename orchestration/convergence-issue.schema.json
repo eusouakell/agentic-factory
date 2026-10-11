@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/eusouakell/agentic-factory/orchestration/convergence-issue.schema.json",
+  "title": "Creative convergence issue",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "issue_id",
+    "workflow_id",
+    "stage_id",
+    "question",
+    "issue_class",
+    "raised_by",
+    "owner",
+    "severity",
+    "status",
+    "round"
+  ],
+  "properties": {
+    "issue_id": {"type": "string", "minLength": 1},
+    "workflow_id": {"type": "string", "minLength": 1},
+    "stage_id": {"type": "string", "minLength": 1},
+    "question": {"type": "string", "minLength": 1},
+    "issue_class": {
+      "type": "string",
+      "enum": [
+        "factual_source",
+        "narrative_content",
+        "experience",
+        "visual",
+        "motion",
+        "implementation",
+        "accessibility",
+        "publication_readiness",
+        "authority"
+      ]
+    },
+    "raised_by": {"type": "string", "minLength": 1},
+    "owner": {"type": "string", "minLength": 1},
+    "arbiter": {"type": ["string", "null"]},
+    "severity": {"type": "string", "enum": ["advisory", "major", "blocker"]},
+    "round": {"type": "integer", "minimum": 1, "maximum": 3},
+    "same_blocker_attempt": {"type": "integer", "minimum": 1, "maximum": 2},
+    "evidence_refs": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "proposed_resolution": {"type": ["string", "null"]},
+    "owner_decision": {
+      "type": ["string", "null"],
+      "enum": [null, "accept", "reject_with_rationale", "authority_conflict"]
+    },
+    "owner_rationale": {"type": ["string", "null"]},
+    "artifact_refs": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "owner_revision",
+        "re_review",
+        "needs_arbitration",
+        "resolved",
+        "rejected_with_rationale",
+        "human_escalation"
+      ]
+    },
+    "human_escalation_reason": {
+      "type": ["string", "null"],
+      "enum": [
+        null,
+        "authority_conflict",
+        "missing_authoritative_evidence",
+        "legal_or_consent_decision",
+        "revision_budget_exhausted",
+        "equally_defensible_material_directions_after_arbitration"
+      ]
+    }
+  }
+}
