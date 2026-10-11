@@ -20,6 +20,7 @@ def validate_visual_manifest(manifest: dict) -> VisualEvidenceResult:
     captures = list(manifest.get("captures", []))
     constraints = dict(manifest.get("constraints") or {})
     section_constraints = dict(manifest.get("section_constraints") or {})
+    section_anchors = dict(manifest.get("section_anchors") or {})
     require_geometry = bool(manifest.get("require_geometry", False))
 
     overflow_tolerance = float(constraints.get("horizontal_overflow_tolerance_px", 2))
@@ -61,7 +62,8 @@ def validate_visual_manifest(manifest: dict) -> VisualEvidenceResult:
             issues.append(f"{prefix}:missing_or_invalid_sha256")
         if not heading:
             issues.append(f"{prefix}:missing_observed_heading")
-        if dom_anchor != section:
+        expected_anchor = str(section_anchors.get(section, section))
+        if dom_anchor != expected_anchor:
             issues.append(f"{prefix}:anchor_mismatch")
         if not reviewer or not review_run:
             issues.append(f"{prefix}:missing_independent_review")
