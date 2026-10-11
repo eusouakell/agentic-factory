@@ -111,7 +111,8 @@ def summarize_run(events: list[dict]) -> dict:
         for task_id, item in planned.items()
         if item["planning_origin"] == "planned" and task_id in accepted_tasks
     )
-    spillover_points = max(0, committed_points - accepted_planned_points)
+    remaining_planned_points = max(0, committed_points - accepted_planned_points)
+    spillover_points = remaining_planned_points if workflow_completed else 0
     scope_growth_delta = sum(
         max(0, current_points.get(task_id, item["baseline_points"]) - item["baseline_points"])
         for task_id, item in planned.items()
@@ -215,6 +216,7 @@ def summarize_run(events: list[dict]) -> dict:
         "accepted_planned_points": accepted_planned_points,
         "baseline_attainment": round(accepted_planned_points / committed_points, 4) if committed_points else 0.0,
         "unplanned_points": unplanned_points,
+        "remaining_planned_points": remaining_planned_points,
         "spillover_points": spillover_points,
         "scope_growth_delta": scope_growth_delta,
         "usage": usage,
@@ -240,6 +242,7 @@ def summarize_portfolio(events: list[dict]) -> dict:
     total_committed = sum(run["committed_points"] for run in runs)
     total_accepted = sum(run["accepted_planned_points"] for run in runs)
     total_unplanned = sum(run["unplanned_points"] for run in runs)
+    total_remaining = sum(run["remaining_planned_points"] for run in runs)
     total_spillover = sum(run["spillover_points"] for run in runs)
 
     failure_counter: Counter[str] = Counter()
@@ -257,6 +260,7 @@ def summarize_portfolio(events: list[dict]) -> dict:
             "accepted_planned_points": total_accepted,
             "baseline_attainment": round(total_accepted / total_committed, 4) if total_committed else 0.0,
             "unplanned_points": total_unplanned,
+            "remaining_planned_points": total_remaining,
             "spillover_points": total_spillover,
             "median_cycle_seconds": med("cycle_seconds"),
             "median_active_seconds": med("active_seconds"),

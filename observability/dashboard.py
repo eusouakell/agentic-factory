@@ -46,7 +46,7 @@ table{{width:100%;border-collapse:collapse}}th,td{{text-align:left;padding:10px 
 <section><h2>Plano × realizado</h2><div class="section-body"><div id="attainment"></div></div></section>
 <section><h2>Oportunidades de melhoria</h2><div class="section-body" id="opportunities"></div></section>
 <section><h2>Trabalho que saiu do previsto</h2><div class="scroll"><table><thead><tr><th>Projeto</th><th>Tipo</th><th>Tarefa</th><th>Pontos</th><th>Detalhe</th></tr></thead><tbody id="deviations"></tbody></table></div></section>
-<section><h2>Workflows / runs</h2><div class="scroll"><table><thead><tr><th>Projeto</th><th>Workflow</th><th>Repo</th><th>Planejado</th><th>Aceito</th><th>Não planejado</th><th>Spillover</th><th>Retries</th><th>Qualidade</th><th>Tokens</th></tr></thead><tbody id="runs"></tbody></table></div></section>
+<section><h2>Workflows / runs</h2><div class="scroll"><table><thead><tr><th>Projeto</th><th>Workflow</th><th>Repo</th><th>Planejado</th><th>Aceito</th><th>Restante</th><th>Não planejado</th><th>Spillover</th><th>Retries</th><th>Qualidade</th><th>Tokens</th></tr></thead><tbody id="runs"></tbody></table></div></section>
 </main>
 <script>
 const RAW={data};
@@ -74,15 +74,15 @@ function deriveOpp(runs){{
 }}
 function render(){{
  const runs=filteredRuns(); const ids=new Set(runs.map(x=>x.run_id));
- const committed=runs.reduce((a,x)=>a+x.committed_points,0), accepted=runs.reduce((a,x)=>a+x.accepted_planned_points,0), unplanned=runs.reduce((a,x)=>a+x.unplanned_points,0), spill=runs.reduce((a,x)=>a+x.spillover_points,0), retries=runs.reduce((a,x)=>a+x.retries,0), tokens=runs.reduce((a,x)=>a+x.usage.total_tokens,0);
+ const committed=runs.reduce((a,x)=>a+x.committed_points,0), accepted=runs.reduce((a,x)=>a+x.accepted_planned_points,0), remaining=runs.reduce((a,x)=>a+x.remaining_planned_points,0), unplanned=runs.reduce((a,x)=>a+x.unplanned_points,0), spill=runs.reduce((a,x)=>a+x.spillover_points,0), retries=runs.reduce((a,x)=>a+x.retries,0), tokens=runs.reduce((a,x)=>a+x.usage.total_tokens,0);
  const attain=committed?accepted/committed:0;
  document.querySelector('#kpis').innerHTML=[
-  ['Pontos planejados',n(committed)],['Pontos aceitos',n(accepted)],['Atingimento',fmtPct(attain)],['Não planejado',n(unplanned)],['Spillover',n(spill)],['Tokens observados',n(tokens)]
+  ['Pontos planejados',n(committed)],['Pontos aceitos',n(accepted)],['Restante planejado',n(remaining)],['Não planejado',n(unplanned)],['Spillover real',n(spill)],['Tokens observados',n(tokens)]
  ].map(([a,b])=>'<div class="kpi"><small>'+a+'</small><strong>'+b+'</strong></div>').join('');
  document.querySelector('#attainment').innerHTML='<strong>'+n(accepted)+' / '+n(committed)+' pontos planejados aceitos</strong><div class="bar"><span style="width:'+Math.min(100,attain*100)+'%"></span></div><p class="meta">Pontos são sizing relativo; não são convertidos em horas.</p>';
  const deviations=RAW.deviations.filter(x=>ids.has(x.run_id));
  document.querySelector('#deviations').innerHTML=deviations.length?deviations.map(x=>'<tr><td>'+x.project_id+'</td><td><span class="badge '+(x.type==='quality'?'bad':x.type==='spillover'?'warn':'')+'">'+x.type+'</span></td><td>'+String(x.task_id||'—')+'</td><td>'+n(x.points)+'</td><td>'+x.detail+'</td></tr>').join(''):'<tr><td colspan="5" class="empty">Nenhum desvio registrado neste filtro.</td></tr>';
- document.querySelector('#runs').innerHTML=runs.length?runs.map(x=>'<tr><td>'+x.project_id+'</td><td>'+x.workflow_id+'</td><td>'+x.repository+'</td><td>'+n(x.committed_points)+'</td><td>'+n(x.accepted_planned_points)+'</td><td>'+n(x.unplanned_points)+'</td><td>'+n(x.spillover_points)+'</td><td>'+n(x.retries)+'</td><td>'+n(x.quality_gate_failures)+' falhas</td><td>'+n(x.usage.total_tokens)+' <span class="meta">'+x.usage_quality+'</span></td></tr>').join(''):'<tr><td colspan="10" class="empty">Ainda não há runs instrumentados para este filtro.</td></tr>';
+ document.querySelector('#runs').innerHTML=runs.length?runs.map(x=>'<tr><td>'+x.project_id+'</td><td>'+x.workflow_id+'</td><td>'+x.repository+'</td><td>'+n(x.committed_points)+'</td><td>'+n(x.accepted_planned_points)+'</td><td>'+n(x.remaining_planned_points)+'</td><td>'+n(x.unplanned_points)+'</td><td>'+n(x.spillover_points)+'</td><td>'+n(x.retries)+'</td><td>'+n(x.quality_gate_failures)+' falhas</td><td>'+n(x.usage.total_tokens)+' <span class="meta">'+x.usage_quality+'</span></td></tr>').join(''):'<tr><td colspan="11" class="empty">Ainda não há runs instrumentados para este filtro.</td></tr>';
  const opp=deriveOpp(runs);
  document.querySelector('#opportunities').innerHTML=opp.length?opp.map(x=>'<div class="opportunity"><strong>'+x.signal+'</strong><p>'+x.hypothesis+'</p><p><b>Ação sugerida:</b> '+x.recommended_intervention+'</p><span class="meta">Métrica: '+x.metric+' · confiança '+x.confidence+'</span></div>').join(''):'<div class="empty">Ainda não há sinal suficiente para gerar oportunidades.</div>';
 }}
