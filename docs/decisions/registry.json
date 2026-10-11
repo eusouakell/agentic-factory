@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "decisions": [
+    {
+      "decision_id": "cross-repo-decision-governance",
+      "title": "Durable cross-repository decisions live at the authority that owns them",
+      "authority_repository": "eusouakell/agentic-factory",
+      "canonical_adr": "docs/decisions/ADR-0001-cross-repository-decision-governance.md",
+      "status": "accepted",
+      "affected_repositories": [
+        "eusouakell/agentic-factory",
+        "eusouakell/bussola",
+        "eusouakell/cereja-editorial-engine",
+        "eusouakell/cereja-knowledge-system",
+        "eusouakell/marketing-context-system"
+      ],
+      "implementation_refs": [
+        "https://github.com/eusouakell/agentic-factory/pull/37"
+      ]
+    },
+    {
+      "decision_id": "human-orchestration-model",
+      "title": "Human owner acts as orchestrator, not agent traffic manager",
+      "authority_repository": "eusouakell/agentic-factory",
+      "canonical_ref": "docs/orchestration/creative-convergence-v1.md",
+      "status": "accepted",
+      "affected_repositories": [
+        "eusouakell/agentic-factory",
+        "eusouakell/bussola",
+        "eusouakell/cereja-editorial-engine"
+      ],
+      "implementation_refs": [
+        "https://github.com/eusouakell/agentic-factory/pull/36"
+      ]
+    },
+    {
+      "decision_id": "deliberative-quality-profile",
+      "title": "High-craft work may use stricter bounded deliberation before the final human gate",
+      "authority_repository": "eusouakell/agentic-factory",
+      "canonical_ref": "docs/orchestration/deliberative-quality-loop-v1.md",
+      "status": "proposed",
+      "affected_repositories": [
+        "eusouakell/bussola"
+      ],
+      "implementation_refs": [
+        "https://github.com/eusouakell/agentic-factory/pull/41",
+        "https://github.com/eusouakell/bussola/pull/13"
+      ]
+    }
+  ]
+}
