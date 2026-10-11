@@ -1,0 +1,68 @@
+{
+  "decision_id": "bussola-public-case-delegated-deliberation-v2",
+  "decision_type": "workflow_oversight_mode",
+  "title": "Delegate intermediate Bússola case decisions to a bounded specialist council",
+  "outcome_ref": "Produce a publish-ready Bússola public case with no routine intermediate Kell gates and one final publication/merge decision.",
+  "decision_owner": {
+    "type": "human",
+    "ref": "kell"
+  },
+  "governance_profile": {
+    "business_value": 5,
+    "risk": 3,
+    "frequency": 2,
+    "reversibility": "reversible",
+    "notes": "Intermediate creative and implementation choices are reversible on a proposal branch. Public publication remains human-controlled."
+  },
+  "inputs": [
+    "explicit owner instruction on 2026-10-11 to let specialists debate and self-regulate until publish-ready",
+    "docs/orchestration/deliberative-quality-loop-v1.md",
+    "quality/rubrics/editorial-web-publish-ready-v1.json",
+    "Bússola repository evidence and current case artifacts"
+  ],
+  "criteria": [
+    "ordinary specialist questions are resolved by the relevant expertise",
+    "producer and critic remain separate",
+    "material disagreement is explicitly arbitrated",
+    "human escalation occurs only on declared exceptions",
+    "publication and merge remain human-owned",
+    "final candidate satisfies publish-readiness rubric and quality blockers"
+  ],
+  "authority_required": {
+    "decision_authority": "shared",
+    "agent_ids": [
+      "workflow-architect",
+      "repository-analyst",
+      "editorial-storyteller",
+      "experience-designer",
+      "editorial-art-director",
+      "creative-director",
+      "frontend-engineer",
+      "accessibility-auditor",
+      "code-reviewer",
+      "readiness-evaluator"
+    ],
+    "notes": "Kell explicitly delegates reversible intermediate decisions to this bounded council. No publication, merge or canonical authority is delegated."
+  },
+  "oversight_mode": "human_on_exception",
+  "exception_conditions": [
+    "missing or conflicting authoritative fact",
+    "unclear publication right, consent or confidentiality",
+    "canonical authority conflict",
+    "material residual accessibility/security/reputational risk",
+    "bounded deliberation budget exhausted",
+    "final publication/merge decision"
+  ],
+  "state": "decided",
+  "decision": {
+    "selected_option": "bounded specialist deliberation with final-only human publication gate",
+    "rationale": "The owner wants the team to resolve expertise questions internally and surface the work only when it is ready to publish."
+  },
+  "evidence": [
+    "explicit owner instruction 2026-10-11",
+    "existing Agentic Factory authority model and first-class decision framework"
+  ],
+  "expected_outcome": "The Bússola landing reaches Kell once, as a publish-ready candidate with consolidated evidence and no routine intermediate design approvals.",
+  "observed_outcome": null,
+  "learn_back": []
+}
