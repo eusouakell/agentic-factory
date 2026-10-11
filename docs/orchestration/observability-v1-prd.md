@@ -241,6 +241,12 @@ Required event types:
 - `quality_gate_passed`
 - `quality_gate_failed`
 - `quality_gate_overridden`
+- `convergence_issue_created`
+- `convergence_issue_owner_responded`
+- `convergence_issue_arbitrated`
+- `convergence_issue_resolved`
+- `human_escalation_opened`
+- `human_escalation_resolved`
 - `workflow_completed`
 
 Optional usage event:
