@@ -25,6 +25,7 @@ def evaluate_publish_readiness(
     open_material_questions: int = 0,
     unresolved_dissent: int = 0,
     applicability: dict[str, bool] | None = None,
+    execution_run_ids: set[str] | None = None,
 ) -> RubricEvaluation:
     thresholds = rubric.get("thresholds", {})
     weighted_min = float(thresholds.get("weighted_minimum", 0))
@@ -77,6 +78,16 @@ def evaluate_publish_readiness(
             blockers.append(f"rubric:missing_review_run_id:{dimension_id}")
         elif primary_run == secondary_run:
             blockers.append(f"rubric:same_execution_for_both_reviews:{dimension_id}")
+
+        if execution_run_ids is not None:
+            if primary_run and primary_run not in execution_run_ids:
+                blockers.append(
+                    f"rubric:unverified_review_run:{dimension_id}:{primary}"
+                )
+            if secondary_run and secondary_run not in execution_run_ids:
+                blockers.append(
+                    f"rubric:unverified_review_run:{dimension_id}:{secondary}"
+                )
 
         records = [primary_record, secondary_record]
         scores: list[float] = []

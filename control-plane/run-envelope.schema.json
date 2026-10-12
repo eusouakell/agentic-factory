@@ -22,6 +22,9 @@
       "type": "string",
       "minLength": 1
     },
+    "execution_id": {
+      "type": ["string", "null"]
+    },
     "agent_id": {
       "type": "string",
       "minLength": 1
@@ -125,6 +128,12 @@
         "string",
         "null"
       ]
+    },
+    "output_schema_ref": {
+      "type": ["string", "null"]
+    },
+    "usage_quality": {
+      "enum": ["exact", "estimated", "unavailable"]
     }
   }
 }

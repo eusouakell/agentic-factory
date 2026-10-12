@@ -248,6 +248,36 @@ class WorkflowRuntime:
             },
         )
 
+    def record_escaped_defect(
+        self,
+        *,
+        criterion: str,
+        discovered_at: str,
+        expected_owner: str,
+        evidence_refs: list[str] | None = None,
+        severity: str = "material",
+        note: str | None = None,
+    ) -> None:
+        if severity not in {"advisory", "material", "blocker"}:
+            raise ValueError("severity must be advisory, material or blocker")
+        if not criterion.strip():
+            raise ValueError("criterion is required")
+        if not discovered_at.strip():
+            raise ValueError("discovered_at is required")
+        if not expected_owner.strip():
+            raise ValueError("expected_owner is required")
+        self._emit(
+            "escaped_defect_recorded",
+            metadata={
+                "criterion": criterion,
+                "discovered_at": discovered_at,
+                "expected_owner": expected_owner,
+                "severity": severity,
+                "note": note,
+            },
+            artifact_refs=evidence_refs,
+        )
+
     def accept_artifact(self, task_id: str, artifact_ref: str) -> None:
         state = self.states[task_id]
         self._emit(

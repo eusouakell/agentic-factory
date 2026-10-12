@@ -164,6 +164,29 @@ def summarize_run(events: list[dict]) -> dict:
     human_escalations = sum(1 for e in events if e["event_type"] == "human_escalation_opened")
     human_gates = sum(1 for e in events if e["event_type"] == "human_gate_opened")
     human_interventions = human_escalations + human_gates
+
+    agent_execution_started = [
+        e for e in events if e["event_type"] == "agent_execution_started"
+    ]
+    agent_execution_completed = [
+        e for e in events if e["event_type"] == "agent_execution_completed"
+    ]
+    agent_execution_failed = [
+        e for e in events if e["event_type"] == "agent_execution_failed"
+    ]
+    execution_ids = {
+        str(e.get("metadata", {}).get("execution_id"))
+        for e in agent_execution_started + agent_execution_completed + agent_execution_failed
+        if e.get("metadata", {}).get("execution_id")
+    }
+    agent_execution_ms = sum(
+        int(e.get("metadata", {}).get("duration_ms", 0) or 0)
+        for e in agent_execution_completed + agent_execution_failed
+    )
+    escaped_defects = sum(
+        1 for e in events if e["event_type"] == "escaped_defect_recorded"
+    )
+
     internal_resolution_rate = (
         material_issues_resolved / material_issues_created
         if material_issues_created
@@ -250,6 +273,12 @@ def summarize_run(events: list[dict]) -> dict:
         "human_escalations": human_escalations,
         "human_gates": human_gates,
         "human_interventions": human_interventions,
+        "agent_executions_started": len(agent_execution_started),
+        "agent_executions_completed": len(agent_execution_completed),
+        "agent_executions_failed": len(agent_execution_failed),
+        "independent_execution_ids": len(execution_ids),
+        "agent_execution_seconds": round(agent_execution_ms / 1000.0, 3),
+        "escaped_defects": escaped_defects,
         "deviations": deviations,
     }
 
@@ -298,6 +327,14 @@ def summarize_portfolio(events: list[dict]) -> dict:
             "convergence_resolved": sum(run["convergence_resolved"] for run in runs),
             "human_escalations": sum(run["human_escalations"] for run in runs),
             "human_interventions": sum(run["human_interventions"] for run in runs),
+            "agent_executions_started": sum(run["agent_executions_started"] for run in runs),
+            "agent_executions_completed": sum(run["agent_executions_completed"] for run in runs),
+            "agent_executions_failed": sum(run["agent_executions_failed"] for run in runs),
+            "independent_execution_ids": sum(run["independent_execution_ids"] for run in runs),
+            "agent_execution_seconds": round(
+                sum(run["agent_execution_seconds"] for run in runs), 3
+            ),
+            "escaped_defects": sum(run["escaped_defects"] for run in runs),
             "internal_resolution_rate": round(
                 (
                     sum(run["convergence_resolved"] for run in runs)
@@ -332,6 +369,7 @@ def derive_opportunities(runs: list[dict], failed_checks: Counter[str]) -> list[
     convergence_issues = sum(run["convergence_issues"] for run in runs)
     convergence_resolved = sum(run["convergence_resolved"] for run in runs)
     human_escalations = sum(run["human_escalations"] for run in runs)
+    escaped_defects = sum(run.get("escaped_defects", 0) for run in runs)
 
     if total_points and unplanned / total_points >= 0.25:
         opportunities.append({
@@ -380,6 +418,14 @@ def derive_opportunities(runs: list[dict], failed_checks: Counter[str]) -> list[
             "recommended_intervention": "Classify escalation reasons and decide whether authority/context should move upstream.",
             "metric": "human escalation rate",
             "confidence": "medium",
+        })
+    if escaped_defects:
+        opportunities.append({
+            "signal": f"Escaped defects detected ({escaped_defects})",
+            "hypothesis": "A final human gate or later stage found a material defect that upstream quality evidence missed.",
+            "recommended_intervention": "Trace each escaped defect to the owning upstream criterion and strengthen that gate before rerunning the pilot.",
+            "metric": "escaped defect count",
+            "confidence": "high",
         })
     if failed_checks:
         check_id, count = failed_checks.most_common(1)[0]

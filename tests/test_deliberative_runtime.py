@@ -183,6 +183,27 @@ class PublishReadinessTests(unittest.TestCase):
         self.assertFalse(result.passed)
         self.assertIn("rubric:same_execution_for_both_reviews:narrative", result.blockers)
 
+    def test_review_run_must_match_executed_specialist_when_provenance_is_supplied(self):
+        rubric = load_rubric()
+        reviews = complete_reviews(rubric)
+        allowed = {review["review_run_id"] for review in reviews}
+        missing_id = reviews[0]["review_run_id"]
+        allowed.remove(missing_id)
+        result = evaluate_publish_readiness(
+            rubric,
+            reviews,
+            visual_manifest=visual_manifest(),
+            readiness_status="READY",
+            execution_run_ids=allowed,
+        )
+        self.assertFalse(result.passed)
+        self.assertTrue(
+            any(
+                blocker.startswith("rubric:unverified_review_run:")
+                for blocker in result.blockers
+            )
+        )
+
     def test_duplicate_visual_content_under_different_section_labels_fails(self):
         manifest = visual_manifest()
         captures = [

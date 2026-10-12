@@ -32,3 +32,4 @@ Merge is the default acceptance gate unless an ADR names a different authority.
 ## Current records
 
 - [ADR-0001 — Cross-repository decision governance](ADR-0001-cross-repository-decision-governance.md)
+- [ADR-0002 — A2 independent execution and visual acceptance](ADR-0002-a2-independent-execution.md)

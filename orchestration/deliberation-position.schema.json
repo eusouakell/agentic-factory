@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Deliberation specialist position",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["decision", "evidence", "criterion", "risk", "recommended_action", "confidence"],
+  "properties": {
+    "decision": {"type": "string", "minLength": 1},
+    "evidence": {"type": "array", "items": {"type": "string"}},
+    "criterion": {"type": "string", "minLength": 1},
+    "risk": {"type": "string", "minLength": 1},
+    "recommended_action": {"type": "string", "minLength": 1},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+  }
+}

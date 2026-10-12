@@ -7,6 +7,34 @@
   "required": ["candidate_ref", "required_viewports", "required_sections", "captures"],
   "properties": {
     "candidate_ref": {"type": "string", "minLength": 1},
+    "require_geometry": {"type": "boolean"},
+    "constraints": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "horizontal_overflow_tolerance_px": {"type": "number", "minimum": 0},
+        "max_image_aspect_ratio_delta": {"type": "number", "minimum": 0},
+        "min_heading_body_ratio": {"type": "number", "minimum": 0},
+        "max_heading_body_ratio": {"type": "number", "minimum": 0}
+      }
+    },
+    "section_anchors": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "minLength": 1}
+    },
+    "section_constraints": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "max_image_width_ratio": {"type": "number", "minimum": 0},
+          "max_image_viewport_area_ratio": {"type": "number", "minimum": 0},
+          "min_heading_body_ratio": {"type": "number", "minimum": 0},
+          "max_heading_body_ratio": {"type": "number", "minimum": 0}
+        }
+      }
+    },
     "required_viewports": {
       "type": "array",
       "minItems": 1,
@@ -23,7 +51,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "additionalProperties": false,
+        "additionalProperties": true,
         "required": [
           "viewport_width",
           "section_id",
@@ -37,6 +65,7 @@
         ],
         "properties": {
           "viewport_width": {"type": "integer", "minimum": 1},
+          "viewport_height": {"type": "integer", "minimum": 1},
           "section_id": {"type": "string", "minLength": 1},
           "dom_anchor": {"type": "string", "minLength": 1},
           "artifact_ref": {"type": "string", "minLength": 1},
@@ -44,7 +73,49 @@
           "observed_heading": {"type": "string", "minLength": 1},
           "reviewer_id": {"type": "string", "minLength": 1},
           "review_run_id": {"type": "string", "minLength": 1},
-          "status": {"enum": ["pass", "fail"]}
+          "status": {"enum": ["pass", "fail"]},
+          "document_metrics": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "scroll_width": {"type": "number", "minimum": 0},
+              "client_width": {"type": "number", "minimum": 0}
+            }
+          },
+          "section_box": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "left": {"type": "number"},
+              "right": {"type": "number"},
+              "width": {"type": "number", "minimum": 0},
+              "height": {"type": "number", "minimum": 0}
+            }
+          },
+          "typography": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "heading_tag": {"type": "string"},
+              "heading_font_px": {"type": "number", "minimum": 0},
+              "body_font_px": {"type": "number", "minimum": 0}
+            }
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "src": {"type": "string"},
+                "natural_width": {"type": "number", "minimum": 0},
+                "natural_height": {"type": "number", "minimum": 0},
+                "rendered_width": {"type": "number", "minimum": 0},
+                "rendered_height": {"type": "number", "minimum": 0},
+                "object_fit": {"type": "string"}
+              }
+            }
+          }
         }
       }
     }

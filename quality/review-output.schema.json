@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/eusouakell/agentic-factory/quality/review-output.schema.json",
+  "title": "Independent quality review output",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["dimension_id", "reviewer_id", "score", "status", "evidence_refs", "findings"],
+  "properties": {
+    "dimension_id": {"type": "string", "minLength": 1},
+    "reviewer_id": {"type": "string", "minLength": 1},
+    "score": {"type": "number", "minimum": 0, "maximum": 10},
+    "status": {"enum": ["pass", "fail", "unknown"]},
+    "evidence_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "findings": {"type": "array", "items": {"type": "object"}}
+  }
+}

@@ -33,7 +33,7 @@ The Factory should absorb routine coordination: route specialists, carry authori
 
 For mature or explicitly configured workflows, the target interaction model is **human-at-the-gates / human-on-exception**, not human review at every specialist handoff.
 
-See [Creative Convergence V1](docs/orchestration/creative-convergence-v1.md).
+See [Creative Convergence V1](docs/orchestration/creative-convergence-v1.md) and [ADR-0002 — A2 independent execution](docs/decisions/ADR-0002-a2-independent-execution.md).
 
 ## Architecture
 
@@ -92,7 +92,7 @@ Start with:
 
 ## Automation Layer
 
-Event-driven routing and execution-surface contracts live in [automations/](automations/). V1 autonomously converts supported events into bounded run plans; model/tool execution remains adapter-specific and preserves human gates.
+Event-driven routing and execution-surface contracts live in [automations/](automations/). V1 converts supported events into bounded run plans and now includes a provider-neutral A2 execution substrate for isolated specialist runs, independent deliberation and persisted run evidence. Production model-backed A2 still requires a configured provider runner on the execution surface; the Factory does not infer that from the adapter alone.
 
 Codex is modeled as an [execution surface](execution-surfaces/codex.md), not as a privileged agent.
 
@@ -100,7 +100,7 @@ Codex is modeled as an [execution surface](execution-surfaces/codex.md), not as 
 
 The portfolio-level observability dashboard is published at **[eusouakell.github.io/agentic-factory](https://eusouakell.github.io/agentic-factory/)**.
 
-It consolidates instrumented workflows across projects and repositories to compare planned vs. accepted work, remaining planned work, unplanned work, real spillover, retries, quality gates, observable token usage and evidence-backed improvement opportunities. Project, repository and workflow type are analytical filters over the same event stream rather than separate telemetry silos.
+It consolidates instrumented workflows across projects and repositories to compare planned vs. accepted work, remaining planned work, unplanned work, real spillover, retries, quality gates, isolated agent executions, escaped defects, observable token usage and evidence-backed improvement opportunities. Project, repository and workflow type are analytical filters over the same event stream rather than separate telemetry silos.
 
 ## Controls
 
