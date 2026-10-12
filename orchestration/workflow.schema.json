@@ -15,6 +15,11 @@
     },
     "decision_ref": {"type": ["string", "null"]},
     "rubric_ref": {"type": ["string", "null"]},
+    "max_parallel_tasks": {"type": "integer", "minimum": 1},
+    "parallel_limits": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 1}
+    },
     "tasks": {
       "type": "array",
       "items": {
@@ -23,7 +28,7 @@
         "properties": {
           "task_id": {"type": "string", "minLength": 1},
           "agent_id": {"type": "string", "minLength": 1},
-          "sizing_points": {"type": "integer", "minimum": 0},
+          "sizing_points": {"enum": [0, 1, 2, 3, 5, 8]},
           "planning_origin": {"enum": ["planned", "unplanned"]},
           "retry_budget": {"type": "integer", "minimum": 0},
           "depends_on": {
@@ -31,6 +36,7 @@
             "items": {"type": "string"},
             "uniqueItems": true
           },
+          "parallel_group": {"type": "string", "minLength": 1},
           "agent_contract_ref": {"type": ["string", "null"]},
           "output_schema_ref": {"type": ["string", "null"]},
           "context_refs": {
