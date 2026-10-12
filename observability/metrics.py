@@ -50,6 +50,8 @@ def summarize_run(events: list[dict]) -> dict:
     active_seconds = 0.0
     rework_seconds = 0.0
     attempts_by_task: Counter[str] = Counter()
+    agent_active_seconds: defaultdict[str, float] = defaultdict(float)
+    agent_rework_seconds: defaultdict[str, float] = defaultdict(float)
 
     for event in events:
         if event["event_type"] == "task_started":
@@ -64,8 +66,11 @@ def summarize_run(events: list[dict]) -> dict:
             if start:
                 elapsed = _seconds(start["timestamp"], event["timestamp"])
                 active_seconds += elapsed
+                agent_id = str(start.get("agent_id") or event.get("agent_id") or "unknown")
+                agent_active_seconds[agent_id] += elapsed
                 if attempt > 1:
                     rework_seconds += elapsed
+                    agent_rework_seconds[agent_id] += elapsed
 
     open_gates: dict[str, str] = {}
     human_wait_seconds = 0.0
@@ -236,6 +241,128 @@ def summarize_run(events: list[dict]) -> dict:
                     "detail": "Committed work not accepted by workflow close",
                 })
 
+    task_projection: dict[str, dict] = {}
+    timeline_event_types = {
+        "workflow_created",
+        "task_planned",
+        "task_added_unplanned",
+        "task_batch_started",
+        "task_started",
+        "task_completed",
+        "task_failed",
+        "task_retried",
+        "artifact_accepted",
+        "quality_gate_failed",
+        "quality_gate_passed",
+        "quality_gate_overridden",
+        "human_gate_opened",
+        "human_gate_resolved",
+        "agent_execution_started",
+        "agent_execution_completed",
+        "agent_execution_failed",
+        "escaped_defect_recorded",
+        "workflow_completed",
+    }
+    timeline: list[dict] = []
+    agent_tasks_started: Counter[str] = Counter()
+    agent_tasks_completed: Counter[str] = Counter()
+    agent_retries: Counter[str] = Counter()
+    agent_execution_counts: Counter[str] = Counter()
+    agent_execution_failures: Counter[str] = Counter()
+    agent_tokens: Counter[str] = Counter()
+
+    for event in events:
+        event_type = event["event_type"]
+        task_id = event.get("task_id")
+        agent_id = str(event.get("agent_id") or "unknown")
+        metadata = event.get("metadata", {})
+
+        if task_id and event_type in {"task_planned", "task_added_unplanned"}:
+            task_projection[task_id] = {
+                "task_id": task_id,
+                "agent_id": agent_id,
+                "state": "queued",
+                "planning_origin": metadata.get(
+                    "planning_origin",
+                    "planned" if event_type == "task_planned" else "unplanned",
+                ),
+                "sizing_points": int(metadata.get("sizing_points", 0)),
+                "depends_on": list(metadata.get("depends_on", [])),
+                "parallel_group": metadata.get("parallel_group", "default"),
+                "attempts": 0,
+            }
+        elif task_id and task_id in task_projection:
+            task = task_projection[task_id]
+            if event_type == "task_started":
+                task["state"] = "running"
+                task["attempts"] = max(
+                    int(task.get("attempts", 0)),
+                    int(metadata.get("attempt", 1)),
+                )
+                agent_tasks_started[agent_id] += 1
+            elif event_type == "task_completed":
+                task["state"] = "completed"
+                agent_tasks_completed[agent_id] += 1
+            elif event_type == "task_failed":
+                task["state"] = "failed"
+            elif event_type == "task_retried":
+                task["state"] = "ready"
+                agent_retries[agent_id] += 1
+            elif event_type == "artifact_accepted":
+                task["state"] = "accepted"
+            elif event_type == "task_resized":
+                task["sizing_points"] = int(
+                    metadata.get("to_points", task.get("sizing_points", 0))
+                )
+
+        if event_type == "agent_execution_completed":
+            agent_execution_counts[agent_id] += 1
+        elif event_type == "agent_execution_failed":
+            agent_execution_failures[agent_id] += 1
+        elif event_type == "usage_recorded":
+            total = metadata.get("total_tokens")
+            if isinstance(total, int):
+                agent_tokens[agent_id] += total
+
+        if event_type in timeline_event_types:
+            timeline.append(
+                {
+                    "timestamp": event["timestamp"],
+                    "event_type": event_type,
+                    "task_id": task_id,
+                    "agent_id": None if agent_id == "unknown" else agent_id,
+                    "gate_id": metadata.get("gate_id"),
+                    "execution_id": metadata.get("execution_id"),
+                    "status": metadata.get("status"),
+                    "criterion": metadata.get("criterion"),
+                }
+            )
+
+    agent_ids = {
+        *agent_active_seconds.keys(),
+        *agent_tasks_started.keys(),
+        *agent_tasks_completed.keys(),
+        *agent_retries.keys(),
+        *agent_execution_counts.keys(),
+        *agent_execution_failures.keys(),
+        *agent_tokens.keys(),
+    }
+    agent_metrics = [
+        {
+            "agent_id": agent_id,
+            "tasks_started": agent_tasks_started[agent_id],
+            "tasks_completed": agent_tasks_completed[agent_id],
+            "retries": agent_retries[agent_id],
+            "active_seconds": round(agent_active_seconds[agent_id], 3),
+            "rework_seconds": round(agent_rework_seconds[agent_id], 3),
+            "agent_executions_completed": agent_execution_counts[agent_id],
+            "agent_executions_failed": agent_execution_failures[agent_id],
+            "tokens_observed": agent_tokens[agent_id],
+        }
+        for agent_id in sorted(agent_ids)
+        if agent_id != "unknown"
+    ]
+
     outcome_status = (
         workflow_completed.get("metadata", {}).get("outcome_status")
         if workflow_completed
@@ -279,6 +406,9 @@ def summarize_run(events: list[dict]) -> dict:
         "independent_execution_ids": len(execution_ids),
         "agent_execution_seconds": round(agent_execution_ms / 1000.0, 3),
         "escaped_defects": escaped_defects,
+        "board": sorted(task_projection.values(), key=lambda item: item["task_id"]),
+        "timeline": timeline,
+        "agent_metrics": agent_metrics,
         "deviations": deviations,
     }
 
@@ -306,6 +436,83 @@ def summarize_portfolio(events: list[dict]) -> dict:
         failure_counter.update(run["failed_checks"])
 
     opportunities = derive_opportunities(runs, failure_counter)
+
+    agent_totals: dict[str, dict] = {}
+    for run in runs:
+        for item in run.get("agent_metrics", []):
+            row = agent_totals.setdefault(
+                item["agent_id"],
+                {
+                    "agent_id": item["agent_id"],
+                    "tasks_started": 0,
+                    "tasks_completed": 0,
+                    "retries": 0,
+                    "active_seconds": 0.0,
+                    "rework_seconds": 0.0,
+                    "agent_executions_completed": 0,
+                    "agent_executions_failed": 0,
+                    "tokens_observed": 0,
+                    "projects": set(),
+                },
+            )
+            for field in (
+                "tasks_started",
+                "tasks_completed",
+                "retries",
+                "agent_executions_completed",
+                "agent_executions_failed",
+                "tokens_observed",
+            ):
+                row[field] += int(item.get(field, 0))
+            row["active_seconds"] += float(item.get("active_seconds", 0))
+            row["rework_seconds"] += float(item.get("rework_seconds", 0))
+            row["projects"].add(run["project_id"])
+
+    agent_comparison = []
+    for row in agent_totals.values():
+        agent_comparison.append(
+            {
+                **{key: value for key, value in row.items() if key != "projects"},
+                "active_seconds": round(row["active_seconds"], 3),
+                "rework_seconds": round(row["rework_seconds"], 3),
+                "projects": sorted(row["projects"]),
+            }
+        )
+    agent_comparison.sort(key=lambda item: item["agent_id"])
+
+    project_groups: dict[str, list[dict]] = defaultdict(list)
+    for run in runs:
+        project_groups[run["project_id"]].append(run)
+
+    project_comparison = []
+    for project_id, project_runs in sorted(project_groups.items()):
+        project_cycle = sum(float(run["cycle_seconds"]) for run in project_runs)
+        project_active = sum(float(run["active_seconds"]) for run in project_runs)
+        project_comparison.append(
+            {
+                "project_id": project_id,
+                "workflow_count": len(project_runs),
+                "committed_points": sum(run["committed_points"] for run in project_runs),
+                "accepted_planned_points": sum(
+                    run["accepted_planned_points"] for run in project_runs
+                ),
+                "unplanned_points": sum(run["unplanned_points"] for run in project_runs),
+                "spillover_points": sum(run["spillover_points"] for run in project_runs),
+                "flow_efficiency": round(
+                    project_active / project_cycle, 4
+                ) if project_cycle else 0.0,
+                "human_wait_seconds": round(
+                    sum(float(run["human_wait_seconds"]) for run in project_runs), 3
+                ),
+                "rework_seconds": round(
+                    sum(float(run["rework_seconds"]) for run in project_runs), 3
+                ),
+                "quality_gate_failures": sum(
+                    run["quality_gate_failures"] for run in project_runs
+                ),
+                "escaped_defects": sum(run["escaped_defects"] for run in project_runs),
+            }
+        )
 
     return {
         "runs": runs,
@@ -346,6 +553,13 @@ def summarize_portfolio(events: list[dict]) -> dict:
             ),
         },
         "failed_checks": dict(failure_counter),
+        "quality_hotspots": [
+            {"check_id": check_id, "count": count}
+            for check_id, count in failure_counter.most_common()
+            if check_id
+        ],
+        "agent_comparison": agent_comparison,
+        "project_comparison": project_comparison,
         "opportunities": opportunities,
         "deviations": [
             {**item, "project_id": run["project_id"], "repository": run["repository"], "run_id": run["run_id"]}
