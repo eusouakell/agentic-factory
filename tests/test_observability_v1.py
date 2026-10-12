@@ -89,6 +89,71 @@ class RuntimeAndMetricsTests(unittest.TestCase):
             ],
         }
 
+    def test_bounded_parallel_batch_respects_global_and_group_limits(self):
+        workflow = {
+            "workflow_id": "parallel-v1",
+            "project_id": "factory",
+            "repository": "eusouakell/agentic-factory",
+            "workflow_type": "orchestration",
+            "max_parallel_tasks": 2,
+            "parallel_limits": {"research": 1},
+            "tasks": [
+                {
+                    "task_id": "research-a",
+                    "agent_id": "research-synthesist",
+                    "sizing_points": 2,
+                    "planning_origin": "planned",
+                    "retry_budget": 0,
+                    "depends_on": [],
+                    "parallel_group": "research",
+                },
+                {
+                    "task_id": "research-b",
+                    "agent_id": "repository-analyst",
+                    "sizing_points": 2,
+                    "planning_origin": "planned",
+                    "retry_budget": 0,
+                    "depends_on": [],
+                    "parallel_group": "research",
+                },
+                {
+                    "task_id": "design",
+                    "agent_id": "experience-designer",
+                    "sizing_points": 3,
+                    "planning_origin": "planned",
+                    "retry_budget": 0,
+                    "depends_on": [],
+                    "parallel_group": "design",
+                },
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            runtime = WorkflowRuntime(
+                workflow,
+                JsonlEventLog(Path(tmp) / "events.jsonl"),
+            )
+            runtime.create()
+            batch = runtime.start_ready_batch()
+            self.assertEqual(batch, ["research-a", "design"])
+            self.assertEqual(
+                {task_id for task_id, state in runtime.states.items() if state.state == "running"},
+                {"research-a", "design"},
+            )
+            self.assertEqual(runtime.start_ready_batch(), [])
+            runtime.complete_task("research-a")
+            runtime.complete_task("design")
+            self.assertEqual(runtime.start_ready_batch(), ["research-b"])
+
+    def test_relative_sizing_scale_rejects_arbitrary_points(self):
+        bad = self.workflow()
+        bad["tasks"][0]["sizing_points"] = 4
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(ValueError):
+                WorkflowRuntime(
+                    bad,
+                    JsonlEventLog(Path(tmp) / "events.jsonl"),
+                )
+
     def test_runtime_records_baseline_retry_wait_and_usage(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "events.jsonl"
@@ -127,6 +192,12 @@ class RuntimeAndMetricsTests(unittest.TestCase):
             self.assertGreater(summary["human_wait_seconds"], 0)
             self.assertEqual(summary["usage"]["total_tokens"], 150)
             self.assertEqual(summary["usage_quality"], "exact")
+            self.assertEqual(summary["board"][0]["state"], "accepted")
+            self.assertTrue(
+                any(item["event_type"] == "human_gate_opened" for item in summary["timeline"])
+            )
+            self.assertEqual(summary["agent_metrics"][0]["agent_id"], "editorial-art-director")
+            self.assertGreater(summary["agent_metrics"][0]["active_seconds"], 0)
 
     def test_in_progress_work_is_remaining_not_spillover(self):
         events = [
@@ -227,6 +298,11 @@ class RuntimeAndMetricsTests(unittest.TestCase):
         self.assertIn("Todos os projetos", page)
         self.assertIn("bussola", page)
         self.assertIn("cereja", page)
+        self.assertIn("Board operacional derivado dos eventos", page)
+        self.assertIn("Timeline normalizada", page)
+        self.assertIn("Comparação por agente", page)
+        self.assertIn("Comparação por projeto", page)
+        self.assertIn("Wait em gate", page)
 
     def test_a2_execution_and_escaped_defects_are_observable(self):
         base = {
@@ -280,6 +356,8 @@ class RuntimeAndMetricsTests(unittest.TestCase):
 
         portfolio = summarize_portfolio(events)
         self.assertEqual(portfolio["summary"]["escaped_defects"], 1)
+        self.assertEqual(portfolio["agent_comparison"][0]["agent_id"], "creative-director")
+        self.assertEqual(portfolio["project_comparison"][0]["project_id"], "bussola")
         self.assertTrue(
             any(
                 item["metric"] == "escaped defect count"
