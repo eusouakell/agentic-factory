@@ -100,7 +100,9 @@ Codex is modeled as an [execution surface](execution-surfaces/codex.md), not as 
 
 The portfolio-level observability dashboard is published at **[eusouakell.github.io/agentic-factory](https://eusouakell.github.io/agentic-factory/)**.
 
-It consolidates instrumented workflows across projects and repositories to compare planned vs. accepted work, remaining planned work, unplanned work, real spillover, retries, quality gates, isolated agent executions, escaped defects, observable token usage and evidence-backed improvement opportunities. Project, repository and workflow type are analytical filters over the same event stream rather than separate telemetry silos.
+It consolidates instrumented workflows across projects and repositories to compare planned vs. accepted work, remaining planned work, unplanned work, real spillover, retries, quality gates, isolated agent executions, escaped defects, observable token usage and evidence-backed improvement opportunities. The same event stream also projects an operational task board, normalized timeline, flow/rework/human-gate wait views and agent/project comparisons. Project, repository and workflow type remain analytical filters rather than separate telemetry silos.
+
+Workflow runtime scheduling supports dependency-safe bounded ready-task batches with global and optional per-group concurrency ceilings. Relative sizing is constrained to the declared 1/2/3/5/8 scale (plus 0 for explicitly unsized work) and is never converted automatically to hours.
 
 ## Controls
 
