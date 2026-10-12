@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 from uuid import uuid4
+
+
+ALLOWED_SIZING_POINTS = {0, 1, 2, 3, 5, 8}
 
 
 def utc_now() -> str:
@@ -30,6 +34,7 @@ class TaskState:
     planning_origin: str
     retry_budget: int
     depends_on: tuple[str, ...]
+    parallel_group: str
     attempts: int = 0
     state: str = "queued"
 
@@ -48,6 +53,16 @@ class WorkflowRuntime:
         self.execution_surface = execution_surface
         self.clock = clock
         self.run_id = f"run_{uuid4().hex[:12]}"
+        self.max_parallel_tasks = int(workflow.get("max_parallel_tasks", 1))
+        if self.max_parallel_tasks < 1:
+            raise ValueError("max_parallel_tasks must be >= 1")
+        self.parallel_limits = {
+            str(group): int(limit)
+            for group, limit in (workflow.get("parallel_limits") or {}).items()
+        }
+        if any(limit < 1 for limit in self.parallel_limits.values()):
+            raise ValueError("parallel group limits must be >= 1")
+
         self.states = {
             raw["task_id"]: TaskState(
                 task_id=raw["task_id"],
@@ -56,9 +71,23 @@ class WorkflowRuntime:
                 planning_origin=raw.get("planning_origin", "planned"),
                 retry_budget=int(raw.get("retry_budget", 0)),
                 depends_on=tuple(raw.get("depends_on", [])),
+                parallel_group=str(raw.get("parallel_group", "default")),
             )
             for raw in workflow.get("tasks", [])
         }
+        if len(self.states) != len(workflow.get("tasks", [])):
+            raise ValueError("task_id values must be unique")
+        for state in self.states.values():
+            if state.sizing_points not in ALLOWED_SIZING_POINTS:
+                raise ValueError(
+                    f"invalid sizing_points for {state.task_id}: {state.sizing_points}; "
+                    "allowed values are 0, 1, 2, 3, 5, 8"
+                )
+            missing = [dep for dep in state.depends_on if dep not in self.states]
+            if missing:
+                raise ValueError(
+                    f"task {state.task_id} depends on unknown tasks: {', '.join(missing)}"
+                )
 
     @property
     def workflow_id(self) -> str:
@@ -110,6 +139,7 @@ class WorkflowRuntime:
                     "baseline_points": state.sizing_points if state.planning_origin == "planned" else 0,
                     "planning_origin": state.planning_origin,
                     "depends_on": list(state.depends_on),
+                    "parallel_group": state.parallel_group,
                 },
             )
 
@@ -123,6 +153,60 @@ class WorkflowRuntime:
                 state.state = "ready"
                 ready.append(task_id)
         return ready
+
+    def start_ready_batch(self, max_parallel: int | None = None) -> list[str]:
+        """Start a dependency-safe bounded batch.
+
+        This is a scheduler primitive, not a promise that the execution surface
+        uses threads/processes. It marks only eligible tasks running and never
+        exceeds the global or per-group concurrency limits.
+        """
+        limit = self.max_parallel_tasks if max_parallel is None else int(max_parallel)
+        if limit < 1:
+            raise ValueError("max_parallel must be >= 1")
+        limit = min(limit, self.max_parallel_tasks)
+
+        running = [state for state in self.states.values() if state.state == "running"]
+        available_global = max(0, limit - len(running))
+        if not available_global:
+            return []
+
+        running_by_group = Counter(state.parallel_group for state in running)
+        selected: list[str] = []
+        selected_by_group: Counter[str] = Counter()
+
+        for task_id in self.ready_tasks():
+            if len(selected) >= available_global:
+                break
+            state = self.states[task_id]
+            group_limit = self.parallel_limits.get(
+                state.parallel_group, self.max_parallel_tasks
+            )
+            group_active = (
+                running_by_group[state.parallel_group]
+                + selected_by_group[state.parallel_group]
+            )
+            if group_active >= group_limit:
+                continue
+            selected.append(task_id)
+            selected_by_group[state.parallel_group] += 1
+
+        for task_id in selected:
+            self.start_task(task_id)
+
+        if selected:
+            self._emit(
+                "task_batch_started",
+                metadata={
+                    "task_ids": selected,
+                    "max_parallel": limit,
+                    "parallel_groups": {
+                        task_id: self.states[task_id].parallel_group
+                        for task_id in selected
+                    },
+                },
+            )
+        return selected
 
     def start_task(self, task_id: str) -> None:
         state = self.states[task_id]
@@ -174,8 +258,11 @@ class WorkflowRuntime:
 
     def resize_task(self, task_id: str, new_points: int, reason: str) -> None:
         state = self.states[task_id]
+        new_points = int(new_points)
+        if new_points not in ALLOWED_SIZING_POINTS:
+            raise ValueError("new_points must be one of 0, 1, 2, 3, 5, 8")
         old_points = state.sizing_points
-        state.sizing_points = int(new_points)
+        state.sizing_points = new_points
         self._emit(
             "task_resized",
             task_id=task_id,
