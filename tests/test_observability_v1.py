@@ -288,5 +288,31 @@ class RuntimeAndMetricsTests(unittest.TestCase):
         )
 
 
+
+class RuntimeProjectionTests(unittest.TestCase):
+    def test_bounded_ready_batches_and_projection(self):
+        workflow = {
+            "workflow_id": "parallel-v1",
+            "project_id": "factory",
+            "repository": "eusouakell/agentic-factory",
+            "workflow_type": "orchestration",
+            "tasks": [
+                {"task_id": "a", "agent_id": "one", "depends_on": []},
+                {"task_id": "b", "agent_id": "two", "depends_on": []},
+                {"task_id": "c", "agent_id": "three", "depends_on": []},
+                {"task_id": "d", "agent_id": "four", "depends_on": ["a"]},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            runtime = WorkflowRuntime(workflow, JsonlEventLog(Path(tmp) / "events.jsonl"))
+            runtime.create()
+            self.assertEqual(runtime.ready_task_batches(max_parallel=2), [["a", "b"], ["c"]])
+            runtime.start_task("a")
+            projection = {item["task_id"]: item for item in runtime.current_task_projection()}
+            self.assertEqual(projection["a"]["state"], "running")
+            self.assertEqual(projection["d"]["state"], "queued")
+            with self.assertRaises(ValueError):
+                runtime.ready_task_batches(max_parallel=0)
+
 if __name__ == "__main__":
     unittest.main()
