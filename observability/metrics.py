@@ -242,6 +242,52 @@ def summarize_run(events: list[dict]) -> dict:
         else "in_progress"
     )
 
+    timeline = [
+        {
+            "timestamp": e["timestamp"],
+            "event_type": e["event_type"],
+            "task_id": e.get("task_id"),
+            "agent_id": e.get("agent_id"),
+            "category": (
+                "human" if e["event_type"].startswith("human_")
+                else "quality" if e["event_type"].startswith("quality_") or e["event_type"] == "escaped_defect_recorded"
+                else "execution" if e["event_type"].startswith("agent_execution_")
+                else "work"
+            ),
+            "detail": e.get("metadata", {}),
+        }
+        for e in events
+        if e["event_type"] in {
+            "workflow_created", "task_started", "task_completed", "task_failed",
+            "task_retried", "human_gate_opened", "human_gate_resolved",
+            "quality_gate_failed", "quality_gate_passed", "quality_gate_overridden",
+            "agent_execution_started", "agent_execution_completed", "agent_execution_failed",
+            "escaped_defect_recorded", "workflow_completed",
+        }
+    ]
+
+    agent_stats: dict[str, dict] = {}
+    for e in events:
+        agent = e.get("agent_id")
+        if not agent:
+            continue
+        stat = agent_stats.setdefault(agent, {
+            "agent_id": agent, "starts": 0, "completed": 0, "failed": 0,
+            "retries": 0, "duration_ms": 0, "human_escalations": 0,
+        })
+        if e["event_type"] == "agent_execution_started":
+            stat["starts"] += 1
+        elif e["event_type"] == "agent_execution_completed":
+            stat["completed"] += 1
+            stat["duration_ms"] += int(e.get("metadata", {}).get("duration_ms", 0) or 0)
+        elif e["event_type"] == "agent_execution_failed":
+            stat["failed"] += 1
+            stat["duration_ms"] += int(e.get("metadata", {}).get("duration_ms", 0) or 0)
+        elif e["event_type"] == "task_retried":
+            stat["retries"] += 1
+        elif e["event_type"] == "human_escalation_opened":
+            stat["human_escalations"] += 1
+
     return {
         "run_id": run_id,
         "workflow_id": first["workflow_id"],
@@ -279,6 +325,8 @@ def summarize_run(events: list[dict]) -> dict:
         "independent_execution_ids": len(execution_ids),
         "agent_execution_seconds": round(agent_execution_ms / 1000.0, 3),
         "escaped_defects": escaped_defects,
+        "timeline": timeline,
+        "agent_stats": sorted(agent_stats.values(), key=lambda x: x["agent_id"]),
         "deviations": deviations,
     }
 
@@ -306,6 +354,30 @@ def summarize_portfolio(events: list[dict]) -> dict:
         failure_counter.update(run["failed_checks"])
 
     opportunities = derive_opportunities(runs, failure_counter)
+
+    projects = []
+    for project_id in sorted({run["project_id"] for run in runs}):
+        subset = [run for run in runs if run["project_id"] == project_id]
+        projects.append({
+            "project_id": project_id,
+            "runs": len(subset),
+            "accepted_outcomes": sum(run["outcome_status"] == "accepted" for run in subset),
+            "retries": sum(run["retries"] for run in subset),
+            "human_interventions": sum(run["human_interventions"] for run in subset),
+            "escaped_defects": sum(run["escaped_defects"] for run in subset),
+            "median_rework_ratio": round(statistics.median([run["rework_ratio"] for run in subset]), 4),
+            "median_human_wait_seconds": round(statistics.median([run["human_wait_seconds"] for run in subset]), 3),
+        })
+
+    agents: dict[str, dict] = {}
+    for run in runs:
+        for row in run.get("agent_stats", []):
+            target = agents.setdefault(row["agent_id"], {
+                "agent_id": row["agent_id"], "starts": 0, "completed": 0, "failed": 0,
+                "retries": 0, "duration_ms": 0, "human_escalations": 0,
+            })
+            for key in ("starts", "completed", "failed", "retries", "duration_ms", "human_escalations"):
+                target[key] += row.get(key, 0)
 
     return {
         "runs": runs,
@@ -346,6 +418,8 @@ def summarize_portfolio(events: list[dict]) -> dict:
             ),
         },
         "failed_checks": dict(failure_counter),
+        "projects": projects,
+        "agents": sorted(agents.values(), key=lambda x: (-x["completed"], x["agent_id"])),
         "opportunities": opportunities,
         "deviations": [
             {**item, "project_id": run["project_id"], "repository": run["repository"], "run_id": run["run_id"]}

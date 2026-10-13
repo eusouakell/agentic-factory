@@ -124,6 +124,29 @@ class WorkflowRuntime:
                 ready.append(task_id)
         return ready
 
+    def ready_task_batches(self, max_parallel: int = 4) -> list[list[str]]:
+        """Return dependency-safe ready work in bounded parallel batches."""
+        if max_parallel < 1:
+            raise ValueError("max_parallel must be >= 1")
+        ready = self.ready_tasks()
+        return [ready[i:i + max_parallel] for i in range(0, len(ready), max_parallel)]
+
+    def current_task_projection(self) -> list[dict]:
+        """Project runtime state for boards/dashboards without becoming authority."""
+        return [
+            {
+                "task_id": state.task_id,
+                "agent_id": state.agent_id,
+                "state": state.state,
+                "attempts": state.attempts,
+                "retry_budget": state.retry_budget,
+                "sizing_points": state.sizing_points,
+                "planning_origin": state.planning_origin,
+                "depends_on": list(state.depends_on),
+            }
+            for state in self.states.values()
+        ]
+
     def start_task(self, task_id: str) -> None:
         state = self.states[task_id]
         if task_id not in self.ready_tasks() and state.state != "ready":
